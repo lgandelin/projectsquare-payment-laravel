@@ -7,14 +7,14 @@
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
-    <div class="container signup-template">
+    <form class="container signup-template">
         <div class="row">
             <div class="col-md-12">
                 <h1>{{ trans('projectsquare-payment::signup.title') }}</h1>
             </div>
         </div>
 
-        <div class="stepwizard" style="margin-bottom: 2rem;">
+        <div class="stepwizard">
             <div class="stepwizard-row setup-panel">
                 <div class="stepwizard-step">
                     <span data-tab="1" class="btn btn-primary btn-circle">1</span>
@@ -44,7 +44,7 @@
                 @include('projectsquare-payment::signup.step3')
             </div>
         </form>
-    </div>
+    </form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
     <script src="{{ asset('js/signup.js') }}"></script>

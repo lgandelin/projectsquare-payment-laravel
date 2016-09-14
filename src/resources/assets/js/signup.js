@@ -22,11 +22,31 @@ $(document).ready(function() {
     });
 
     $('.valid-step-1').click(function() {
-        displayTab(2);
+        $('#step-1 .required').removeClass('invalid');
+        var error = false;
+        $('#step-1 .required').each(function() {
+            if ($(this).val() == "") {
+                $(this).addClass('invalid');
+                error = true;
+            }
+        });
+
+        if (!error)
+            displayTab(2);
     });
 
     $('.valid-step-2').click(function() {
-        displayTab(3);
+        $('#step-2 .required').removeClass('invalid');
+        var error = false;
+        $('#step-2 .required').each(function() {
+            if ($(this).val() == "") {
+                $(this).addClass('invalid');
+                error = true;
+            }
+        });
+
+        if (!error)
+            displayTab(3);
     });
 
     $('.back-step-1').click(function() {

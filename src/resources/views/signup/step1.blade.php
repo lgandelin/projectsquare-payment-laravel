@@ -4,7 +4,7 @@
     <div style="margin-bottom: 4rem; clear: both;">
         <div class="form-group">
             <label for="agency_name">{{ trans('projectsquare-payment::signup.agency_name') }}</label>
-            <input class="form-control" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_agency_name') }}" name="agency_name" style="width: 50%" />
+            <input class="form-control required" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_agency_name') }}" name="agency_name" style="width: 50%" />
         </div>
     </div>
 
@@ -21,7 +21,7 @@
                 </p>
             </div>
 
-            <input class="form-control" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_url') }}" name="url" style="display: inline-block; width: 400px"/>
+            <input class="form-control required" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_url') }}" name="url" style="display: inline-block; width: 400px"/>
             .projectsquare.io
             <br>
             <input type="button" class="btn btn-sm btn-primary" value="{{ trans('projectsquare-payment::signup.check_url_disponibility') }}" style="margin-top: 1rem;" />

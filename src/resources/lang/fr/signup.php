@@ -33,4 +33,6 @@ return [
     'users' => 'utilisateur(s)',
     'step2_title' => 'Vos coordonnées',
     'step3_title' => 'Validation',
+
+    'valid_platform_creation' => 'Valider la création de la plateforme',
 ];

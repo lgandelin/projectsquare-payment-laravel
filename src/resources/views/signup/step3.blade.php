@@ -70,9 +70,8 @@
         <span class="value administrator_city_value"></span>
     </div>
 
-
     <div class="submit" style="margin-top: 5rem;">
         <input type="button" class="btn btn-default pull-left back-step-2" value="{{ trans('projectsquare-payment::signup.previous_step') }}" />
-        <input type="button" class="btn btn-success pull-right valid-step-3" value="{{ trans('projectsquare-payment::generic.valid') }}" />
+        <input type="button" class="btn btn-success pull-right valid-step-3" value="{{ trans('projectsquare-payment::signup.valid_platform_creation') }}" />
     </div>
 </div>

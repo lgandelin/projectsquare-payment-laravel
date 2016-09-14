@@ -5848,7 +5848,8 @@ button.close {
 .signup-template .stepwizard {
   display: table;
   width: 100%;
-  position: relative; }
+  position: relative;
+  margin-bottom: 2rem; }
 .signup-template .stepwizard-row {
   display: table-row; }
 .signup-template .stepwizard-row:before {
@@ -5882,5 +5883,7 @@ button.close {
   color: #337ab7; }
 .signup-template .total {
   font-size: 30px; }
+.signup-template .invalid {
+  border: 1px solid #960216; }
 
 /*# sourceMappingURL=style.css.map */

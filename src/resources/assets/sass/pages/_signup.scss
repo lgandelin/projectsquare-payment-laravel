@@ -8,6 +8,7 @@
         display: table;
         width: 100%;
         position: relative;
+        margin-bottom: 2rem;
     }
 
     .stepwizard-row {
@@ -57,5 +58,9 @@
 
     .total {
         font-size: 30px;
+    }
+
+    .invalid {
+        border: 1px solid #960216;
     }
 }
