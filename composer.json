@@ -1,0 +1,25 @@
+{
+    "name": "webaccess/projectsquare-payment-laravel",
+    "type": "library",
+    "description": "Projectsquare Payment - Laravel package",
+    "authors": [
+        {
+            "name": "Louis Gandelin",
+            "email": "lgandelin@web-access.fr"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/support": "~5.2",
+        "intervention/image": "~2.3.5"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webaccess\\ProjectSquarePaymentLaravel\\": "src/Webaccess/ProjectSquarePaymentLaravel"
+        }
+    },
+    "minimum-stability": "dev"
+}
