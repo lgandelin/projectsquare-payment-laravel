@@ -7,7 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
-    <form class="container signup-template">
+    <form action="{{ route('signup_handler') }}" method="post" class="container signup-template">
         <div class="row">
             <div class="col-md-12">
                 <h1>{{ trans('projectsquare-payment::signup.title') }}</h1>

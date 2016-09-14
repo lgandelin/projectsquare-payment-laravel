@@ -5,6 +5,9 @@ namespace Webaccess\ProjectSquarePaymentLaravel;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
+use Webaccess\ProjectSquarePayment\Interactors\Platforms\CreatePlatformInteractor;
+use Webaccess\ProjectSquarePayment\Repositories\InMemory\InMemoryPlatformRepository;
+
 class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 {
     protected $defer = false;
@@ -32,11 +35,11 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 
     public function register()
     {
-        /*App::bind('GetClientsInteractor', function () {
-             return new GetClientsInteractor(
-                 new EloquentClientRepository()
+        App::bind('CreatePlatformInteractor', function () {
+             return new CreatePlatformInteractor(
+                 new InMemoryPlatformRepository()
              );
-         });*/
+        });
 
         /*$this->commands([
             'Webaccess\ProjectSquareLaravel\Commands\CreateUserCommand',

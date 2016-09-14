@@ -72,6 +72,8 @@
 
     <div class="submit" style="margin-top: 5rem;">
         <input type="button" class="btn btn-default pull-left back-step-2" value="{{ trans('projectsquare-payment::signup.previous_step') }}" />
-        <input type="button" class="btn btn-success pull-right valid-step-3" value="{{ trans('projectsquare-payment::signup.valid_platform_creation') }}" />
+        <input type="submit" class="btn btn-success pull-right valid-step-3" value="{{ trans('projectsquare-payment::signup.valid_platform_creation') }}" />
     </div>
+
+    {{ csrf_field() }}
 </div>
