@@ -21,8 +21,6 @@
         <input class="form-control" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_first_name') }}" name="administrator_first_name" style="width: 50%" />
     </div>
 
-    <hr>
-
     <div class="form-group">
         <label for="administrator_billing_address">{{ trans('projectsquare-payment::signup.billing_address') }}</label>
         <textarea rows="5" class="form-control" name="administrator_billing_address" style="width: 50%"></textarea>
@@ -38,5 +36,8 @@
         <input class="form-control" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_city') }}" name="administrator_city" style="width: 50%" />
     </div>
 
-    <input type="button" class="btn btn-success pull-right valid-step-2" value="{{ trans('projectsquare-payment::signup.next_step') }}" />
+    <div class="submit" style="margin-top: 5rem;">
+        <input type="button" class="btn btn-default pull-left back-step-1" value="{{ trans('projectsquare-payment::signup.previous_step') }}" />
+        <input type="button" class="btn btn-success pull-right valid-step-2" value="{{ trans('projectsquare-payment::signup.next_step') }}" />
+    </div>
 </div>

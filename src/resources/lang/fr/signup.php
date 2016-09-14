@@ -12,6 +12,7 @@ return [
     'users_count' => 'Nombre d\'utilisateurs',
     'platform_cost' => 'Coût de votre plateforme',
     'next_step' => 'Etape suivante >>',
+    'previous_step' => '<< Etape précédente',
 
     'email' => 'Adresse email',
     'placeholder_email' => 'Votre adresse email',
@@ -31,5 +32,5 @@ return [
     'step1_title' => 'Votre plateforme',
     'users' => 'utilisateur(s)',
     'step2_title' => 'Vos coordonnées',
-    'step3_title' => 'Confirmation',
+    'step3_title' => 'Validation',
 ];
