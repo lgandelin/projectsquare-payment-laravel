@@ -1,10 +1,10 @@
 <div class="col-lg-12 col-md-12">
-    <h3 style="margin-bottom: 3rem;">{{ trans('projectsquare-payment::signup.step1_title') }}</h3>
+    <h3>{{ trans('projectsquare-payment::signup.step1_title') }}</h3>
 
     <div style="margin-bottom: 4rem; clear: both;">
         <div class="form-group">
             <label for="agency_name">{{ trans('projectsquare-payment::signup.agency_name') }}</label>
-            <input class="form-control required" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_agency_name') }}" name="agency_name" style="width: 50%" />
+            <input class="form-control required" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_agency_name') }}" name="agency_name" value="{{ old('agency_name') }}" style="width: 50%" />
         </div>
     </div>
 
@@ -21,7 +21,7 @@
                 </p>
             </div>
 
-            <input class="form-control required" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_url') }}" name="url" style="display: inline-block; width: 400px"/>
+            <input class="form-control required" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_url') }}" name="url" value="{{ old('url') }}" style="display: inline-block; width: 400px"/>
             .projectsquare.io
             <br>
             <input type="button" class="btn btn-sm btn-primary" value="{{ trans('projectsquare-payment::signup.check_url_disponibility') }}" style="margin-top: 1rem;" />
@@ -34,8 +34,8 @@
         <div class="form-group col-lg-6 col-md-6">
             <label for="users_count">{{ trans('projectsquare-payment::signup.users_count') }}</label>
             <div style="margin-top: 2.5rem; margin-left: 1rem; cursor: pointer;">
-                <input id="slider_users_count" data-slider-id='slider_users_count' type="text" data-slider-min="1" data-slider-max="30" data-slider-step="1" data-slider-value="1"/>
-                <input class="form-control" type="number" name="users_count" value="1" style="display: inline-block; width: 50px; margin-left: 5rem; margin-right: 0.5rem; padding-right: 0; text-align: center" readonly /> {{ trans('projectsquare-payment::signup.users') }}
+                <input id="slider_users_count" data-slider-id='slider_users_count' type="text" data-slider-min="1" data-slider-max="30" data-slider-step="1" data-slider-value="{{ old('users_count') }}"/>
+                <input class="form-control" type="number" name="users_count" value="{{ old('users_count') }}" style="display: inline-block; width: 50px; margin-left: 5rem; margin-right: 0.5rem; padding-right: 0; text-align: center" readonly /> {{ trans('projectsquare-payment::signup.users') }}
             </div>
         </div>
 

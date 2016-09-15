@@ -32,16 +32,24 @@
         </div>
 
         <form role="form" action="" method="post">
+
+            @if (isset($error) && $error)
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ $error }}
+                </div>
+            @endif
+
             <div class="row setup-content" id="step-1">
-                @include('projectsquare-payment::signup.step1')
+                @include('projectsquare-payment::signup.steps.step1')
             </div>
 
             <div class="row setup-content" id="step-2">
-                @include('projectsquare-payment::signup.step2')
+                @include('projectsquare-payment::signup.steps.step2')
             </div>
 
             <div class="row setup-content" id="step-3">
-                @include('projectsquare-payment::signup.step3')
+                @include('projectsquare-payment::signup.steps.step3')
             </div>
         </form>
     </form>
