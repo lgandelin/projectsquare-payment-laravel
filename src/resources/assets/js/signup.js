@@ -67,6 +67,16 @@ $(document).ready(function() {
     });
 
     $('.alert').delay(7500).fadeOut();
+
+
+    //Check platform slug
+    $('.check-slug-btn').click(function() {
+        checkSlug();
+    });
+
+    $('input[name="slug"]').focusout(function() {
+        checkSlug();
+    });
 });
 
 function displayTab(tab) {
@@ -92,3 +102,24 @@ function loadEnteredValues() {
     $('.administrator_zipcode_value').text($('input[name="administrator_zipcode"]').val());
     $('.administrator_city_value').text($('input[name="administrator_city"]').val());
 }
+
+function checkSlug() {
+    $('input[name="slug"]').removeClass('invalid');
+
+    $.ajax({
+        type: "POST",
+        url: route_check_slug,
+        data: {
+            _token: $('input[name="_token"]').val(),
+            slug: $('input[name="slug"]').val()
+        },
+        success: function (data) {
+            if (data.success == false) {
+                $('input[name="slug"]').addClass('invalid');
+            } else {
+
+            }
+        }
+    });
+}
+

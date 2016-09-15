@@ -23,8 +23,7 @@
 
             <input class="form-control required" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_url') }}" name="slug" value="{{ old('slug') }}" style="display: inline-block; width: 400px"/>
             .projectsquare.io
-            <br>
-            <input type="button" class="btn btn-sm btn-primary" value="{{ trans('projectsquare-payment::signup.check_url_disponibility') }}" style="margin-top: 1rem;" />
+            <input type="button" class="btn btn-sm btn-primary check-slug-btn" value="{{ trans('projectsquare-payment::signup.check_slug') }}" style="margin-left: 2rem;" />
         </div>
     </div>
 

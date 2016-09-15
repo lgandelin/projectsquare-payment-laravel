@@ -6,7 +6,7 @@ return [
     'placeholder_agency_name' => 'ex: Mon Agence',
     'url' => 'URL souhaitée',
     'placeholder_url' => 'ex: mon-agence',
-    'check_url_disponibility' => 'Vérifier la disponibilité',
+    'check_slug' => 'Vérifier',
     'url_notice' => 'Vous pouvez définir l\'URL que vous souhaitez dans le champ ci-dessous, généralement il représentera le nom de votre agence web.',
     'url_notice_2' => 'Caractères autorisés : [a..z], [0..9] et -',
     'users_count' => 'Nombre d\'utilisateurs',
@@ -48,4 +48,6 @@ return [
     'administrator_first_name_required_error' => 'Vous devez renseigner votre prénom.',
     'administrator_email_required_error' => 'Vous devez renseigner votre email.',
     'administrator_password_required_error' => 'Vous devez renseigner un mot de passe.',
+
+    'platform_slug_verification_error' => 'Une erreur est survenue lors de la vérification de l\'URL de votre plateforme.  Veuillez retentez l\'opération et nous excuser pour la gêne occasionnée.',
 ];

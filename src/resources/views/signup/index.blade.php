@@ -55,6 +55,7 @@
     </form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
+    <script>var route_check_slug = "{{ route('signup_check_slug') }}";</script>
     <script src="{{ asset('js/signup.js') }}"></script>
 </body>
 </html>

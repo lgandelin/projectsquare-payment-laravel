@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Webaccess\ProjectSquarePayment\Requests\Signup\CheckPlatformSlugRequest;
 use Webaccess\ProjectSquarePayment\Requests\Signup\SignupRequest;
 use Webaccess\ProjectSquarePayment\Responses\Administrators\CreateAdministratorResponse;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
@@ -51,6 +52,27 @@ class SignupController extends Controller
         }
 
         return redirect()->route('signup');
+    }
+
+    public function check_slug(Request $request)
+    {
+        try {
+            $response = app()->make('CheckPlatformSlugInteractor')->execute(new CheckPlatformSlugRequest([
+                'slug' => $request->slug
+            ]));
+
+            return response()->json([
+                'success' => $response->success,
+                'error' => $response->errorCode
+            ], 200);
+
+        } catch (Exception $e) {
+            $this->logErrorFromException($e, $request);
+
+            return response()->json([
+                'error' => trans('projectsquare-payment::signup.platform_slug_verification_error'),
+            ], 500);
+        }
     }
 
     private function getErrorMessage($errorCode)
