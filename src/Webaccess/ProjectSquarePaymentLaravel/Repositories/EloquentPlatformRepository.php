@@ -34,7 +34,7 @@ class EloquentPlatformRepository implements PlatformRepository
         $platformModel->users_count = $platform->getUsersCount();
         $platformModel->save();
 
-        return true;
+        return $platformModel->id;
     }
 
     private function convertModelToEntity(Platform $platformModel): PlatformEntity

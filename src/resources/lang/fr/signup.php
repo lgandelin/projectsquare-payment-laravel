@@ -36,7 +36,8 @@ return [
 
     'valid_platform_creation' => 'Valider la création de la plateforme',
 
-    'generic_error' => 'Une erreur est survenue lors de la création de votre plateforme. Veuillez retentez l\'opération et nous excuser pour la gêne occasionnée.',
+    'generic_error' => 'Une erreur est survenue lors de la création de votre compte. Veuillez retentez l\'opération et nous excuser pour la gêne occasionnée.',
+
     'platform_name_required_error' => 'Le nom de votre agence est obligatoire.',
     'platform_slug_required_error' => 'L\'URL de la plateforme est oblogatoire.',
     'platform_slug_unavailable_error' => 'L\'URL que vous souhaitez obtenir n\'est pas disponible. Veuillez rééssayer avec une autre URL.',

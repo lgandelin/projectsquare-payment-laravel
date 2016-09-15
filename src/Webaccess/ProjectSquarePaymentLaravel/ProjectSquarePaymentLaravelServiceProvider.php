@@ -5,8 +5,9 @@ namespace Webaccess\ProjectSquarePaymentLaravel;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
+use Webaccess\ProjectSquarePayment\Interactors\Administrators\CreateAdministratorInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\CreatePlatformInteractor;
-use Webaccess\ProjectSquarePayment\Repositories\InMemory\InMemoryPlatformRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentAdministratorRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentPlatformRepository;
 
 class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
@@ -22,12 +23,12 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
         $this->loadViewsFrom($basePath.'resources/views/', 'projectsquare-payment');
         $this->loadTranslationsFrom($basePath.'resources/lang/', 'projectsquare-payment');
 
-        /*$this->publishes([
+        $this->publishes([
             $basePath.'resources/assets/css' => base_path('public/css'),
             $basePath.'resources/assets/js' => base_path('public/js'),
             $basePath.'resources/assets/fonts' => base_path('public/fonts'),
             $basePath.'resources/assets/img' => base_path('public/img'),
-        ], 'assets');*/
+        ], 'assets');
 
         $this->publishes([
             $basePath.'database/migrations' => database_path('migrations'),
@@ -40,6 +41,12 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
              return new CreatePlatformInteractor(
                  new EloquentPlatformRepository()
              );
+        });
+
+        App::bind('CreateAdministratorInteractor', function () {
+            return new CreateAdministratorInteractor(
+                new EloquentAdministratorRepository()
+            );
         });
     }
 }

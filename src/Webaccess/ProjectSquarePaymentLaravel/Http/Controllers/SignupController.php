@@ -7,7 +7,9 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
+use Webaccess\ProjectSquarePayment\Requests\Administrators\CreateAdministratorRequest;
 use Webaccess\ProjectSquarePayment\Requests\Platforms\CreatePlatformRequest;
+use Webaccess\ProjectSquarePayment\Responses\Administrators\CreateAdministratorResponse;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
 
 class SignupController extends Controller
@@ -30,20 +32,39 @@ class SignupController extends Controller
                 'usersCount' => $request->users_count,
             ]));
 
-            if ($response->success) {
-
-            } else {
-                $request->session()->flash('error', $this->getErrorMessage($response->errorCode));
+            if (!$response->success) {
+                $request->session()->flash('error', $this->getPlatformErrorMessage($response->errorCode));
+                return redirect()->route('signup');
             }
+
+            $responseAdministrator = app()->make('CreateAdministratorInteractor')->execute(new CreateAdministratorRequest([
+                'email' => $request->administrator_email,
+                'password' => $request->administrator_password,
+                'lastName' => $request->administrator_last_name,
+                'firstName' => $request->administrator_first_name,
+                'address' => $request->administrator_billing_address,
+                'zipCode' => $request->administrator_zipcode,
+                'city' => $request->administrator_city,
+                'platformID' => $response->platformID
+            ]));
+
+            if (!$responseAdministrator->success) {
+                $request->session()->flash('error', $this->getAdministratorErrorMessage($responseAdministrator->errorCode));
+                return redirect()->route('signup');
+            }
+
+            //Launch platform
+            dd($response->platformID, $responseAdministrator->administratorID);
+
         } catch (Exception $e) {
-            $request->session()->flash('error', trans('projectsquare-payment::signup.generic_error'));
+            $request->session()->flash('error', trans('projectsquare-payment::signup.platform_generic_error'));
             $this->logErrorFromException($e, $request);
         }
 
         return redirect()->route('signup');
     }
 
-    private function getErrorMessage($errorCode)
+    private function getPlatformErrorMessage($errorCode)
     {
         $errorMessage = null;
 
@@ -66,6 +87,43 @@ class SignupController extends Controller
 
             case CreatePlatformResponse::PLATFORM_USERS_COUNT_REQUIRED:
                 $errorMessage = trans('projectsquare-payment::signup.platform_users_count_required_error');
+                break;
+
+            default:
+                $errorMessage = trans('projectsquare-payment::signup.generic_error');
+                break;
+        }
+
+        return $errorMessage;
+    }
+
+    private function getAdministratorErrorMessage($errorCode)
+    {
+        $errorMessage = null;
+
+        switch ($errorCode) {
+            case CreateAdministratorResponse::REPOSITORY_CREATION_FAILED:
+                $errorMessage = trans('projectsquare-payment::signup.generic_error');
+                break;
+
+            case CreateAdministratorResponse::ADMINISTRATOR_LAST_NAME_REQUIRED:
+                $errorMessage = trans('projectsquare-payment::signup.administrator_last_name_required_error');
+                break;
+
+            case CreateAdministratorResponse::ADMINISTRATOR_FIRST_NAME_REQUIRED:
+                $errorMessage = trans('projectsquare-payment::signup.administrator_first_name_required_error');
+                break;
+
+            case CreateAdministratorResponse::ADMINISTRATOR_EMAIL_REQUIRED:
+                $errorMessage = trans('projectsquare-payment::signup.administrator_email_required_error');
+                break;
+
+            case CreateAdministratorResponse::ADMINISTRATOR_PASSWORD_REQUIRED:
+                $errorMessage = trans('projectsquare-payment::signup.administrator_password_required_error');
+                break;
+
+            case CreateAdministratorResponse::PLATFORM_ID_REQUIRED:
+                $errorMessage = trans('projectsquare-payment::signup.generic_error');
                 break;
 
             default:
