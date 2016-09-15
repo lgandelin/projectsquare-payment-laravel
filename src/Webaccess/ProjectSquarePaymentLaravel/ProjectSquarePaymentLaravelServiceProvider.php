@@ -5,8 +5,7 @@ namespace Webaccess\ProjectSquarePaymentLaravel;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
-use Webaccess\ProjectSquarePayment\Interactors\Administrators\CreateAdministratorInteractor;
-use Webaccess\ProjectSquarePayment\Interactors\Platforms\CreatePlatformInteractor;
+use Webaccess\ProjectSquarePayment\Interactors\Signup\SignupInteractor;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentAdministratorRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentPlatformRepository;
 
@@ -37,16 +36,11 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 
     public function register()
     {
-        App::bind('CreatePlatformInteractor', function () {
-             return new CreatePlatformInteractor(
-                 new EloquentPlatformRepository()
+        App::bind('SignupInteractor', function () {
+             return new SignupInteractor(
+                 new EloquentPlatformRepository(),
+                 new EloquentAdministratorRepository()
              );
-        });
-
-        App::bind('CreateAdministratorInteractor', function () {
-            return new CreateAdministratorInteractor(
-                new EloquentAdministratorRepository()
-            );
         });
     }
 }

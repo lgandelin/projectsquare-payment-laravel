@@ -7,8 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
-use Webaccess\ProjectSquarePayment\Requests\Administrators\CreateAdministratorRequest;
-use Webaccess\ProjectSquarePayment\Requests\Platforms\CreatePlatformRequest;
+use Webaccess\ProjectSquarePayment\Requests\Signup\SignupRequest;
 use Webaccess\ProjectSquarePayment\Responses\Administrators\CreateAdministratorResponse;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
 
@@ -26,35 +25,23 @@ class SignupController extends Controller
         $request->flashExcept('administrator_password');
 
         try {
-            $response = app()->make('CreatePlatformInteractor')->execute(new CreatePlatformRequest([
-                'name' => $request->name,
-                'slug' => $request->slug,
-                'usersCount' => $request->users_count,
+            $response = app()->make('SignupInteractor')->execute(new SignupRequest([
+                'platformName' => $request->name,
+                'platformSlug' => $request->slug,
+                'platformUsersCount' => $request->users_count,
+                'administratorEmail' => $request->administrator_email,
+                'administratorPassword' => $request->administrator_password,
+                'administratorLastName' => $request->administrator_last_name,
+                'administratorFirstName' => $request->administrator_first_name,
+                'administratorBillingAddress' => $request->administrator_billing_address,
+                'administratorZipcode' => $request->administrator_zipcode,
+                'administratorCity' => $request->administrator_city,
             ]));
 
             if (!$response->success) {
-                $request->session()->flash('error', $this->getPlatformErrorMessage($response->errorCode));
+                $request->session()->flash('error', $this->getErrorMessage($response->errorCode));
                 return redirect()->route('signup');
             }
-
-            $responseAdministrator = app()->make('CreateAdministratorInteractor')->execute(new CreateAdministratorRequest([
-                'email' => $request->administrator_email,
-                'password' => $request->administrator_password,
-                'lastName' => $request->administrator_last_name,
-                'firstName' => $request->administrator_first_name,
-                'address' => $request->administrator_billing_address,
-                'zipCode' => $request->administrator_zipcode,
-                'city' => $request->administrator_city,
-                'platformID' => $response->platformID
-            ]));
-
-            if (!$responseAdministrator->success) {
-                $request->session()->flash('error', $this->getAdministratorErrorMessage($responseAdministrator->errorCode));
-                return redirect()->route('signup');
-            }
-
-            //Launch platform
-            dd($response->platformID, $responseAdministrator->administratorID);
 
         } catch (Exception $e) {
             $request->session()->flash('error', trans('projectsquare-payment::signup.platform_generic_error'));
@@ -64,7 +51,7 @@ class SignupController extends Controller
         return redirect()->route('signup');
     }
 
-    private function getPlatformErrorMessage($errorCode)
+    private function getErrorMessage($errorCode)
     {
         $errorMessage = null;
 
@@ -89,19 +76,6 @@ class SignupController extends Controller
                 $errorMessage = trans('projectsquare-payment::signup.platform_users_count_required_error');
                 break;
 
-            default:
-                $errorMessage = trans('projectsquare-payment::signup.generic_error');
-                break;
-        }
-
-        return $errorMessage;
-    }
-
-    private function getAdministratorErrorMessage($errorCode)
-    {
-        $errorMessage = null;
-
-        switch ($errorCode) {
             case CreateAdministratorResponse::REPOSITORY_CREATION_FAILED:
                 $errorMessage = trans('projectsquare-payment::signup.generic_error');
                 break;

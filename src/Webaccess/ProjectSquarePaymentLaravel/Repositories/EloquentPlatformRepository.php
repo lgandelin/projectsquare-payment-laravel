@@ -47,4 +47,10 @@ class EloquentPlatformRepository implements PlatformRepository
 
         return $platform;
     }
+
+    public function deleteByID($platformID)
+    {
+        if ($platform = Platform::find($platformID))
+            $platform->delete();
+    }
 }
