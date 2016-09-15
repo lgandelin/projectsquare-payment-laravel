@@ -7,12 +7,12 @@
 
         <div class="form-group">
             <label>{{ trans('projectsquare-payment::signup.agency_name') }} : </label>
-            <span class="value agency_name_value"></span>
+            <span class="value name_value"></span>
         </div>
 
         <div class="form-group">
             <label>{{ trans('projectsquare-payment::signup.url') }} : </label>
-            <span class="value url_value"></span>
+            <span class="value slug_value"></span>
         </div>
 
 

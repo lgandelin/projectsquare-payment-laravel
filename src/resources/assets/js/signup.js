@@ -63,8 +63,10 @@ $(document).ready(function() {
 
     //Alerts close buttons
     $('.alert .close').click(function() {
-        $(this).closest('.alert').hide();
+        $(this).closest('.alert').fadeOut();
     });
+
+    $('.alert').delay(7500).fadeOut();
 });
 
 function displayTab(tab) {
@@ -80,8 +82,8 @@ function displayTab(tab) {
 }
 
 function loadEnteredValues() {
-    $('.agency_name_value').text($('input[name="agency_name"]').val());
-    $('.url_value').text($('input[name="url"]').val() + ".projectsquare.io");
+    $('.name_value').text($('input[name="name"]').val());
+    $('.slug_value').text($('input[name="slug"]').val() + ".projectsquare.io");
     $('.users_count_value').text(users_count);
     $('.administrator_email_value').text($('input[name="administrator_email"]').val());
     $('.administrator_last_name_value').text($('input[name="administrator_last_name"]').val());

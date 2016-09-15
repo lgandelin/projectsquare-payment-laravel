@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\CreatePlatformInteractor;
 use Webaccess\ProjectSquarePayment\Repositories\InMemory\InMemoryPlatformRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentPlatformRepository;
 
 class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 {
@@ -26,23 +27,19 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
             $basePath.'resources/assets/js' => base_path('public/js'),
             $basePath.'resources/assets/fonts' => base_path('public/fonts'),
             $basePath.'resources/assets/img' => base_path('public/img'),
-        ], 'assets');
+        ], 'assets');*/
 
         $this->publishes([
             $basePath.'database/migrations' => database_path('migrations'),
-        ], 'migrations');*/
+        ], 'migrations');
     }
 
     public function register()
     {
         App::bind('CreatePlatformInteractor', function () {
              return new CreatePlatformInteractor(
-                 new InMemoryPlatformRepository()
+                 new EloquentPlatformRepository()
              );
         });
-
-        /*$this->commands([
-            'Webaccess\ProjectSquareLaravel\Commands\CreateUserCommand',
-        ]);*/
     }
 }

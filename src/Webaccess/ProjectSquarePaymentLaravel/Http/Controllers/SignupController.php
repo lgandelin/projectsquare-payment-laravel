@@ -2,8 +2,11 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 
+use DateTime;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
 use Webaccess\ProjectSquarePayment\Requests\Platforms\CreatePlatformRequest;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
 
@@ -22,23 +25,19 @@ class SignupController extends Controller
 
         try {
             $response = app()->make('CreatePlatformInteractor')->execute(new CreatePlatformRequest([
-                'name' => $request->agency_name,
-                'slug' => $request->url,
+                'name' => $request->name,
+                'slug' => $request->slug,
                 'usersCount' => $request->users_count,
             ]));
 
             if ($response->success) {
-                //Déclencher création plateforme
 
             } else {
                 $request->session()->flash('error', $this->getErrorMessage($response->errorCode));
-
-                //Add logs : all infos + errorCode + date
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $request->session()->flash('error', trans('projectsquare-payment::signup.generic_error'));
-
-            //Add logs : all infos + exception message + date
+            $this->logErrorFromException($e, $request);
         }
 
         return redirect()->route('signup');
@@ -75,5 +74,15 @@ class SignupController extends Controller
         }
 
         return $errorMessage;
+    }
+
+    private function logErrorFromException(Exception $e, Request $request = null)
+    {
+        Log::error('Date : ' . (new DateTime())->format('Y-m-d H:i:s'));
+        Log::error('Message : ' . $e->getMessage());
+        Log::error('File : ' . $e->getFile());
+        Log::error('Line : ' . $e->getLine());
+        if ($request) Log::error('Parameters : ' . json_encode($request->all()));
+        Log::error('--------------------------------------------------');
     }
 }
