@@ -6,10 +6,12 @@ use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Webaccess\ProjectSquarePayment\Requests\Signup\SignupRequest;
 use Webaccess\ProjectSquarePayment\Responses\Administrators\CreateAdministratorResponse;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
+use Webaccess\ProjectSquarePayment\Responses\Signup\CheckPlatformSlugResponse;
 
 class SignupController extends Controller
 {
@@ -30,7 +32,7 @@ class SignupController extends Controller
                 'platformSlug' => $request->slug,
                 'platformUsersCount' => $request->users_count,
                 'administratorEmail' => $request->administrator_email,
-                'administratorPassword' => $request->administrator_password,
+                'administratorPassword' => Hash::make($request->administrator_password),
                 'administratorLastName' => $request->administrator_last_name,
                 'administratorFirstName' => $request->administrator_first_name,
                 'administratorBillingAddress' => $request->administrator_billing_address,
@@ -68,8 +70,12 @@ class SignupController extends Controller
                 $errorMessage = trans('projectsquare-payment::signup.platform_slug_required_error');
                 break;
 
-            case CreatePlatformResponse::PLATFORM_SLUG_UNAVAILABLE:
+            case CheckPlatformSlugResponse::PLATFORM_SLUG_UNAVAILABLE:
                 $errorMessage = trans('projectsquare-payment::signup.platform_slug_unavailable_error');
+                break;
+
+            case CheckPlatformSlugResponse::PLATFORM_SLUG_INVALID:
+                $errorMessage = trans('projectsquare-payment::signup.platform_slug_invalid_error');
                 break;
 
             case CreatePlatformResponse::PLATFORM_USERS_COUNT_REQUIRED:
