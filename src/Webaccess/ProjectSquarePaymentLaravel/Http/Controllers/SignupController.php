@@ -18,7 +18,14 @@ class SignupController extends Controller
 {
     public function index(Request $request)
     {
+        $users_count = ($request->users_count) ? $request->users_count : 1;
+        $users_count = (old('users_count')) ? old('users_count') : $users_count;
+
         return view('projectsquare-payment::signup.index', [
+            'platform_monthly_cost' => env('PLATFORM_MONTHLY_COST'),
+            'user_monthly_cost' => env('USER_MONTHLY_COST'),
+            'total_monthly_cost' => env('PLATFORM_MONTHLY_COST') + $users_count * env('USER_MONTHLY_COST'),
+            'users_count' => $users_count,
             'error' => ($request->session()->has('error')) ? $request->session()->get('error') : null,
         ]);
     }
@@ -45,6 +52,8 @@ class SignupController extends Controller
                 $request->session()->flash('error', $this->getErrorMessage($response->errorCode));
                 return redirect()->route('signup');
             }
+
+            $this->launchPlatformCreation($request->slug, $request->administrator_email);
 
         } catch (Exception $e) {
             $request->session()->flash('error', trans('projectsquare-payment::signup.platform_generic_error'));
@@ -73,6 +82,13 @@ class SignupController extends Controller
                 'error' => trans('projectsquare-payment::signup.platform_slug_verification_error'),
             ], 500);
         }
+    }
+
+    private function launchPlatformCreation($slug, $administratorEmail)
+    {
+        $fileName = env('ENV_FILES_FOLDER') . $slug . '.sh';
+        $fileContent = 'DO_MACHINE_NAME=' . $slug . PHP_EOL . 'APP_NAME=' . $slug . PHP_EOL . 'EMAIL_ADDRESS=' . $administratorEmail . PHP_EOL;
+        file_put_contents($fileName, $fileContent);
     }
 
     private function getErrorMessage($errorCode)

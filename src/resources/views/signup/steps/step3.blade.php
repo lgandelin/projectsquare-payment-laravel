@@ -25,9 +25,9 @@
     <div class="col-md-6">
         <div class="form-group col-lg-6 col-md-6">
             <label>{{ trans('projectsquare-payment::signup.platform_cost') }}</label><br/>
-            Coût fixe : <span class="amount">27.00</span>€ / mois<br/>
-            Prix / utilisateur : <span class="amount">17.00</span>€ / mois<br/>
-            <span class="amount total">44.00</span>€ / mois
+            Coût fixe : <span class="amount">{{ number_format($platform_monthly_cost, 2) }}</span>€ / mois<br/>
+            Prix / utilisateur : <span class="amount">{{ number_format($user_monthly_cost, 2) }}</span>€ / mois<br/>
+            <span class="amount total">{{ number_format($total_monthly_cost, 2) }}</span>€ / mois
         </div>
     </div>
 

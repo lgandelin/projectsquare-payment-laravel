@@ -33,16 +33,16 @@
         <div class="form-group col-lg-6 col-md-6">
             <label for="users_count">{{ trans('projectsquare-payment::signup.users_count') }}</label>
             <div style="margin-top: 2.5rem; margin-left: 1rem; cursor: pointer;">
-                <input id="slider_users_count" data-slider-id='slider_users_count' type="text" data-slider-min="1" data-slider-max="30" data-slider-step="1" data-slider-value="{{ old('users_count') }}"/>
-                <input class="form-control" type="number" name="users_count" value="{{ old('users_count') }}" style="display: inline-block; width: 50px; margin-left: 5rem; margin-right: 0.5rem; padding-right: 0; text-align: center" readonly /> {{ trans('projectsquare-payment::signup.users') }}
+                <input id="slider_users_count" data-slider-id='slider_users_count' type="text" data-slider-min="1" data-slider-max="30" data-slider-step="1" data-slider-value="{{ $users_count }}"/>
+                <input class="form-control" type="number" name="users_count" value="{{ $users_count }}" style="display: inline-block; width: 50px; margin-left: 5rem; margin-right: 0.5rem; padding-right: 0; text-align: center" readonly /> {{ trans('projectsquare-payment::signup.users') }}
             </div>
         </div>
 
         <div class="form-group col-lg-6 col-md-6">
             <label>{{ trans('projectsquare-payment::signup.platform_cost') }}</label><br/>
-            Coût fixe : <span class="amount">27.00</span>€ / mois<br/>
-            Prix / utilisateur : <span class="amount">17.00</span>€ / mois<br/>
-            <span class="amount total">44.00</span>€ / mois
+            Coût fixe : <span class="amount">{{ number_format($platform_monthly_cost, 2) }}</span>€ / mois<br/>
+            Prix / utilisateur : <span class="amount">{{ number_format($user_monthly_cost, 2) }}</span>€ / mois<br/>
+            <span class="amount total">{{ number_format($total_monthly_cost, 2) }}</span>€ / mois
         </div>
     </div>
 

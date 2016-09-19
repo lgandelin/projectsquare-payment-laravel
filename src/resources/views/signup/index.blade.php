@@ -31,27 +31,27 @@
             </div>
         </div>
 
-        <form role="form" action="" method="post">
-
-            @if (isset($error) && $error)
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    {{ $error }}
-                </div>
-            @endif
-
-            <div class="row setup-content" id="step-1">
-                @include('projectsquare-payment::signup.steps.step1')
+        @if (isset($error) && $error)
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ $error }}
             </div>
+        @endif
 
-            <div class="row setup-content" id="step-2">
-                @include('projectsquare-payment::signup.steps.step2')
-            </div>
+        <div class="row setup-content" id="step-1">
+            @include('projectsquare-payment::signup.steps.step1')
+        </div>
 
-            <div class="row setup-content" id="step-3">
-                @include('projectsquare-payment::signup.steps.step3')
-            </div>
-        </form>
+        <div class="row setup-content" id="step-2">
+            @include('projectsquare-payment::signup.steps.step2')
+        </div>
+
+        <div class="row setup-content" id="step-3">
+            @include('projectsquare-payment::signup.steps.step3')
+        </div>
+
+        <input type="hidden" id="platform_monthly_cost" value="{{ $platform_monthly_cost }}" />
+        <input type="hidden" id="user_monthly_cost" value="{{ $user_monthly_cost }}" />
     </form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
