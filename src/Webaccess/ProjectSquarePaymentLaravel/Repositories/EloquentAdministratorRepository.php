@@ -33,7 +33,7 @@ class EloquentAdministratorRepository implements AdministratorRepository
         return $administratorModel->id;
     }
 
-    private function convertModelToEntity(Administrator $administratorModel): AdministratorEntity
+    private function convertModelToEntity(Administrator $administratorModel)
     {
         $administrator = new AdministratorEntity();
         $administrator->setId($administratorModel->id);

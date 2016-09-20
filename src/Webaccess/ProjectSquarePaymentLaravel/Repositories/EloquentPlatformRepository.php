@@ -37,7 +37,7 @@ class EloquentPlatformRepository implements PlatformRepository
         return $platformModel->id;
     }
 
-    private function convertModelToEntity(Platform $platformModel): PlatformEntity
+    private function convertModelToEntity(Platform $platformModel)
     {
         $platform = new PlatformEntity();
         $platform->setId($platformModel->id);

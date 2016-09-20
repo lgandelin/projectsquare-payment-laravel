@@ -87,7 +87,7 @@ class SignupController extends Controller
     private function launchPlatformCreation($slug, $administratorEmail)
     {
         $fileName = env('ENV_FILES_FOLDER') . $slug . '.sh';
-        $fileContent = 'DO_MACHINE_NAME=' . $slug . PHP_EOL . 'APP_NAME=' . $slug . PHP_EOL . 'EMAIL_ADDRESS=' . $administratorEmail . PHP_EOL;
+        $fileContent = 'DO_MACHINE_NAME="' . $slug . '"' . PHP_EOL . 'APP_NAME="' . $slug . '"' . PHP_EOL . 'EMAIL_ADDRESS="' . $administratorEmail . '"' . PHP_EOL;
         file_put_contents($fileName, $fileContent);
     }
 
