@@ -1,9 +1,14 @@
 <?php
 
-namespace Webaccess\ProjectSquareLaravel;
+namespace Webaccess\ProjectSquarePaymentLaravel;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
+
+use Webaccess\ProjectSquarePayment\Interactors\Signup\CheckPlatformSlugInteractor;
+use Webaccess\ProjectSquarePayment\Interactors\Signup\SignupInteractor;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentAdministratorRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentPlatformRepository;
 
 class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 {
@@ -11,13 +16,12 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        dd('ok');
         $basePath = __DIR__.'/../../';
 
         include __DIR__.'/Http/routes.php';
 
-        /*$this->loadViewsFrom($basePath.'resources/views/', 'projectsquare');
-        $this->loadTranslationsFrom($basePath.'resources/lang/', 'projectsquare');
+        $this->loadViewsFrom($basePath.'resources/views/', 'projectsquare-payment');
+        $this->loadTranslationsFrom($basePath.'resources/lang/', 'projectsquare-payment');
 
         $this->publishes([
             $basePath.'resources/assets/css' => base_path('public/css'),
@@ -28,19 +32,22 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 
         $this->publishes([
             $basePath.'database/migrations' => database_path('migrations'),
-        ], 'migrations');*/
+        ], 'migrations');
     }
 
     public function register()
     {
-        App::bind('GetClientsInteractor', function () {
-             return new GetClientsInteractor(
-                 new EloquentClientRepository()
+        App::bind('SignupInteractor', function () {
+             return new SignupInteractor(
+                 new EloquentPlatformRepository(),
+                 new EloquentAdministratorRepository()
              );
-         });
+        });
 
-        /*$this->commands([
-            'Webaccess\ProjectSquareLaravel\Commands\CreateUserCommand',
-        ]);*/
+        App::bind('CheckPlatformSlugInteractor', function() {
+            return new CheckPlatformSlugInteractor(
+                new EloquentPlatformRepository()
+            );
+        });
     }
 }
