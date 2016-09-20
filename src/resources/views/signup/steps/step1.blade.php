@@ -21,7 +21,7 @@
                 </p>
             </div>
 
-            <input class="form-control required" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_url') }}" name="slug" value="{{ old('slug') }}" style="display: inline-block; width: 400px"/>
+            <input data-verified="0" class="form-control required" type="text" placeholder="{{ trans('projectsquare-payment::signup.placeholder_url') }}" name="slug" value="{{ old('slug') }}" style="display: inline-block; width: 400px"/>
             .projectsquare.io
             <input type="button" class="btn btn-sm btn-primary check-slug-btn" value="{{ trans('projectsquare-payment::signup.check_slug') }}" style="margin-left: 2rem;" />
         </div>

@@ -35,12 +35,22 @@ $(document).ready(function() {
     $('.valid-step-1').click(function() {
         $('#step-1 .required').removeClass('invalid');
         var error = false;
+
         $('#step-1 .required').each(function() {
             if ($(this).val() == "") {
                 $(this).addClass('invalid');
                 error = true;
             }
         });
+
+        if ($('input[name="slug"]').val() == "") {
+            $('input[name="slug"]').addClass('invalid');
+            error = true;
+        } else if ($('input[name="slug"]').attr('data-verified') == "0") {
+            if (!checkSlug()) {
+                error = true;
+            }
+        }
 
         if (!error)
             displayTab(2);
@@ -74,8 +84,23 @@ $(document).ready(function() {
         checkSlug();
     });
 
-    $('input[name="slug"]').focusout(function() {
+    /*$('input[name="slug"]').focusout(function() {
         checkSlug();
+    });*/
+
+    $('input[name="slug"]').change(function() {
+        $('input[name="slug"]').attr('data-verified', 0);
+
+        $('.check-slug-btn').addClass('btn-primary').removeClass('btn-success').removeClass('btn-info');
+        $('.check-slug-btn').val('Vérifier');
+    });
+
+    $('input[name="name"]').focusout(function() {
+        if ($('input[name="name"]').val() != "" && $('input[name="slug"]').val() == "") {
+            var slug = slugify($('input[name="name"]').val());
+            $('input[name="slug"]').val(slug);
+            checkSlug();
+        }
     });
 });
 
@@ -104,7 +129,14 @@ function loadEnteredValues() {
 }
 
 function checkSlug() {
+    if ($('input[name="slug"]').attr('data-verified') == "1") {
+        return true;
+    }
+
     $('input[name="slug"]').removeClass('invalid');
+
+    $('.check-slug-btn').toggleClass('btn-primary').toggleClass('btn-info');
+    $('.check-slug-btn').val('Vérification de l\'URL en cours...');
 
     $.ajax({
         type: "POST",
@@ -116,10 +148,28 @@ function checkSlug() {
         success: function (data) {
             if (data.success == false) {
                 $('input[name="slug"]').addClass('invalid');
-            } else {
+                $('.check-slug-btn').addClass('btn-danger').removeClass('btn-info');
+                $('.check-slug-btn').val('URL indisponible');
+                setTimeout(function() {
+                    $('.check-slug-btn').removeClass('btn-danger').addClass('btn-primary');
+                    $('.check-slug-btn').val('Vérifier');
+                }, 2000);
 
+            } else {
+                $('input[name="slug"]').attr('data-verified', 1);
+                $('.check-slug-btn').removeClass('btn-info').addClass('btn-success');
+                $('.check-slug-btn').val('URL disponible');
             }
         }
     });
+}
+
+function slugify(text) {
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '');            // Trim - from end of text
 }
 
