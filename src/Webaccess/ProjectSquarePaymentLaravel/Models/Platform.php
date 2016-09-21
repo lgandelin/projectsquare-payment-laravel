@@ -17,4 +17,9 @@ class Platform extends Model
         'platform_monthly_cost',
         'user_monthly_cost',
     ];
+
+    public function node()
+    {
+        return $this->belongsTo('Webaccess\ProjectSquareLaravelPayment\Models\Node');
+    }
 }

@@ -13,6 +13,7 @@ use Webaccess\ProjectSquarePayment\Requests\Signup\SignupRequest;
 use Webaccess\ProjectSquarePayment\Responses\Administrators\CreateAdministratorResponse;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
 use Webaccess\ProjectSquarePayment\Responses\Signup\CheckPlatformSlugResponse;
+use Webaccess\ProjectSquarePaymentLaravel\Models\Node;
 
 class SignupController extends Controller
 {
@@ -84,13 +85,86 @@ class SignupController extends Controller
         }
     }
 
+    /**
+     * @param $slug
+     * @param $administratorEmail
+     */
     private function launchPlatformCreation($slug, $administratorEmail)
     {
-        $fileName = env('ENV_FILES_FOLDER') . $slug . '.sh';
-        $fileContent = 'DO_MACHINE_NAME="' . $slug . '"' . PHP_EOL . 'APP_NAME="' . $slug . '"' . PHP_EOL . 'EMAIL_ADDRESS="' . $administratorEmail . '"' . PHP_EOL;
+        if (!$nodeIdentifier = $this->getAvailableNodeIdentifier()) {
+            $nodeIdentifier = $this->persistNewNode(false);
+
+            $fileName = env('ENVS_FOLDER') . $slug . '.txt';
+            $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL;
+            file_put_contents($fileName, $fileContent);
+        } else {
+            $this->createApp($nodeIdentifier, $slug, $administratorEmail);
+            $this->updateNodeAvailability($nodeIdentifier);
+        }
+
+        $this->createNode();
+    }
+
+    private function getAvailableNodeIdentifier()
+    {
+        if ($node = Node::where('available', '=', true)->inRandomOrder()->first()) {
+            return $node->identifier;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $nodeIdentifier
+     * @param $slug
+     * @param $administratorEmail
+     */
+    private function createApp($nodeIdentifier, $slug, $administratorEmail)
+    {
+        $fileName = env('APPS_FOLDER') . $slug . '.txt';
+        $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL;
         file_put_contents($fileName, $fileContent);
     }
 
+    private function createNode()
+    {
+        $nodeIdentifier = $this->persistNewNode();
+
+        //Launch node generation
+        $fileName = env('NODES_FOLDER') . $nodeIdentifier . '.txt';
+        $fileContent = $nodeIdentifier . PHP_EOL;
+        file_put_contents($fileName, $fileContent);
+    }
+
+    private function generateNodeIdentifier()
+    {
+        return uniqid();
+    }
+
+    /**
+     * @param $nodeIdentifier
+     */
+    private function updateNodeAvailability($nodeIdentifier)
+    {
+        $node = Node::where('identifier', '=', $nodeIdentifier)->first();
+        $node->available = false;
+        $node->save();
+    }
+
+    private function persistNewNode($availability = true)
+    {
+        $node = new Node();
+        $node->identifier = $this->generateNodeIdentifier();
+        $node->available = $availability;
+        $node->save();
+
+        return $node->identifier;
+    }
+
+    /**
+     * @param $errorCode
+     * @return string
+     */
     private function getErrorMessage($errorCode)
     {
         $errorMessage = null;
@@ -152,6 +226,10 @@ class SignupController extends Controller
         return $errorMessage;
     }
 
+    /**
+     * @param Exception $e
+     * @param Request|null $request
+     */
     private function logErrorFromException(Exception $e, Request $request = null)
     {
         Log::error('Date : ' . (new DateTime())->format('Y-m-d H:i:s'));
