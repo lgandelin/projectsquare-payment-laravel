@@ -104,7 +104,7 @@ class SignupController extends Controller
             $this->updateNodeAvailability($nodeIdentifier);
         }
 
-        $this->updatePlatformNodeIdentifier($platformID, $nodeIdentifier);
+        $this->updatePlatformNodeID($platformID, $nodeIdentifier);
 
         $this->createNode();
     }
@@ -149,10 +149,13 @@ class SignupController extends Controller
      * @param $platformID
      * @param $nodeIdentifier
      */
-    private function updatePlatformNodeIdentifier($platformID, $nodeIdentifier)
+    private function updatePlatformNodeID($platformID, $nodeIdentifier)
     {
-        if ($platform = Platform::find($platformID)) {
-            $platform->node_identifier = $nodeIdentifier;
+        $platform = Platform::find($platformID);
+        $node = Node::where('identifier', '=', $nodeIdentifier)->first();
+
+        if ($platform && $node) {
+            $platform->node_id = $node->id;
             $platform->save();
         } else {
             Log::error('Date : ' . (new DateTime())->format('Y-m-d H:i:s'));
