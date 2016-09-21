@@ -1,0 +1,105 @@
+* { 
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box;    
+	box-sizing: border-box;         
+}
+
+@font-face {
+	font-family: "AvantGarde-Medium";
+	src: url('../fonts/AvantGarde-Medium.woff'),
+		 url('../fonts/AvantGarde-Medium.otf'),
+		 url('../fonts/AvantGarde-Medium.svg'),
+		 url('../fonts/AvantGarde-Medium.eot'),
+		 url('../fonts/AvantGarde-Medium.ttf');
+}
+
+@font-face {
+	font-family: "AvantGarde-Book";
+	src: url('../fonts/AvantGarde-Book.woff'),
+		 url('../fonts/AvantGarde-Book.otf'),
+		 url('../fonts/AvantGarde-Book.svg'),
+		 url('../fonts/AvantGarde-Book.eot'),
+		 url('../fonts/AvantGarde-Book.ttf');
+}
+
+@font-face {
+	font-family: "MyriadPro-Regular";
+	src: url('../fonts/MyriadPro-Regular.woff'),
+		 url('../fonts/MyriadPro-Regular.otf'),
+		 url('../fonts/MyriadPro-Regular.svg'),
+		 url('../fonts/MyriadPro-Regular.eot'),
+		 url('../fonts/MyriadPro-Regular.ttf');
+}
+@font-face {
+	font-family: "MyriadPro-Semibold";
+	src: url('../fonts/MyriadPro-Semibold.woff'),
+		 url('../fonts/MyriadPro-Semibold.otf'),
+		 url('../fonts/MyriadPro-Semibold.svg'),
+		 url('../fonts/MyriadPro-Semibold.eot'),
+		 url('../fonts/MyriadPro-Semibold.ttf');
+}
+
+em {
+	font-style: italic;
+}
+
+p {
+
+	a {
+		color: $touareg;
+		font-weight: bold;	
+	}
+
+	a:hover {
+		color: $touareg;
+	}
+}
+strong {
+	font-weight: bold;
+	color: rgba(55,57,57,0.84);
+}
+
+ul {
+	list-style: none;
+}
+body {
+	font-family: $typo3;
+	color: $gray;
+	font-size: 18px;
+}
+
+h2 {
+	@extend .title;
+
+}
+
+.title {
+	font-family: $typo1;
+	font-size: 36px;
+	padding-bottom: 40px;
+}
+
+.sub_title {
+	font-family: $typo2;
+	margin-bottom: 25px;
+	font-size: 32px;
+}
+
+.title, .sub_title {
+	color: $touareg;
+	text-align: center;
+}
+
+.title_maj {
+	text-transform: uppercase;
+	font-family: $typo2;
+	color: $touareg;
+	text-align: center;
+	font-size: 14px;
+	letter-spacing: 2px;
+	margin-bottom: 30px;
+}
+
+a {
+	transition: color 0.75s ease;
+}

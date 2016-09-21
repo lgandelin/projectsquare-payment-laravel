@@ -1,0 +1,213 @@
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.alignleft {
+	float: left;
+}
+
+.alignright {
+	float: right;
+}
+
+a:visited {
+}
+a:focus {
+	text-decoration: none;
+}
+
+.content {
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.right {
+	margin-left: 0;
+}
+
+.pages {
+	//margin-left: 5%;
+	margin-top: 5%;
+	margin-bottom: 5%;
+
+	ul {
+		list-style: disc;
+		list-style: inherit;
+		list-style-position : inside;
+			margin-bottom: 15px;
+	}
+
+	ol {
+		list-style-position : inside;
+	}
+}
+
+.page_404 {
+	text-align: center;
+	display: block;
+	margin-bottom: 3%;
+
+	.title {
+		padding-top: 3%;
+		margin-bottom: 3%;
+	}
+}
+
+.liens {
+	position: fixed;
+	bottom: 25px;
+	right: 25px;
+	z-index: 2;
+
+	display: none;
+
+	.lien_contact, .haut_page {
+		padding: 17px;
+		z-index: 999;
+		width:44px;
+		height: 44px;
+		margin-bottom: 3px;
+		display: block;
+	}
+
+	.lien_contact {
+		background:$touareg url(../img/lien-contact.png) no-repeat center;
+	}
+	.haut_page {
+		background:$touareg url(../img/fleche-haut-de-page.png) no-repeat center;
+	}
+	.haut_page:hover, .lien_contact:hover {
+		opacity: 0.7;
+	}
+}
+
+.template {
+	.background_blue {
+		background : $gray_blue;
+		margin: 0;
+	}
+}
+
+.border {
+	border-bottom: 2px solid $gray_blue;
+	margin-bottom: 50px;
+}
+
+.thank-you-page {
+
+	h1 {
+		padding-top: 50px;
+	}
+	
+}
+.inscription {
+	width: 50%;
+	margin: auto;
+}
+
+.offre_commerciale {
+	width: 50%;
+	margin: auto;
+}
+
+.page-template-offre-commerciale {
+	.header {
+
+		.logo {
+			margin-bottom: 50px;
+			.reseaux-sociaux {
+				display: none;
+			}
+		}
+
+		.menu {
+			display: none;
+		}
+	}
+}
+.offres_commerciales_template {
+
+
+	.background_blue {
+		padding-top: 27px;
+		padding-bottom: 27px;
+	}
+	
+
+	.offre_commerciale {
+		width: 20%;
+		margin-bottom: 50px;
+
+	}
+
+	.texte {
+		margin-top: 21%;
+	}
+
+	.reseaux-sociaux {
+		margin-top: 20px;
+
+		.share-twitter {
+			display: inline-block;
+			width: 50px;
+			height: 47px;
+			background: url(../img/blog/twitter.png) no-repeat;
+			margin-right: 10px;
+		}
+
+		.share-twitter:hover {
+			background: url(../img/blog/twitter-hover.png) no-repeat;
+		}
+		
+		.linkedin-share-button {
+
+			.img-linkedin {
+				vertical-align: top;
+				display: inline-block;
+				width: 50px;
+				height: 48px;
+				background: url(../img/blog/linkedin.png) no-repeat;
+			}
+		}
+
+		.linkedin-share-button:hover {
+			.img-linkedin {
+				background: url(../img/blog/linkedin-hover.png) no-repeat;
+			}
+		}
+	}
+}
+
+body {
+	min-height: 100%;
+	position: relative;
+	padding-bottom: 75px;
+}
+
+html {
+	height: 100%;
+}
+
+.table {
+
+	td {
+		padding : 10px 20px !important;
+		border: 1px solid #424242;
+		vertical-align: middle;
+	}
+	
+}
+
+.footer {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1;
+}
+
+.texte_inscription {
+	margin-top: 50px;
+}

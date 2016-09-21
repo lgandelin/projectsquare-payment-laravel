@@ -10,6 +10,7 @@ $(document).ready(function() {
     $("#slider_users_count").on("change", function(slideEvt) {
         users_count = slideEvt.value.newValue;
         $('input[name="users_count"]').val(users_count);
+        $('.users_count').text(users_count);
         var amount = parseFloat($('#platform_monthly_cost').val()) + parseFloat($('#user_monthly_cost').val()) * users_count;
         $('.total').text(amount.toFixed(2));
     });
@@ -17,10 +18,6 @@ $(document).ready(function() {
 
     //Steps navigation
     $('#step-2, #step-3').hide();
-
-    $(".stepwizard-step span:not([disabled])").click(function() {
-        displayTab($(this).attr('data-tab'));
-    });
 
     $('.back-step-1').click(function() {
         displayTab(1);
@@ -84,14 +81,10 @@ $(document).ready(function() {
         checkSlug();
     });
 
-    /*$('input[name="slug"]').focusout(function() {
-        checkSlug();
-    });*/
-
     $('input[name="slug"]').change(function() {
         $('input[name="slug"]').attr('data-verified', 0);
 
-        $('.check-slug-btn').addClass('btn-primary').removeClass('btn-success').removeClass('btn-info');
+        $('.check-slug-btn').removeClass('verification-success').removeClass('verification-in-progress');
         $('.check-slug-btn').val('Vérifier');
     });
 
@@ -102,14 +95,20 @@ $(document).ready(function() {
             checkSlug();
         }
     });
+
+    $('input[name="slug"]').focusout(function() {
+        if ($('input[name="slug"]').val() != "") {
+            checkSlug();
+        }
+    });
 });
 
 function displayTab(tab) {
     $('.setup-content').hide();
     $('#step-' + tab).show();
 
-    $('.stepwizard-step span').addClass('btn-default').removeClass('btn-primary');
-    $('.stepwizard-step span[data-tab="' + tab + '"]').removeAttr('disabled').addClass('btn-primary').removeClass('btn-default');
+    $('.stepwizard-step').removeClass('active-step');
+    $('.stepwizard-step span[data-tab="' + tab + '"]').closest('.stepwizard-step').addClass('active-step');
 
     if (tab == 3) {
         loadEnteredValues();
@@ -135,8 +134,8 @@ function checkSlug() {
 
     $('input[name="slug"]').removeClass('invalid');
 
-    $('.check-slug-btn').toggleClass('btn-primary').toggleClass('btn-info');
-    $('.check-slug-btn').val('Vérification de l\'URL en cours...');
+    $('.check-slug-btn').toggleClass('verification-success').toggleClass('verification-in-progress');
+    $('.check-slug-btn').val('Vérification ...');
 
     $.ajax({
         type: "POST",
@@ -148,16 +147,17 @@ function checkSlug() {
         success: function (data) {
             if (data.success == false) {
                 $('input[name="slug"]').addClass('invalid');
-                $('.check-slug-btn').addClass('btn-danger').removeClass('btn-info');
+                $('.check-slug-btn').addClass('verification-error').removeClass('verification-in-progress');
                 $('.check-slug-btn').val('URL indisponible');
                 setTimeout(function() {
-                    $('.check-slug-btn').removeClass('btn-danger').addClass('btn-primary');
+                    $('.check-slug-btn').removeClass('verification-error');
+                    $('.check-slug-btn').removeClass('verification-success');
                     $('.check-slug-btn').val('Vérifier');
                 }, 2000);
 
             } else {
                 $('input[name="slug"]').attr('data-verified', 1);
-                $('.check-slug-btn').removeClass('btn-info').addClass('btn-success');
+                $('.check-slug-btn').removeClass('verification-in-progress').addClass('verification-success');
                 $('.check-slug-btn').val('URL disponible');
             }
         }
