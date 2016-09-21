@@ -13,6 +13,9 @@ class Administrator extends Model
         'password',
         'last_name',
         'first_name',
+        'billing_address',
+        'zipcode',
+        'city',
     ];
 
     public function platform()

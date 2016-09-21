@@ -14,6 +14,7 @@ use Webaccess\ProjectSquarePayment\Responses\Administrators\CreateAdministratorR
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
 use Webaccess\ProjectSquarePayment\Responses\Signup\CheckPlatformSlugResponse;
 use Webaccess\ProjectSquarePaymentLaravel\Models\Node;
+use Webaccess\ProjectSquarePaymentLaravel\Models\Platform;
 
 class SignupController extends Controller
 {
@@ -54,7 +55,7 @@ class SignupController extends Controller
                 return redirect()->route('signup');
             }
 
-            $this->launchPlatformCreation($request->slug, $request->administrator_email);
+            $this->launchPlatformCreation($request->slug, $request->administrator_email, $response->platformID);
 
         } catch (Exception $e) {
             $request->session()->flash('error', trans('projectsquare-payment::signup.platform_generic_error'));
@@ -88,8 +89,9 @@ class SignupController extends Controller
     /**
      * @param $slug
      * @param $administratorEmail
+     * @param $platformID
      */
-    private function launchPlatformCreation($slug, $administratorEmail)
+    private function launchPlatformCreation($slug, $administratorEmail, $platformID)
     {
         if (!$nodeIdentifier = $this->getAvailableNodeIdentifier()) {
             $nodeIdentifier = $this->persistNewNode(false);
@@ -101,6 +103,8 @@ class SignupController extends Controller
             $this->createApp($nodeIdentifier, $slug, $administratorEmail);
             $this->updateNodeAvailability($nodeIdentifier);
         }
+
+        $this->updatePlatformNodeIdentifier($platformID, $nodeIdentifier);
 
         $this->createNode();
     }
@@ -139,6 +143,25 @@ class SignupController extends Controller
     private function generateNodeIdentifier()
     {
         return uniqid();
+    }
+
+    /**
+     * @param $platformID
+     * @param $nodeIdentifier
+     */
+    private function updatePlatformNodeIdentifier($platformID, $nodeIdentifier)
+    {
+        if ($platform = Platform::find($platformID)) {
+            $platform->node_identifier = $nodeIdentifier;
+            $platform->save();
+        } else {
+            Log::error('Date : ' . (new DateTime())->format('Y-m-d H:i:s'));
+            Log::error('Message : In updatePlatformNodeIdentifier method, the platformID was not found or the nodeIdentifier is incorrect');
+            Log::error('File : SignupController.php');
+            Log::error('Line : 154');
+            Log::error('Parameters : ' . json_encode(['platformID' => $platformID, 'nodeIdentifier' => $nodeIdentifier]));
+            Log::error('--------------------------------------------------');
+        }
     }
 
     /**
