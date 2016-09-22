@@ -5,7 +5,7 @@
 @endsection
 
 @section('main-content')
-    <div class="template confirmation_template">
+    <div class="template signup_confirmation_template ">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <ul class="fil-ariane">
@@ -23,11 +23,23 @@
 
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <p>Merci de vous être inscrits à Projectsquare !</p>
 
-                <p>Votre plateforme est en cours de création, vous recevrez un email lorsque celle-ci sera prête.</p>
+                <div class="thanks">
+                    <h3>Merci de vous être inscrits à Projectsquare !</h3>
 
-                <p>En cas de problème, n'hésitez pas à nous contacter.</p>
+                    <p>Votre plateforme est en cours de création, vous recevrez un email lorsque celle-ci sera prête.</p>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar"
+                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                        Création de la plateforme en cours
+                    </div>
+                </div>
+
+                <div class="platform-ready" style="display: none;">
+                    <a class="button" href="#" target="_blank">Accéder à ma plateforme</a>
+                </div>
             </div>
         </div>
     </div>

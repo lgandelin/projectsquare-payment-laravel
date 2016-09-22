@@ -10,7 +10,10 @@ var checkPlatformAvailability = function () {
                 timeOutId = setTimeout(checkPlatformAvailability, 2000);
             } else {
                 clearTimeout(timeOutId);
-                alert(data.url);
+                $('.progress').hide();
+                $('.thanks p').text('Votre plateforme est prête ! Vous pouvez dès maintenant cliquer sur le bouton ci-dessous pour y accéder.');
+                $('.platform-ready a').attr('href', data.url);
+                $('.platform-ready').fadeIn();
             }
         }
     });

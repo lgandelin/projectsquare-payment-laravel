@@ -9811,3 +9811,28 @@ html {
 .inscription_template .valid-step-3:hover {
   background: #d5e647 !important;
 }
+
+/* line 3, ../sass/pages/_signup-confirmation.scss */
+.signup_confirmation_template .thanks {
+  margin-top: 12rem;
+  text-align: center;
+}
+/* line 8, ../sass/pages/_signup-confirmation.scss */
+.signup_confirmation_template .progress {
+  width: 85%;
+  margin-top: 10rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 15, ../sass/pages/_signup-confirmation.scss */
+.signup_confirmation_template .platform-ready {
+  margin-top: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 290px;
+}
+/* line 22, ../sass/pages/_signup-confirmation.scss */
+.signup_confirmation_template .contact-us {
+  font-style: italic;
+  margin-top: 10rem;
+}
