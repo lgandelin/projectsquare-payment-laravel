@@ -56,7 +56,9 @@ class SignupController extends Controller
             }
 
             $this->launchPlatformCreation($request->slug, $request->administrator_email, $response->platformID);
+            $request->session()->put('platformID', $response->platformID);
 
+            return redirect()->route('confirmation');
         } catch (Exception $e) {
             $request->session()->flash('error', trans('projectsquare-payment::signup.platform_generic_error'));
             $this->logErrorFromException($e, $request);
@@ -86,6 +88,26 @@ class SignupController extends Controller
         }
     }
 
+    public function confirmation(Request $request)
+    {
+        return view('projectsquare-payment::signup.confirmation');
+    }
+
+    public function check_platform_url(Request $request)
+    {
+        $platformURL = '';
+        if ($request->session()->has('platformID')) {
+            if ($platform = Platform::find($request->session()->get('platformID'))) {
+                $platformURL = 'http://' . $platform->slug . '.projectsquare.io';
+            }
+        }
+
+        return response()->json([
+            'success' => $this->isURLAvailable($platformURL),
+            'url' => $platformURL
+        ], 200);
+    }
+
     /**
      * @param $slug
      * @param $administratorEmail
@@ -106,7 +128,7 @@ class SignupController extends Controller
 
         $this->updatePlatformNodeID($platformID, $nodeIdentifier);
 
-        $this->createNode();
+        $this->createNextNode();
     }
 
     private function getAvailableNodeIdentifier()
@@ -130,7 +152,7 @@ class SignupController extends Controller
         file_put_contents($fileName, $fileContent);
     }
 
-    private function createNode()
+    private function createNextNode()
     {
         $nodeIdentifier = $this->persistNewNode();
 
@@ -185,6 +207,24 @@ class SignupController extends Controller
         $node->save();
 
         return $node->identifier;
+    }
+
+    /**
+     * @param $platformURL
+     * @return bool
+     */
+    private function isURLAvailable($platformURL)
+    {
+        if ($platformURL == NULL) return false;
+        $ch = curl_init($platformURL);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $data = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        return ($httpcode >= 200 && $httpcode < 300) ? true : false;
     }
 
     /**

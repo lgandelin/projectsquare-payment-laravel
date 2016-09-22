@@ -14,7 +14,7 @@ class UpdatePlatformsTableAddNodeIdentifier extends Migration
     public function up()
     {
         Schema::table('platforms', function (Blueprint $table) {
-            $table->string('node_id')->after('users_count')->nullable();
+            $table->integer('node_id')->after('users_count')->nullable();
         });
     }
 
