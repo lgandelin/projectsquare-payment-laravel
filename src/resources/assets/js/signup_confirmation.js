@@ -1,7 +1,8 @@
 var timeOutId = 0;
 var checkPlatformAvailability = function () {
+    var timestamp = new Date().getTime();
     $.ajax({
-        url: route_check_platform_url,
+        url: route_check_platform_url + '?t=' + timestamp,
         data: {
             _token: $('input[name="_token"]').val(),
         },

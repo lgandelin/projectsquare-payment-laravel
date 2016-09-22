@@ -49,5 +49,9 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
                 new EloquentPlatformRepository()
             );
         });
+
+        $this->commands([
+            'Webaccess\ProjectSquarePaymentLaravel\Commands\SetNodeAvailable',
+        ]);
     }
 }

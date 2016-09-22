@@ -116,14 +116,14 @@ class SignupController extends Controller
     private function launchPlatformCreation($slug, $administratorEmail, $platformID)
     {
         if (!$nodeIdentifier = $this->getAvailableNodeIdentifier()) {
-            $nodeIdentifier = $this->persistNewNode(false);
+            $nodeIdentifier = $this->persistNewNode();
 
             $fileName = env('ENVS_FOLDER') . $slug . '.txt';
             $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL;
             file_put_contents($fileName, $fileContent);
         } else {
             $this->createApp($nodeIdentifier, $slug, $administratorEmail);
-            $this->updateNodeAvailability($nodeIdentifier);
+            $this->setNodeUnavailable($nodeIdentifier);
         }
 
         $this->updatePlatformNodeID($platformID, $nodeIdentifier);
@@ -133,7 +133,7 @@ class SignupController extends Controller
 
     private function getAvailableNodeIdentifier()
     {
-        if ($node = Node::where('available', '=', true)->inRandomOrder()->first()) {
+        if ($node = Node::where('available', '=', true)->orderBy('created_at', 'asc')->first()) {
             return $node->identifier;
         }
 
@@ -158,7 +158,7 @@ class SignupController extends Controller
 
         //Launch node generation
         $fileName = env('NODES_FOLDER') . $nodeIdentifier . '.txt';
-        $fileContent = $nodeIdentifier . PHP_EOL;
+        $fileContent = $nodeIdentifier . PHP_EOL . "1" . PHP_EOL;
         file_put_contents($fileName, $fileContent);
     }
 
@@ -189,24 +189,24 @@ class SignupController extends Controller
         }
     }
 
+    private function persistNewNode()
+    {
+        $node = new Node();
+        $node->identifier = $this->generateNodeIdentifier();
+        $node->available = false;
+        $node->save();
+
+        return $node->identifier;
+    }
+
     /**
      * @param $nodeIdentifier
      */
-    private function updateNodeAvailability($nodeIdentifier)
+    private function setNodeUnavailable($nodeIdentifier)
     {
         $node = Node::where('identifier', '=', $nodeIdentifier)->first();
         $node->available = false;
         $node->save();
-    }
-
-    private function persistNewNode($availability = true)
-    {
-        $node = new Node();
-        $node->identifier = $this->generateNodeIdentifier();
-        $node->available = $availability;
-        $node->save();
-
-        return $node->identifier;
     }
 
     /**
@@ -220,6 +220,7 @@ class SignupController extends Controller
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FRESH_CONNECT, TRUE);
         $data = curl_exec($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);

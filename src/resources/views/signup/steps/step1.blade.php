@@ -24,7 +24,7 @@
     <div class="form-group">
         <label for="users_count">{{ trans('projectsquare-payment::signup.users_count') }}</label>
 
-        <span class="users_count" value="{{ $users_count }}">1</span>
+        <span class="users_count">{{ $users_count }}</span>
         <input id="slider_users_count" data-slider-id='slider_users_count' type="text" data-slider-min="1" data-slider-max="30" data-slider-step="1" data-slider-value="{{ $users_count }}"/>
         <input type="hidden" name="users_count" value="{{ $users_count }}" />
         <br/>
