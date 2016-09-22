@@ -1,0 +1,27 @@
+.fil-ariane {
+	overflow: hidden;
+	padding-top: 18px;
+	padding-bottom: 10px;
+	background: $gray_blue;
+
+	li {
+		float: left;
+		font-family: $typo4;
+		font-size: 14px;
+		padding-left: 20px;	
+		a {
+			border-right : 2px solid white;
+			padding-right: 15px;
+			color: $blue;
+		}
+
+		a:hover {
+			text-decoration:none;
+		}
+	}
+
+	li:last-child {
+		padding-left: 15px;
+		color: $touareg;
+	}
+}

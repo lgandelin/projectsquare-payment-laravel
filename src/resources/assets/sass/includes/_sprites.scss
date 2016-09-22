@@ -1,0 +1,7 @@
+@import "compass/utilities/sprites";
+
+@import "header/*.png";
+@include all-header-sprites;
+
+@import "footer/*.png";
+@include all-footer-sprites;

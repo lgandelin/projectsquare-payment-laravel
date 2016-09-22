@@ -1,4 +1,4 @@
-<div class="col-md-6">
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
     <h3>{{ trans('projectsquare-payment::signup.recap') }}</h3>
 
     <section>
@@ -60,7 +60,7 @@
     </section>
 </div>
 
-<div class="col-md-6">
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
     <section style="margin-top: 11.5rem;">
         <h4>{{ trans('projectsquare-payment::signup.cost') }}</h4>
 
@@ -71,7 +71,7 @@
     </section>
 </div>
 
-<div class="submit" style="clear: both; margin-top: 5rem;">
+<div class="submit col-lg-12 col-md-12" style="clear: both; overflow: hidden">
     <input type="button" class="pull-left back-step-2" value="{{ trans('projectsquare-payment::signup.previous_step') }}" />
     <input type="submit" class="pull-right valid-step-3" value="{{ trans('projectsquare-payment::signup.valid_platform_creation') }}" />
 </div>

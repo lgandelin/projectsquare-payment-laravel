@@ -27,6 +27,10 @@ a:focus {
 	margin-left: 0;
 }
 
+ul {
+	margin-bottom: 0;
+}
+
 .pages {
 	//margin-left: 5%;
 	margin-top: 5%;
@@ -105,79 +109,6 @@ a:focus {
 .inscription {
 	width: 50%;
 	margin: auto;
-}
-
-.offre_commerciale {
-	width: 50%;
-	margin: auto;
-}
-
-.page-template-offre-commerciale {
-	.header {
-
-		.logo {
-			margin-bottom: 50px;
-			.reseaux-sociaux {
-				display: none;
-			}
-		}
-
-		.menu {
-			display: none;
-		}
-	}
-}
-.offres_commerciales_template {
-
-
-	.background_blue {
-		padding-top: 27px;
-		padding-bottom: 27px;
-	}
-	
-
-	.offre_commerciale {
-		width: 20%;
-		margin-bottom: 50px;
-
-	}
-
-	.texte {
-		margin-top: 21%;
-	}
-
-	.reseaux-sociaux {
-		margin-top: 20px;
-
-		.share-twitter {
-			display: inline-block;
-			width: 50px;
-			height: 47px;
-			background: url(../img/blog/twitter.png) no-repeat;
-			margin-right: 10px;
-		}
-
-		.share-twitter:hover {
-			background: url(../img/blog/twitter-hover.png) no-repeat;
-		}
-		
-		.linkedin-share-button {
-
-			.img-linkedin {
-				vertical-align: top;
-				display: inline-block;
-				width: 50px;
-				height: 48px;
-				background: url(../img/blog/linkedin.png) no-repeat;
-			}
-		}
-
-		.linkedin-share-button:hover {
-			.img-linkedin {
-				background: url(../img/blog/linkedin-hover.png) no-repeat;
-			}
-		}
-	}
 }
 
 body {

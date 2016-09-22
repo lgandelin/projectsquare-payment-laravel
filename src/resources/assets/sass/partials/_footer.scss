@@ -1,0 +1,81 @@
+.footer {
+	line-height: 70px;
+    height: 70px;
+
+    .menu-footer {
+
+      background: $green;
+
+		.menu {
+			overflow: hidden;
+
+			li {
+				float: left;
+		
+				a {
+					padding-right: 13px;	
+					padding-left: 13px;
+
+					color: $touareg;
+					font-family: $typo2;
+					font-size: 14px;
+
+					border-right: 2px solid white;
+					
+				}
+
+				a:hover {
+					color: $blue;
+					text-decoration: none;
+				}
+			}
+
+			li:last-child {
+
+				a {
+					border-right: none;
+				}
+			}
+		}
+	}
+
+	.reseaux-sociaux {
+		overflow: hidden;
+		background: $green;
+
+		.copyright {
+			float: left;
+			margin-right: 20px;
+			color: $touareg;
+			font-size: 16px;
+			margin-bottom: 1px;
+		}
+
+		li {
+			float: left;
+			margin-right: 7px;
+			margin-top: 20px;
+
+			a {
+				width: 34px;
+				height: 31px;
+				display: block;
+			}
+		}
+
+		.twitter {
+			@include footer-sprite(twitter);
+		}
+
+		.twitter:hover {
+			@include footer-sprite(twitter-hover);
+		}
+
+		.linkedin {
+			@include footer-sprite(linkedin);
+		}
+		.linkedin:hover {
+			@include footer-sprite(linkedin-hover);
+		}
+	}
+}
