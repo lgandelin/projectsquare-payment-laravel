@@ -26,8 +26,9 @@
 
         <span class="users_count" value="{{ $users_count }}">1</span>
         <input id="slider_users_count" data-slider-id='slider_users_count' type="text" data-slider-min="1" data-slider-max="30" data-slider-step="1" data-slider-value="{{ $users_count }}"/>
+        <input type="hidden" name="users_count" value="{{ $users_count }}" />
         <br/>
-        soit : <span class="amount"><span class="total">{{ number_format($total_monthly_cost, 2) }}</span>€ / mois</span>
+        soit : <span class="amount" style="margin-left: 10px"><span class="total">{{ number_format($total_monthly_cost, 2) }}</span>€ / mois</span>
     </div>
 
     {{--<div class="form-group">
