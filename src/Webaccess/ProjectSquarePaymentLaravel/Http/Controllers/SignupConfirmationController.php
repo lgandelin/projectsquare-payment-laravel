@@ -23,7 +23,7 @@ class SignupConfirmationController extends Controller
         }
 
         return response()->json([
-            'success' => $this->isURLAvailable($platformURL .'/install'),
+            'success' => $this->isURLAvailable($platformURL .'/config'),
             'url' => $platformURL
         ], 200);
     }
