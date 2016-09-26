@@ -2,8 +2,9 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Request;
+use Webaccess\ProjectSquarePaymentLaravel\Services\PlatformManager;
 
 class SignupConfirmationController extends Controller
 {
@@ -16,7 +17,7 @@ class SignupConfirmationController extends Controller
     {
         $platformURL = '';
         if ($request->session()->has('platformID')) {
-            if ($platform = Platform::find($request->session()->get('platformID'))) {
+            if ($platform = (new PlatformManager())->getPlatformByID($request->session()->get('platformID'))) {
                 $platformURL = 'http://' . $platform->slug . '.projectsquare.io';
             }
         }

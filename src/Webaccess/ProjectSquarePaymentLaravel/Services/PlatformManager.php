@@ -73,7 +73,7 @@ class PlatformManager
      */
     private function updatePlatformNodeID($platformID, $nodeIdentifier)
     {
-        $platform = Platform::find($platformID);
+        $platform = $this->getPlatformByID($platformID);
         $node = Node::where('identifier', '=', $nodeIdentifier)->first();
 
         if ($platform && $node) {
@@ -102,5 +102,13 @@ class PlatformManager
         $node = Node::where('identifier', '=', $nodeIdentifier)->first();
         $node->available = false;
         $node->save();
+    }
+
+    /**
+     * @param $platformID
+     */
+    public function getPlatformByID($platformID)
+    {
+        return Platform::find($platformID);
     }
 }
