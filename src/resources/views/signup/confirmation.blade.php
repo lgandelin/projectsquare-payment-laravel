@@ -1,7 +1,7 @@
 @extends('projectsquare-payment::master')
 
 @section('page-title')
-    Inscription à Projectsquare confirmée !
+    {{ trans('projectsquare-payment::pages.seo_title_signup_confirmation') }}
 @endsection
 
 @section('main-content')
@@ -10,7 +10,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <ul class="fil-ariane">
                     <li>
-                        <a href="http://projectsquare.io/">Accueil</a>
+                        <a href="http://projectsquare.io/">{{ trans('projectsquare-payment::pages.home_title') }}</a>
                     </li>
                     <li class="page_fille">
                         {{ trans('projectsquare-payment::signup_confirmation.title') }}
@@ -25,20 +25,20 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                 <div class="thanks">
-                    <h3>Merci de vous être inscrits à Projectsquare !</h3>
+                    <h3>{{ trans('projectsquare-payment::signup_confirmation.thanks_for_signing_up') }}</h3>
 
-                    <p>Votre plateforme est en cours de création, vous recevrez un email lorsque celle-ci sera prête.</p>
+                    <p>{{ trans('projectsquare-payment::signup_confirmation.thanks_for_signing_up2') }}</p>
                 </div>
 
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped active" role="progressbar"
                          aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-                        Création de la plateforme en cours
+                        {{ trans('projectsquare-payment::signup_confirmation.platform_creation_in_progress') }}
                     </div>
                 </div>
 
                 <div class="platform-ready" style="display: none;">
-                    <a class="button" href="#" target="_blank">Accéder à ma plateforme</a>
+                    <a class="button" href="#" target="_blank">{{ trans('projectsquare-payment::signup_confirmation.access_my_platform') }}</a>
                 </div>
             </div>
         </div>

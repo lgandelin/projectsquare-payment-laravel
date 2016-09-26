@@ -1,7 +1,7 @@
 @extends('projectsquare-payment::master')
 
 @section('page-title')
-    S'inscrire à Projectsquare: La plateforme pour optimiser la gestion de vos projets web
+    {{ trans('projectsquare-payment::pages.seo_title_signup') }}
 @endsection
 
 @section('main-content')
@@ -10,7 +10,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <ul class="fil-ariane">
                     <li>
-                        <a href="http://projectsquare.io/">Accueil</a>
+                        <a href="http://projectsquare.io/">{{ trans('projectsquare-payment::pages.home_title') }}</a>
                     </li>
                     <li class="page_fille">
                         {{ trans('projectsquare-payment::signup.title') }}
