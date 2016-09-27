@@ -1,0 +1,29 @@
+.button {
+	background: $gray_blue;
+	display: block;
+	padding: 18px 50px 18px 50px; 
+	transition: background 0.50s ease;
+}
+
+.button:hover {
+	background: $blue;
+	color: white;
+	text-decoration: none;
+}
+
+.twitter-share-button {
+
+	.btn-o {
+
+		.btn {
+
+			background-color: red;
+			i {
+			
+			background: url(../img/header/twitter.png) no-repeat;
+			
+			}
+		}
+		
+	}
+}

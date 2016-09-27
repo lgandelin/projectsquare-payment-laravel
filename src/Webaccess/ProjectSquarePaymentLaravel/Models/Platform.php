@@ -16,5 +16,6 @@ class Platform extends Model
         'balance',
         'platform_monthly_cost',
         'user_monthly_cost',
+        'node_id'
     ];
 }

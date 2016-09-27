@@ -1,4 +1,17 @@
+@import "vendor/_reset";
 @import "vendor/_bootstrap";
 @import "vendor/_bootstrap-slider";
 
+@import "includes/_variables";
+@import "includes/_typography";
+@import "includes/_buttons";
+@import "includes/_utils";
+@import "includes/_form";
+@import "includes/_sprites";
+
+@import "partials/_fil-ariane";
+@import "partials/_header";
+@import "partials/_footer";
+
 @import "pages/_signup";
+@import "pages/_signup-confirmation";
