@@ -12,7 +12,7 @@ $(document).ready(function() {
         $('input[name="users_count"]').val(users_count);
         $('.users_count').text(users_count);
         var amount = parseFloat($('#platform_monthly_cost').val()) + parseFloat($('#user_monthly_cost').val()) * users_count;
-        $('.total').text(amount.toFixed(2));
+        $('.total').text(amount);
     });
 
 
