@@ -3,6 +3,6 @@
 return [
     'seo_title_signup' => 'S\'inscrire à Projectsquare: La plateforme pour optimiser la gestion de vos projets web',
     'seo_title_signup_confirmation' => 'Inscription à Projectsquare confirmée !',
-
+    'seo_title_my_account' => 'Mon compte Projectsquare',
     'home_title' => 'Accueil',
 ];

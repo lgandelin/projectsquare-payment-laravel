@@ -18,6 +18,10 @@ class Administrator extends Model
         'city',
     ];
 
+    protected $hidden = [
+        'password', 'remember_token'
+    ];
+
     public function platform()
     {
         return $this->belongsTo('Webaccess\ProjectSquareLaravelPayment\Models\Platform');
