@@ -5,6 +5,7 @@ namespace Webaccess\ProjectSquarePaymentLaravel;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
+use Webaccess\ProjectSquarePayment\Interactors\Platforms\GetPlatformUsageAmountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\CheckPlatformSlugInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\SignupInteractor;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentAdministratorRepository;
@@ -46,6 +47,12 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 
         App::bind('CheckPlatformSlugInteractor', function() {
             return new CheckPlatformSlugInteractor(
+                new EloquentPlatformRepository()
+            );
+        });
+
+        App::bind('GetPlatformUsageAmountInteractor', function() {
+            return new GetPlatformUsageAmountInteractor(
                 new EloquentPlatformRepository()
             );
         });
