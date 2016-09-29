@@ -81,6 +81,7 @@ class SignupController extends Controller
             Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
 
             return response()->json([
+                'success' => false,
                 'error' => trans('projectsquare-payment::signup.platform_slug_verification_error'),
             ], 500);
         }

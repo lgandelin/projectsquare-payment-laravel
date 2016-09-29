@@ -28,7 +28,18 @@
 
                 <h3>Plateforme</h3>
 
-                <p>Nombre d'utilisateurs : {{ $platform->users_count }} <input type="button" class="btn btn-primary" value="Modifier" /></p>
+                <p>
+                    <label for="users_count">Nombre d'utilisateurs</label>
+                    <div class="users-count-display">
+                        {{ $platform->users_count }} <input type="button" class="btn btn-primary btn-users-count" value="Modifier" />
+                    </div>
+
+                    <div class="users-count-update" style="display: none">
+                        <input class="form-control" type="text" value="{{ $platform->users_count }}" name="users_count" style="display: inline-block; width: 50px" />
+                        <input type="button" class="btn btn-success btn-valid-users-count-update" value="Valider" />
+                        <input type="button" class="btn btn-default btn-valid-users-count-cancel" value="Annuler" />
+                    </div>
+                </p>
 
                 <hr>
 
@@ -49,4 +60,8 @@
             </div>
         </div>
     </div>
+    {{ csrf_field() }}
+
+    <script>var route_update_users_count = "{{ route('update_users_count') }}";</script>
+    <script src="{{ asset('js/my_account.js') }}"></script>
 @endsection
