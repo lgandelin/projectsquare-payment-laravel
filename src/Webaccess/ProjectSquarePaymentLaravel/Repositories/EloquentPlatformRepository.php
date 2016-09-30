@@ -26,6 +26,17 @@ class EloquentPlatformRepository implements PlatformRepository
         return false;
     }
 
+    public function getAll()
+    {
+        $result = [];
+        $platformModels = Platform::where('balance', '>', 0)->get();
+        foreach ($platformModels as $platformModel) {
+            $result[]= $this->convertModelToEntity($platformModel);
+        }
+
+        return $result;
+    }
+
     public function persist(PlatformEntity $platform)
     {
         $platformModel = ($platform->getId()) ? Platform::find($platform->getID()) : new Platform();

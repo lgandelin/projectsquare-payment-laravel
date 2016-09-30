@@ -5,6 +5,7 @@ namespace Webaccess\ProjectSquarePaymentLaravel;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
+use Webaccess\ProjectSquarePayment\Interactors\Platforms\DebitPlatformsAccountsInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\GetPlatformUsageAmountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformUsersCountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\CheckPlatformSlugInteractor;
@@ -64,8 +65,15 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
             );
         });
 
+        App::bind('DebitPlatformsAccountsInteractor', function() {
+            return new DebitPlatformsAccountsInteractor(
+                new EloquentPlatformRepository()
+            );
+        });
+
         $this->commands([
             'Webaccess\ProjectSquarePaymentLaravel\Commands\SetNodeAvailable',
+            'Webaccess\ProjectSquarePaymentLaravel\Commands\DebitPlatformsAccounts',
         ]);
     }
 }
