@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\GetPlatformUsageAmountInteractor;
+use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformUsersCountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\CheckPlatformSlugInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\SignupInteractor;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentAdministratorRepository;
@@ -53,6 +54,12 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 
         App::bind('GetPlatformUsageAmountInteractor', function() {
             return new GetPlatformUsageAmountInteractor(
+                new EloquentPlatformRepository()
+            );
+        });
+
+        App::bind('UpdatePlatformUsersCountInteractor', function() {
+            return new UpdatePlatformUsersCountInteractor(
                 new EloquentPlatformRepository()
             );
         });
