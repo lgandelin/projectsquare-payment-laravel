@@ -111,4 +111,17 @@ class PlatformManager
     {
         return Platform::find($platformID);
     }
+
+    /**
+     * @param $platformID
+     * @return bool|string
+     */
+    public static function getPlatformURL($platformID)
+    {
+        if ($platform = (new PlatformManager())->getPlatformByID($platformID)) {
+            return 'http://' . $platform->slug . '.projectsquare.io';
+        }
+
+        return false;
+    }
 }

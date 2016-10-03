@@ -11,7 +11,7 @@ use Webaccess\ProjectSquarePayment\Requests\Platforms\FundPlatformAccountRequest
 use Webaccess\ProjectSquarePayment\Responses\Platforms\FundPlatformAccountResponse;
 use Webaccess\ProjectSquarePayment\Requests\Platforms\UpdatePlatformUsersCountRequest;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\UpdatePlatformUsersCountResponse;
-
+use GuzzleHttp\Client;
 
 class MyAccountController extends Controller
 {
@@ -37,22 +37,21 @@ class MyAccountController extends Controller
     {
         $platform = $this->getCurrentPlatform();
         $usersCount = $request->users_count;
-        $actualUsersCount = 5; //@TODO : fetch actual users count from the platform
 
         try {
             $response = app()->make('UpdatePlatformUsersCountInteractor')->execute(new UpdatePlatformUsersCountRequest([
                 'platformID' => $platform->id,
                 'usersCount' => $usersCount,
-                'actualUsersCount' => $actualUsersCount
+                'actualUsersCount' => $this->getUsersCountFromPlatform($platform->id)
             ]));
 
             if ($response->success) {
-                //@TODO : update platform users count
+                $this->updateUsersCountInPlatform($platform->id, $usersCount);
             }
 
             return response()->json([
                 'success' => $response->success,
-                'error' => $this->getErrorMessageUpdateUsersCount($response->errorCode),
+                'error' => ($response->errorCode) ? $this->getErrorMessageUpdateUsersCount($response->errorCode) : null,
                 'daily_cost' => app()->make('GetPlatformUsageAmountInteractor')->getDailyCost($platform->id),
                 'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($platform->id),
             ], 200);
@@ -78,7 +77,7 @@ class MyAccountController extends Controller
 
             return response()->json([
                 'success' => $response->success,
-                'error' => $this->getErrorMessageFundAccount($response->errorCode),
+                'error' => ($response->errorCode) ? $this->getErrorMessageFundAccount($response->errorCode) : null,
             ], 200);
         } catch (Exception $e) {
             Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
@@ -124,5 +123,25 @@ class MyAccountController extends Controller
         ];
 
         return (isset($errorMessages[$errorCode])) ? $errorMessages[$errorCode] :  trans('projectsquare-payment::my_account.fund_platform_account_generic_error');
+    }
+
+    private function getUsersCountFromPlatform($platformID)
+    {
+        $client = new Client(['base_uri' => PlatformManager::getPlatformURL($platformID)]);
+        $response = $client->get('/api/users_count');
+        $body = json_decode($response->getBody());
+
+        return $body->count;
+    }
+
+    private function updateUsersCountInPlatform($platformID, $usersCount)
+    {
+        $client = new Client(['base_uri' => PlatformManager::getPlatformURL($platformID)]);
+        $response = $client->post('/api/update_users_count', [
+            'json' => [
+                'count' => $usersCount,
+                'token' => env('API_TOKEN')
+            ]
+        ]);
     }
 }
