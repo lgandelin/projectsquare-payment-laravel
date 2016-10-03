@@ -11,7 +11,6 @@ use Webaccess\ProjectSquarePayment\Requests\Platforms\FundPlatformAccountRequest
 use Webaccess\ProjectSquarePayment\Responses\Platforms\FundPlatformAccountResponse;
 use Webaccess\ProjectSquarePayment\Requests\Platforms\UpdatePlatformUsersCountRequest;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\UpdatePlatformUsersCountResponse;
-use GuzzleHttp\Client;
 
 class MyAccountController extends Controller
 {
@@ -42,11 +41,11 @@ class MyAccountController extends Controller
             $response = app()->make('UpdatePlatformUsersCountInteractor')->execute(new UpdatePlatformUsersCountRequest([
                 'platformID' => $platform->id,
                 'usersCount' => $usersCount,
-                'actualUsersCount' => $this->getUsersCountFromPlatform($platform->id)
+                'actualUsersCount' => PlatformManager::getUsersCountFromRealPlatform($platform->id)
             ]));
 
             if ($response->success) {
-                $this->updateUsersCountInPlatform($platform->id, $usersCount);
+                PlatformManager::updateUsersCountInRealPlatform($platform->id, $usersCount);
             }
 
             return response()->json([
@@ -123,25 +122,5 @@ class MyAccountController extends Controller
         ];
 
         return (isset($errorMessages[$errorCode])) ? $errorMessages[$errorCode] :  trans('projectsquare-payment::my_account.fund_platform_account_generic_error');
-    }
-
-    private function getUsersCountFromPlatform($platformID)
-    {
-        $client = new Client(['base_uri' => PlatformManager::getPlatformURL($platformID)]);
-        $response = $client->get('/api/users_count');
-        $body = json_decode($response->getBody());
-
-        return $body->count;
-    }
-
-    private function updateUsersCountInPlatform($platformID, $usersCount)
-    {
-        $client = new Client(['base_uri' => PlatformManager::getPlatformURL($platformID)]);
-        $response = $client->post('/api/update_users_count', [
-            'json' => [
-                'count' => $usersCount,
-                'token' => env('API_TOKEN')
-            ]
-        ]);
     }
 }

@@ -54,7 +54,7 @@ class SignupController extends Controller
             }
 
 
-            (new PlatformManager())->launchPlatformCreation($request->slug, $request->administrator_email, $response->platformID);
+            (new PlatformManager())->launchPlatformCreation($request->slug, $request->administrator_email, $request->users_count, $response->platformID);
             $request->session()->put('platformID', $response->platformID);
 
             return redirect()->route('confirmation');

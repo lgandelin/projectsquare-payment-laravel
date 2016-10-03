@@ -2,6 +2,7 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Services;
 
+use GuzzleHttp\Client;
 use Webaccess\ProjectSquarePaymentLaravel\Models\Node;
 use Webaccess\ProjectSquarePaymentLaravel\Models\Platform;
 use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
@@ -13,7 +14,7 @@ class PlatformManager
      * @param $administratorEmail
      * @param $platformID
      */
-    public function launchPlatformCreation($slug, $administratorEmail, $platformID)
+    public function launchPlatformCreation($slug, $administratorEmail, $usersCount, $platformID)
     {
         if (!$nodeIdentifier = $this->getAvailableNodeIdentifier()) {
             $nodeIdentifier = $this->persistNewNode();
@@ -22,7 +23,7 @@ class PlatformManager
             $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL;
             file_put_contents($fileName, $fileContent);
         } else {
-            $this->createApp($nodeIdentifier, $slug, $administratorEmail);
+            $this->createApp($nodeIdentifier, $slug, $administratorEmail, $usersCount);
             $this->setNodeUnavailable($nodeIdentifier);
         }
 
@@ -44,11 +45,12 @@ class PlatformManager
      * @param $nodeIdentifier
      * @param $slug
      * @param $administratorEmail
+     * @param $usersLimit
      */
-    private function createApp($nodeIdentifier, $slug, $administratorEmail)
+    private function createApp($nodeIdentifier, $slug, $administratorEmail, $usersLimit)
     {
         $fileName = env('APPS_FOLDER') . $slug . '.txt';
-        $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL;
+        $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL . $usersLimit . PHP_EOL;
         file_put_contents($fileName, $fileContent);
     }
 
@@ -123,5 +125,33 @@ class PlatformManager
         }
 
         return false;
+    }
+
+    /**
+     * @param $platformID
+     * @return mixed
+     */
+    public static function getUsersCountFromRealPlatform($platformID)
+    {
+        $client = new Client(['base_uri' => PlatformManager::getPlatformURL($platformID)]);
+        $response = $client->get('/api/users_count');
+        $body = json_decode($response->getBody());
+
+        return $body->count;
+    }
+
+    /**
+     * @param $platformID
+     * @param $usersCount
+     */
+    public static function updateUsersCountInRealPlatform($platformID, $usersCount)
+    {
+        $client = new Client(['base_uri' => PlatformManager::getPlatformURL($platformID)]);
+        $response = $client->post('/api/update_users_count', [
+            'json' => [
+                'count' => $usersCount,
+                'token' => env('API_TOKEN')
+            ]
+        ]);
     }
 }
