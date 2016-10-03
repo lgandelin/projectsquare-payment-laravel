@@ -30,25 +30,32 @@
                 <h3>Plateforme</h3>
 
                 <p>
-                    <label for="users_count">Nombre d'utilisateurs</label>
-                    <div class="users-count-display">
-                        <span class="value">{{ $platform->users_count }}</span> <input type="button" class="btn btn-primary btn-users-count" value="Modifier" />
-                    </div>
+                    <label for="users_count">Nombre d'utilisateurs : </label>
+                    <span class="users-count-display">
+                        <span class="value" style="font-size:3.5rem; display: inline-block; vertical-align: middle; margin-right: 1rem;">{{ $platform->users_count }}</span> <input type="button" class="btn btn-primary btn-users-count" value="Modifier" />
+                    </span>
 
-                    <div class="users-count-update" style="display: none">
+                    <span class="users-count-update" style="display: none">
                         <input class="form-control" type="number" value="{{ $platform->users_count }}" name="users_count" style="display: inline-block; width: 75px" />
                         <input type="button" class="btn btn-success btn-valid-users-count-update" value="Valider" />
                         <input type="button" class="btn btn-default btn-valid-users-count-cancel" value="Annuler" />
-                    </div>
+                    </span>
                 </p>
 
                 <hr>
 
                 <h3>Compte</h3>
 
-                <p>Solde du compte : {{ number_format($platform->balance, 2) }}€ <input type="button" class="btn btn-success" value="Réapprovisionner" /></p>
+                <p>Solde du compte : <span style="font-size:3.5rem;">{{ number_format($platform->balance, 2) }}€</span></p>
                 <p class="daily-usage">Usage quotidien : <span class="value">{{ number_format($daily_cost, 2) }}</span>€</p>
                 <p class="monthly-usage">Usage mensuel : <span class="value">{{ number_format($monthly_cost, 2) }}</span>€</p>
+
+
+                <input type="text" class="form-control amount" name="amount" style="width:100px; display: inline-block;" placeholder="ex: 50.00" /> €
+                <input type="button" class="btn btn-success btn-valid-fund-account" value="Réapprovisionner" />
+
+                <hr>
+
                 <p>
                     <input type="checkbox" name="email_alert" /> M'envoyer un email lorsque le solde du compte est inférieur à <input class="form-control" type="text" value="20" style="display: inline-block; width: 50px"/> €
                     <input type="button" class="btn btn-success" value="Valider" />
@@ -64,5 +71,6 @@
     {{ csrf_field() }}
 
     <script>var route_update_users_count = "{{ route('update_users_count') }}";</script>
+    <script>var route_fund_account = "{{ route('fund_account') }}";</script>
     <script src="{{ asset('js/my_account.js') }}"></script>
 @endsection

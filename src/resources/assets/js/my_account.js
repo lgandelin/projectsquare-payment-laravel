@@ -38,4 +38,24 @@ $(document).ready(function() {
         $('.users-count-display').show();
         $('.users-count-update').hide();
     });
+
+    //Fund account
+    $('.btn-valid-fund-account').click(function() {
+        $.ajax({
+            type: "POST",
+            url: route_fund_account,
+            data: {
+                _token: $('input[name="_token"]').val(),
+                amount: $('input[name="amount"]').val()
+            },
+            success: function (data) {
+                if (data.success == false) {
+                    alert(data.error);
+                } else {
+                    alert('Paiement effectué avec succès');
+                    window.location.reload();
+                }
+            },
+        });
+    });
 });

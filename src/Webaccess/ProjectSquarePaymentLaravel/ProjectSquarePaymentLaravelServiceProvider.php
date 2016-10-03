@@ -6,12 +6,16 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\DebitPlatformsAccountsInteractor;
+use Webaccess\ProjectSquarePayment\Interactors\Platforms\FundPlatformAccountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\GetPlatformUsageAmountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformUsersCountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\CheckPlatformSlugInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\SignupInteractor;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentAdministratorRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentPlatformRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Commands\DebitPlatformsAccounts;
+use Webaccess\ProjectSquarePaymentLaravel\Commands\SetNodeAvailable;
+use Webaccess\ProjectSquarePayment\Context;
 
 class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 {
@@ -71,9 +75,15 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
             );
         });
 
+        App::bind('FundPlatformAccountInteractor', function() {
+            return new FundPlatformAccountInteractor(
+                new EloquentPlatformRepository()
+            );
+        });
+
         $this->commands([
-            'Webaccess\ProjectSquarePaymentLaravel\Commands\SetNodeAvailable',
-            'Webaccess\ProjectSquarePaymentLaravel\Commands\DebitPlatformsAccounts',
+            SetNodeAvailable::class,
+            DebitPlatformsAccounts::class,
         ]);
     }
 }
