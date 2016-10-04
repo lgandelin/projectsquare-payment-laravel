@@ -42,12 +42,7 @@ class MyAccountController extends Controller
             $response = app()->make('UpdatePlatformUsersCountInteractor')->execute(new UpdatePlatformUsersCountRequest([
                 'platformID' => $this->getCurrentPlatformID(),
                 'usersCount' => $usersCount,
-                'actualUsersCount' => app()->make('PlatformAPIGateway')->getUsersCountFromRealPlatform($this->getCurrentPlatformID())
             ]));
-
-            if ($response->success) {
-                app()->make('PlatformAPIGateway')->updateUsersCountInRealPlatform($this->getCurrentPlatformID(), $usersCount);
-            }
 
             return response()->json([
                 'success' => $response->success,

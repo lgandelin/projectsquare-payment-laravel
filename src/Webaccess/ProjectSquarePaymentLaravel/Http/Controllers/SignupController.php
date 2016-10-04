@@ -12,6 +12,7 @@ use Webaccess\ProjectSquarePayment\Responses\Administrators\CreateAdministratorR
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
 use Webaccess\ProjectSquarePayment\Responses\Signup\CheckPlatformSlugResponse;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentNodeRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Services\DigitalOceanService;
 use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
 
 class SignupController extends Controller
@@ -102,19 +103,19 @@ class SignupController extends Controller
     private function launchPlatformCreation($slug, $administratorEmail, $usersCount, $platformID)
     {
         $nodeIdentifier = $this->nodeRepository->getAvailableNodeIdentifier();
-        
+
         if (!$nodeIdentifier) {
             $nodeIdentifier = $this->nodeRepository->persistNewNode();
-            app()->make('PlatformAPIGateway')->launchEnvCreation($slug, $administratorEmail, $usersCount, $nodeIdentifier);
+            DigitalOceanService::launchEnvCreation($slug, $administratorEmail, $usersCount, $nodeIdentifier);
         } else {
-            app()->make('PlatformAPIGateway')->launchAppCreation($nodeIdentifier, $slug, $administratorEmail, $usersCount);
+            DigitalOceanService::launchAppCreation($nodeIdentifier, $slug, $administratorEmail, $usersCount);
             $this->nodeRepository->setNodeUnavailable($nodeIdentifier);
         }
 
         $this->nodeRepository->updatePlatformNodeID($platformID, $nodeIdentifier);
 
         $nodeIdentifier = $this->nodeRepository->persistNewNode();
-        app()->make('PlatformAPIGateway')->launchNodeCreation($nodeIdentifier);
+        DigitalOceanService::launchNodeCreation($nodeIdentifier);
     }
 
     /**
