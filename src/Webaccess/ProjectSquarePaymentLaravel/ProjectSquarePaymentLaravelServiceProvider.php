@@ -9,8 +9,10 @@ use Webaccess\ProjectSquarePayment\Interactors\Platforms\DebitPlatformsAccountsI
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\FundPlatformAccountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\GetPlatformUsageAmountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformUsersCountInteractor;
+use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformsStatusesInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\CheckPlatformSlugInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\SignupInteractor;
+use Webaccess\ProjectSquarePaymentLaravel\Commands\UpdatePlatformsStatuses;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentAdministratorRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentPlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\DebitPlatformsAccounts;
@@ -81,9 +83,16 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
             );
         });
 
+        App::bind('UpdatePlatformsStatusesInteractor', function() {
+            return new UpdatePlatformsStatusesInteractor(
+                new EloquentPlatformRepository()
+            );
+        });
+
         $this->commands([
             SetNodeAvailable::class,
             DebitPlatformsAccounts::class,
+            UpdatePlatformsStatuses::class,
         ]);
     }
 }

@@ -29,7 +29,7 @@ class EloquentPlatformRepository implements PlatformRepository
     public function getAll()
     {
         $result = [];
-        $platformModels = Platform::where('balance', '>', 0)->get();
+        $platformModels = Platform::all();
         foreach ($platformModels as $platformModel) {
             $result[]= $this->convertModelToEntity($platformModel);
         }
