@@ -43,6 +43,7 @@ class EloquentPlatformRepository implements PlatformRepository
         $platformModel->name = $platform->getName();
         $platformModel->slug = $platform->getSlug();
         $platformModel->users_count = $platform->getUsersCount();
+        $platformModel->status = $platform->getStatus();
         $platformModel->platform_monthly_cost = $platform->getPlatformMonthlyCost();
         $platformModel->user_monthly_cost = $platform->getUserMonthlyCost();
         $platformModel->balance = $platform->getAccountBalance();
@@ -58,6 +59,7 @@ class EloquentPlatformRepository implements PlatformRepository
         $platform->setName($platformModel->name);
         $platform->setSlug($platformModel->slug);
         $platform->setUsersCount($platformModel->users_count);
+        $platform->setStatus($platformModel->status);
         $platform->setPlatformMonthlyCost($platformModel->platform_monthly_cost);
         $platform->setUserMonthlyCost($platformModel->user_monthly_cost);
         $platform->setAccountBalance($platformModel->balance);

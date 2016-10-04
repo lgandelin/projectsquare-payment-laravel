@@ -39,6 +39,8 @@ class SignupController extends Controller
                 'platformName' => $request->name,
                 'platformSlug' => $request->slug,
                 'platformUsersCount' => $request->users_count,
+                'platformPlatformMonthlyCost' => env('PLATFORM_MONTHLY_COST'),
+                'platformUserMonthlyCost' => env('USER_MONTHLY_COST'),
                 'administratorEmail' => $request->administrator_email,
                 'administratorPassword' => Hash::make($request->administrator_password),
                 'administratorLastName' => $request->administrator_last_name,
