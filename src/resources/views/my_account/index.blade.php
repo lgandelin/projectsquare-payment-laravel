@@ -32,11 +32,11 @@
                 <p>
                     <label for="users_count">Nombre d'utilisateurs : </label>
                     <span class="users-count-display">
-                        <span class="value" style="font-size:3.5rem; display: inline-block; vertical-align: middle; margin-right: 1rem;">{{ $platform->users_count }}</span> <input type="button" class="btn btn-primary btn-users-count" value="Modifier" />
+                        <span class="value" style="font-size:3.5rem; display: inline-block; vertical-align: middle; margin-right: 1rem;">{{ $users_count }}</span> <input type="button" class="btn btn-primary btn-users-count" value="Modifier" />
                     </span>
 
                     <span class="users-count-update" style="display: none">
-                        <input class="form-control" type="number" value="{{ $platform->users_count }}" name="users_count" style="display: inline-block; width: 75px" />
+                        <input class="form-control" type="number" value="{{ $users_count }}" name="users_count" style="display: inline-block; width: 75px" />
                         <input type="button" class="btn btn-success btn-valid-users-count-update" value="Valider" />
                         <input type="button" class="btn btn-default btn-valid-users-count-cancel" value="Annuler" />
                     </span>
@@ -46,7 +46,7 @@
 
                 <h3>Compte</h3>
 
-                <p>Solde du compte : <span style="font-size:3.5rem;">{{ number_format($platform->balance, 2) }}€</span></p>
+                <p>Solde du compte : <span style="font-size:3.5rem;">{{ number_format($balance, 2) }}€</span></p>
                 <p class="daily-usage">Usage quotidien : <span class="value">{{ number_format($daily_cost, 2) }}</span>€</p>
                 <p class="monthly-usage">Usage mensuel : <span class="value">{{ number_format($monthly_cost, 2) }}</span>€</p>
 

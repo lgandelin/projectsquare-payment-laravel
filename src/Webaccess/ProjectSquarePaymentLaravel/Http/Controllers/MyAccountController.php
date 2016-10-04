@@ -5,7 +5,7 @@ namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Webaccess\ProjectSquarePaymentLaravel\Services\PlatformManager;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentPlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
 use Webaccess\ProjectSquarePayment\Requests\Platforms\FundPlatformAccountRequest;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\FundPlatformAccountResponse;
@@ -17,42 +17,43 @@ class MyAccountController extends Controller
     public function __construct(Request $request)
     {
         $this->middleware('auth');
+        $this->platformRepository = new EloquentPlatformRepository();
     }
 
     public function index(Request $request)
     {
         $user = auth()->user();
-        $platform = $this->getCurrentPlatform();
+        $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
 
         return view('projectsquare-payment::my_account.index', [
             'user' => $user,
-            'platform' => $platform,
-            'daily_cost' => app()->make('GetPlatformUsageAmountInteractor')->getDailyCost($platform->id),
-            'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($platform->id),
+            'users_count' => $platform->getUsersCount(),
+            'balance' => $platform->getAccountBalance(),
+            'daily_cost' => app()->make('GetPlatformUsageAmountInteractor')->getDailyCost($this->getCurrentPlatformID()),
+            'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),
         ]);
     }
 
     public function udpate_users_count(Request $request)
     {
-        $platform = $this->getCurrentPlatform();
         $usersCount = $request->users_count;
 
         try {
             $response = app()->make('UpdatePlatformUsersCountInteractor')->execute(new UpdatePlatformUsersCountRequest([
-                'platformID' => $platform->id,
+                'platformID' => $this->getCurrentPlatformID(),
                 'usersCount' => $usersCount,
-                'actualUsersCount' => PlatformManager::getUsersCountFromRealPlatform($platform->id)
+                'actualUsersCount' => app()->make('PlatformAPIGateway')->getUsersCountFromRealPlatform($this->getCurrentPlatformID())
             ]));
 
             if ($response->success) {
-                PlatformManager::updateUsersCountInRealPlatform($platform->id, $usersCount);
+                app()->make('PlatformAPIGateway')->updateUsersCountInRealPlatform($this->getCurrentPlatformID(), $usersCount);
             }
 
             return response()->json([
                 'success' => $response->success,
                 'error' => ($response->errorCode) ? $this->getErrorMessageUpdateUsersCount($response->errorCode) : null,
-                'daily_cost' => app()->make('GetPlatformUsageAmountInteractor')->getDailyCost($platform->id),
-                'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($platform->id),
+                'daily_cost' => app()->make('GetPlatformUsageAmountInteractor')->getDailyCost($this->getCurrentPlatformID()),
+                'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),
             ], 200);
         } catch (Exception $e) {
             Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
@@ -66,11 +67,9 @@ class MyAccountController extends Controller
 
     public function fund_account(Request $request)
     {
-        $platform = $this->getCurrentPlatform();
-
         try {
             $response = app()->make('FundPlatformAccountInteractor')->execute(new FundPlatformAccountRequest([
-                'platformID' => $platform->id,
+                'platformID' => $this->getCurrentPlatformID(),
                 'amount' => $request->amount,
             ]));
 
@@ -88,10 +87,11 @@ class MyAccountController extends Controller
         }
     }
 
-    private function getCurrentPlatform()
+    private function getCurrentPlatformID()
     {
         $user = auth()->user();
-        return (new PlatformManager())->getPlatformByID($user->platform_id);
+
+        return ($user) ? $user->platform_id : false;
     }
 
     /**

@@ -11,11 +11,16 @@ use Webaccess\ProjectSquarePayment\Requests\Signup\SignupRequest;
 use Webaccess\ProjectSquarePayment\Responses\Administrators\CreateAdministratorResponse;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
 use Webaccess\ProjectSquarePayment\Responses\Signup\CheckPlatformSlugResponse;
-use Webaccess\ProjectSquarePaymentLaravel\Services\PlatformManager;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentNodeRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
 
 class SignupController extends Controller
 {
+    public function __construct()
+    {
+        $this->nodeRepository = new EloquentNodeRepository();
+    }
+
     public function index(Request $request)
     {
         $users_count = ($request->users_count) ? $request->users_count : 1;
@@ -55,8 +60,7 @@ class SignupController extends Controller
                 return redirect()->route('signup');
             }
 
-
-            (new PlatformManager())->launchPlatformCreation($request->slug, $request->administrator_email, $request->users_count, $response->platformID);
+            $this->launchPlatformCreation($request->slug, $request->administrator_email, $request->users_count, $response->platformID);
             $request->session()->put('platformID', $response->platformID);
 
             return redirect()->route('confirmation');
@@ -87,6 +91,30 @@ class SignupController extends Controller
                 'error' => trans('projectsquare-payment::signup.platform_slug_verification_error'),
             ], 500);
         }
+    }
+
+    /**
+     * @param $slug
+     * @param $administratorEmail
+     * @param $usersCount
+     * @param $platformID
+     */
+    private function launchPlatformCreation($slug, $administratorEmail, $usersCount, $platformID)
+    {
+        $nodeIdentifier = $this->nodeRepository->getAvailableNodeIdentifier();
+        
+        if (!$nodeIdentifier) {
+            $nodeIdentifier = $this->nodeRepository->persistNewNode();
+            app()->make('PlatformAPIGateway')->launchEnvCreation($slug, $administratorEmail, $usersCount, $nodeIdentifier);
+        } else {
+            app()->make('PlatformAPIGateway')->launchAppCreation($nodeIdentifier, $slug, $administratorEmail, $usersCount);
+            $this->nodeRepository->setNodeUnavailable($nodeIdentifier);
+        }
+
+        $this->nodeRepository->updatePlatformNodeID($platformID, $nodeIdentifier);
+
+        $nodeIdentifier = $this->nodeRepository->persistNewNode();
+        app()->make('PlatformAPIGateway')->launchNodeCreation($nodeIdentifier);
     }
 
     /**

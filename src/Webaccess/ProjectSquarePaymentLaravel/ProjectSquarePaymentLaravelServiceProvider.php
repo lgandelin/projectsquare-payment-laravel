@@ -5,6 +5,7 @@ namespace Webaccess\ProjectSquarePaymentLaravel;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
+use Webaccess\ProjectSquarePayment\Context;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\DebitPlatformsAccountsInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\FundPlatformAccountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\GetPlatformUsageAmountInteractor;
@@ -17,7 +18,7 @@ use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentAdministratorRepo
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentPlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\DebitPlatformsAccounts;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\SetNodeAvailable;
-use Webaccess\ProjectSquarePayment\Context;
+use Webaccess\ProjectSquarePaymentLaravel\Services\PlatformAPIGateway;
 
 class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 {
@@ -85,6 +86,12 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 
         App::bind('UpdatePlatformsStatusesInteractor', function() {
             return new UpdatePlatformsStatusesInteractor(
+                new EloquentPlatformRepository()
+            );
+        });
+
+        App::bind('PlatformAPIGateway', function() {
+            return new PlatformAPIGateway(
                 new EloquentPlatformRepository()
             );
         });
