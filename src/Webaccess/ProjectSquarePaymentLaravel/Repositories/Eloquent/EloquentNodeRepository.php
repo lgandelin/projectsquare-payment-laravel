@@ -3,9 +3,10 @@
 namespace Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent;
 
 use Webaccess\ProjectSquarePaymentLaravel\Models\Node;
-use Webaccess\ProjectSquarePaymentLaravel\Models\Platform;
+use Webaccess\ProjectSquarePayment\Entities\Node as NodeEntity;
+use Webaccess\ProjectSquarePayment\Repositories\NodeRepository;
 
-class EloquentNodeRepository
+class EloquentNodeRepository implements NodeRepository
 {
     public function getAvailableNodeIdentifier()
     {
@@ -16,29 +17,19 @@ class EloquentNodeRepository
         return false;
     }
 
-    /**
-     * @param $platformID
-     * @param $nodeIdentifier
-     */
-    public function updatePlatformNodeID($platformID, $nodeIdentifier)
+    public function getByID($nodeID)
     {
-        $platform = Platform::find($platformID);
-        $node = Node::where('identifier', '=', $nodeIdentifier)->first();
-
-        if ($platform && $node) {
-            $platform->node_id = $node->id;
-            $platform->save();
-        }
+        return Node::find($nodeID);
     }
 
-    public function persistNewNode()
+    public function persist(NodeEntity $node)
     {
         $node = new Node();
-        $node->identifier = $this->generateNodeIdentifier();
-        $node->available = false;
+        $node->identifier = $node->getIdentifier();
+        $node->available = $node->isAvailable();
         $node->save();
 
-        return $node->identifier;
+        return $node->id;
     }
 
     /**

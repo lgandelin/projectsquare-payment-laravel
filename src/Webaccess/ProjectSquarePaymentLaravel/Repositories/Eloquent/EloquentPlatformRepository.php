@@ -4,6 +4,7 @@ namespace Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent;
 
 use Webaccess\ProjectSquarePayment\Entities\Platform as PlatformEntity;
 use Webaccess\ProjectSquarePayment\Repositories\PlatformRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Models\Node;
 use Webaccess\ProjectSquarePaymentLaravel\Models\Platform;
 
 class EloquentPlatformRepository implements PlatformRepository
@@ -72,5 +73,20 @@ class EloquentPlatformRepository implements PlatformRepository
     {
         if ($platform = Platform::find($platformID))
             $platform->delete();
+    }
+
+    /**
+     * @param $platformID
+     * @param $nodeIdentifier
+     */
+    public function updatePlatformNodeIdentifier($platformID, $nodeIdentifier)
+    {
+        $platform = Platform::find($platformID);
+        $node = Node::where('identifier', '=', $nodeIdentifier)->first();
+
+        if ($platform && $node) {
+            $platform->node_id = $node->id;
+            $platform->save();
+        }
     }
 }

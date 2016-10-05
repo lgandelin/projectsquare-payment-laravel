@@ -2,18 +2,21 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Services;
 
-class DigitalOceanService
+use Webaccess\ProjectSquarePayment\Services\RemoteInfrastructureGenerator;
+
+class DigitalOceanService implements RemoteInfrastructureGenerator
 {
     /**
+     * @param $nodeIdentifier
      * @param $slug
      * @param $administratorEmail
-     * @param $usersCount
-     * @param $nodeIdentifier
+     * @param $usersLimit
+     * @internal param $usersCount
      */
-    public static function launchEnvCreation($slug, $administratorEmail, $usersCount, $nodeIdentifier)
+    public function launchEnvCreation($nodeIdentifier, $slug, $administratorEmail, $usersLimit)
     {
         $fileName = env('ENVS_FOLDER') . $slug . '.txt';
-        $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL . $usersCount . PHP_EOL;
+        $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL . $usersLimit . PHP_EOL;
         file_put_contents($fileName, $fileContent);
     }
 
@@ -23,7 +26,7 @@ class DigitalOceanService
      * @param $administratorEmail
      * @param $usersLimit
      */
-    public static function launchAppCreation($nodeIdentifier, $slug, $administratorEmail, $usersLimit)
+    public function launchAppCreation($nodeIdentifier, $slug, $administratorEmail, $usersLimit)
     {
         $fileName = env('APPS_FOLDER') . $slug . '.txt';
         $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL . $usersLimit . PHP_EOL;
@@ -33,7 +36,7 @@ class DigitalOceanService
     /**
      * @param $nodeIdentifier
      */
-    public static function launchNodeCreation($nodeIdentifier)
+    public function launchNodeCreation($nodeIdentifier)
     {
         $fileName = env('NODES_FOLDER') . $nodeIdentifier . '.txt';
         $fileContent = $nodeIdentifier . PHP_EOL . "1" . PHP_EOL;

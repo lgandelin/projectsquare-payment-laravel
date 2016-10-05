@@ -61,7 +61,6 @@ class SignupController extends Controller
                 return redirect()->route('signup');
             }
 
-            $this->launchPlatformCreation($request->slug, $request->administrator_email, $request->users_count, $response->platformID);
             $request->session()->put('platformID', $response->platformID);
 
             return redirect()->route('confirmation');
@@ -92,30 +91,6 @@ class SignupController extends Controller
                 'error' => trans('projectsquare-payment::signup.platform_slug_verification_error'),
             ], 500);
         }
-    }
-
-    /**
-     * @param $slug
-     * @param $administratorEmail
-     * @param $usersCount
-     * @param $platformID
-     */
-    private function launchPlatformCreation($slug, $administratorEmail, $usersCount, $platformID)
-    {
-        $nodeIdentifier = $this->nodeRepository->getAvailableNodeIdentifier();
-
-        if (!$nodeIdentifier) {
-            $nodeIdentifier = $this->nodeRepository->persistNewNode();
-            DigitalOceanService::launchEnvCreation($slug, $administratorEmail, $usersCount, $nodeIdentifier);
-        } else {
-            DigitalOceanService::launchAppCreation($nodeIdentifier, $slug, $administratorEmail, $usersCount);
-            $this->nodeRepository->setNodeUnavailable($nodeIdentifier);
-        }
-
-        $this->nodeRepository->updatePlatformNodeID($platformID, $nodeIdentifier);
-
-        $nodeIdentifier = $this->nodeRepository->persistNewNode();
-        DigitalOceanService::launchNodeCreation($nodeIdentifier);
     }
 
     /**

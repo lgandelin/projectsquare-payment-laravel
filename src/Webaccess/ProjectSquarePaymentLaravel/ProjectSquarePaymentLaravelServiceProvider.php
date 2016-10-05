@@ -13,12 +13,14 @@ use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformUsersCoun
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformsStatusesInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\CheckPlatformSlugInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\SignupInteractor;
-use Webaccess\ProjectSquarePaymentLaravel\Repositories\Guzzle\GuzzleRemotePlatformRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Commands\DebitPlatformsAccounts;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\UpdatePlatformsStatuses;
+use Webaccess\ProjectSquarePaymentLaravel\Commands\SetNodeAvailable;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentNodeRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\Guzzle\GuzzleRemotePlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentAdministratorRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
-use Webaccess\ProjectSquarePaymentLaravel\Commands\DebitPlatformsAccounts;
-use Webaccess\ProjectSquarePaymentLaravel\Commands\SetNodeAvailable;
+use Webaccess\ProjectSquarePaymentLaravel\Services\DigitalOceanService;
 
 class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 {
@@ -50,7 +52,9 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
         App::bind('SignupInteractor', function () {
              return new SignupInteractor(
                  new EloquentPlatformRepository(),
-                 new EloquentAdministratorRepository()
+                 new EloquentAdministratorRepository(),
+                 new EloquentNodeRepository(),
+                 new DigitalOceanService()
              );
         });
 
