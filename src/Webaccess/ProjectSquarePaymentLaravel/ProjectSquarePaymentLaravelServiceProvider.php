@@ -13,12 +13,12 @@ use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformUsersCoun
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformsStatusesInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\CheckPlatformSlugInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\SignupInteractor;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\Guzzle\GuzzleRemotePlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\UpdatePlatformsStatuses;
-use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentAdministratorRepository;
-use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentPlatformRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentAdministratorRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\DebitPlatformsAccounts;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\SetNodeAvailable;
-use Webaccess\ProjectSquarePayment\Services\ProjectsquareAPIService;
 
 class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 {
@@ -69,7 +69,7 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
         App::bind('UpdatePlatformUsersCountInteractor', function() {
             return new UpdatePlatformUsersCountInteractor(
                 new EloquentPlatformRepository(),
-                new ProjectsquareAPIService()
+                new GuzzleRemotePlatformRepository(env('API_TOKEN'))
             );
         });
 

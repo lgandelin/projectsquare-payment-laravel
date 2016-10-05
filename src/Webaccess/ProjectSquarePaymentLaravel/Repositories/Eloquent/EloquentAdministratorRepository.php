@@ -1,6 +1,6 @@
 <?php
 
-namespace Webaccess\ProjectSquarePaymentLaravel\Repositories;
+namespace Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent;
 
 use Webaccess\ProjectSquarePayment\Entities\Administrator as AdministratorEntity;
 use Webaccess\ProjectSquarePayment\Repositories\AdministratorRepository;

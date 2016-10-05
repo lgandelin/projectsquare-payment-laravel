@@ -1,6 +1,6 @@
 <?php
 
-namespace Webaccess\ProjectSquarePaymentLaravel\Repositories;
+namespace Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent;
 
 use Webaccess\ProjectSquarePayment\Entities\Platform as PlatformEntity;
 use Webaccess\ProjectSquarePayment\Repositories\PlatformRepository;

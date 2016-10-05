@@ -5,7 +5,7 @@ namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Webaccess\ProjectSquarePaymentLaravel\Repositories\EloquentPlatformRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
 use Webaccess\ProjectSquarePayment\Requests\Platforms\FundPlatformAccountRequest;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\FundPlatformAccountResponse;
