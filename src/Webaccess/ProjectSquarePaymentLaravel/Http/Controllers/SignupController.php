@@ -17,11 +17,10 @@ use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
 
 class SignupController extends Controller
 {
-    public function __construct()
-    {
-        $this->nodeRepository = new EloquentNodeRepository();
-    }
-
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function index(Request $request)
     {
         $users_count = ($request->users_count) ? $request->users_count : 1;
@@ -36,6 +35,10 @@ class SignupController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function handler(Request $request)
     {
         $request->flashExcept('administrator_password');
@@ -72,6 +75,10 @@ class SignupController extends Controller
         return redirect()->route('signup');
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function check_slug(Request $request)
     {
         try {

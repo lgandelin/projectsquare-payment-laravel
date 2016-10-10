@@ -43,7 +43,7 @@ $(document).ready(function() {
     $('.btn-valid-fund-account').click(function() {
         $.ajax({
             type: "POST",
-            url: route_fund_account,
+            url: route_payment_form,
             data: {
                 _token: $('input[name="_token"]').val(),
                 amount: $('input[name="amount"]').val()
@@ -52,8 +52,9 @@ $(document).ready(function() {
                 if (data.success == false) {
                     alert(data.error);
                 } else {
-                    alert('Paiement effectué avec succès');
-                    window.location.reload();
+                    $('#payment-form input[name="Data"]').val(data.data);
+                    $('#payment-form input[name="Seal"]').val(data.seal);
+                    $('#payment-form').submit();
                 }
             },
         });

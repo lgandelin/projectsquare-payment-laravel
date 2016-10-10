@@ -50,9 +50,14 @@
                 <p class="daily-usage">Usage quotidien : <span class="value">{{ number_format($daily_cost, 2) }}</span>€</p>
                 <p class="monthly-usage">Usage mensuel : <span class="value">{{ number_format($monthly_cost, 2) }}</span>€</p>
 
-
                 <input type="text" class="form-control amount" name="amount" style="width:100px; display: inline-block;" placeholder="ex: 50.00" /> €
                 <input type="button" class="btn btn-success btn-valid-fund-account" value="Réapprovisionner" />
+
+                <form id="payment-form" method="post" action="{{ env('MERCANET_PAYMENT_URL') }}">
+                    <input type="hidden" name="Data" value="">
+                    <input type="hidden" name="InterfaceVersion" value="{{ env('MERCANET_VERSION') }}">
+                    <input type="hidden" name="Seal" value="">
+                </form>
 
                 <hr>
 
@@ -71,6 +76,6 @@
     {{ csrf_field() }}
 
     <script>var route_update_users_count = "{{ route('update_users_count') }}";</script>
-    <script>var route_fund_account = "{{ route('fund_account') }}";</script>
+    <script>var route_payment_form = "{{ route('payment_form') }}";</script>
     <script src="{{ asset('js/my_account.js') }}"></script>
 @endsection
