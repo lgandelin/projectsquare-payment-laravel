@@ -11,8 +11,6 @@ use Webaccess\ProjectSquarePayment\Requests\Signup\SignupRequest;
 use Webaccess\ProjectSquarePayment\Responses\Administrators\CreateAdministratorResponse;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
 use Webaccess\ProjectSquarePayment\Responses\Signup\CheckPlatformSlugResponse;
-use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentNodeRepository;
-use Webaccess\ProjectSquarePaymentLaravel\Services\DigitalOceanService;
 use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
 
 class SignupController extends Controller

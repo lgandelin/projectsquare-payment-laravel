@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Webaccess\ProjectSquareLaravel\Models\Administrator;
 
-class LoginController
+class LoginController extends Controller
 {
     public function login(Request $request)
     {

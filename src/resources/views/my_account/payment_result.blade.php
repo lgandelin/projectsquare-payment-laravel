@@ -28,6 +28,10 @@
                 <a style="float: right" href="{{ route('logout') }}">Se déconnecter</a>
 
                 Votre paiement a été effectué avec succès !
+
+                <br/>
+
+                <a class="btn btn-primary" href="{{ route('my_account') }}">Revenir à mon compte</a>
             </div>
         </div>
     </div>
