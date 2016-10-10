@@ -12,13 +12,16 @@ Route::group(['middleware' => ['web']], function () {
     //MON COMPTE
     Route::get('/', array('as' => 'my_account', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@index'));
     Route::post('/update_users_count', array('as' => 'update_users_count', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@udpate_users_count'));
-    Route::post('/payment_form', array('as' => 'payment_form', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_form'));
+
+        //PAIEMENT
+        Route::post('/payment_form', array('as' => 'payment_form', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_form'));
+        Route::get('/payment_result/{transaction_id}', array('as' => 'payment_result', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_result'));
 
     //SIGNUP
     Route::get('/inscription/{users_count?}', array('as' => 'signup', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\SignupController@index'));
     Route::post('/inscription', array('as' => 'signup_handler', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\SignupController@handler'));
     Route::post('/signup_check_slug', array('as' => 'signup_check_slug', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\SignupController@check_slug'));
-    Route::get('/confirmation', array('as' => 'confirmation', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\SignupConfirmationController@index'));
+    Route::get('/signup_confirmation', array('as' => 'signup_confirmation', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\SignupConfirmationController@index'));
     Route::get('/signup_confirmation_check_platform_url', array('as' => 'signup_confirmation_check_platform_url', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\SignupConfirmationController@check_platform_url'));
 });
 

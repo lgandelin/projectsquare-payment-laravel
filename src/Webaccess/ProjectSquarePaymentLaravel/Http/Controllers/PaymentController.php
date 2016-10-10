@@ -98,6 +98,21 @@ class PaymentController extends Controller
                 Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
             }
         }
+
+        return redirect()->route('payment_result', ['transactionID' => $transactionIdentifier]);
+    }
+
+    /**
+     * @param $transactionIdentifier
+     * @return mixed
+     */
+    public function payment_result($transactionIdentifier)
+    {
+        $transaction = $this->getTransactionByIdentifier($transactionIdentifier);
+
+        return view('projectsquare-payment::my_account.payment_result', [
+            'transaction' => $transaction
+        ]);
     }
 
     /**

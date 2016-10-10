@@ -66,7 +66,7 @@ class SignupController extends Controller
 
             $request->session()->put('platformID', $response->platformID);
 
-            return redirect()->route('confirmation');
+            return redirect()->route('signup_confirmation');
         } catch (Exception $e) {
             $request->session()->flash('error', trans('projectsquare-payment::signup.platform_generic_error'));
             Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
