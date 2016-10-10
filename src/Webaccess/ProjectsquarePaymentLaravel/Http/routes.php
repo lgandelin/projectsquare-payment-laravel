@@ -12,7 +12,6 @@ Route::group(['middleware' => ['web']], function () {
     //MON COMPTE
     Route::get('/', array('as' => 'my_account', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@index'));
     Route::post('/update_users_count', array('as' => 'update_users_count', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@udpate_users_count'));
-    //Route::post('/fund_account', array('as' => 'fund_account', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@fund_account'));
     Route::post('/payment_form', array('as' => 'payment_form', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_form'));
 
     //SIGNUP

@@ -57,27 +57,32 @@ class MercanetService
 
     /**
      * @param $data
-     * @return mixed
+     * @return array
      */
-    public static function extractTransactionIdentifierFromData($data)
+    public static function extractParametersFromData($data)
     {
-        if (preg_match('/transactionReference=([a-zA-Z0-9\_]*)/', $data, $matches)) {
-            return isset($matches[1]) ? $matches[1] : false;
+        $parameters = [];
+        $pairs = explode('|', $data);
+
+        foreach ($pairs as $i) {
+            //split into name and value
+            list($name,$value) = explode('=', $i, 2);
+
+            //if name already exists
+            if( isset($parameters[$name]) ) {
+                //stick multiple values into an array
+                if( is_array($parameters[$name]) ) {
+                    $parameters[$name][] = $value;
+                }
+                else {
+                    $parameters[$name] = array($parameters[$name], $value);
+                }
+            }
+            else {
+                $parameters[$name] = $value;
+            }
         }
 
-        return false;
-    }
-
-    /**
-     * @param $data
-     * @return mixed
-     */
-    public static function extractAmountFromData($data)
-    {
-        if (preg_match('/amount=([0-9\.]*)/', $data, $matches)) {
-            return isset($matches[1]) ? floatval($matches[1]) / 100 : false;
-        }
-
-        return false;
+        return $parameters;
     }
 }
