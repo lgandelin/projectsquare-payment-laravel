@@ -24,12 +24,12 @@ class EloquentNodeRepository implements NodeRepository
 
     public function persist(NodeEntity $node)
     {
-        $node = new Node();
-        $node->identifier = $node->getIdentifier();
-        $node->available = $node->isAvailable();
-        $node->save();
+        $nodeModel = new Node();
+        $nodeModel->identifier = $node->getIdentifier();
+        $nodeModel->available = $node->isAvailable();
+        $nodeModel->save();
 
-        return $node->id;
+        return $nodeModel->id;
     }
 
     /**
@@ -40,10 +40,5 @@ class EloquentNodeRepository implements NodeRepository
         $node = Node::where('identifier', '=', $nodeIdentifier)->first();
         $node->available = false;
         $node->save();
-    }
-
-    private function generateNodeIdentifier()
-    {
-        return uniqid();
     }
 }
