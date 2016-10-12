@@ -12,6 +12,10 @@ class SignupConfirmationController extends Controller
         return view('projectsquare-payment::signup.confirmation');
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function check_platform_url(Request $request)
     {
         $platformURL = '';

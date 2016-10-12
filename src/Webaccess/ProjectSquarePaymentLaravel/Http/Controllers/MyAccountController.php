@@ -18,6 +18,10 @@ class MyAccountController extends Controller
         $this->platformRepository = new EloquentPlatformRepository();
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function index(Request $request)
     {
         $user = auth()->user();
@@ -34,12 +38,10 @@ class MyAccountController extends Controller
 
     public function udpate_users_count(Request $request)
     {
-        $usersCount = $request->users_count;
-
         try {
             $response = app()->make('UpdatePlatformUsersCountInteractor')->execute(new UpdatePlatformUsersCountRequest([
                 'platformID' => $this->getCurrentPlatformID(),
-                'usersCount' => $usersCount,
+                'usersCount' => $request->users_count,
             ]));
 
             return response()->json([

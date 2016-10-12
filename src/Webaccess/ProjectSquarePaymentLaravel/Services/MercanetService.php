@@ -2,7 +2,9 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Services;
 
-class MercanetService
+use Webaccess\ProjectSquarePayment\Services\BankService;
+
+class MercanetService implements BankService
 {
     public static function generateFormFields($amount, $transactionReference)
     {
@@ -28,7 +30,7 @@ class MercanetService
      * @param $seal
      * @return bool
      */
-    public static function checkSignature($data, $seal)
+    public function checkSignature($data, $seal)
     {
         return self::getSealFromData($data) === $seal;
     }

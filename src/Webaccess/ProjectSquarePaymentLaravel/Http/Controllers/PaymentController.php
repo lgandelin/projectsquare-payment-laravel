@@ -4,12 +4,12 @@ namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Webaccess\ProjectSquarePaymentLaravel\Models\Transaction;
+
+use Webaccess\ProjectSquarePayment\Requests\Payment\HandleBankCallRequest;
+use Webaccess\ProjectSquarePayment\Responses\Payment\HandleBankCallResponse;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Services\MercanetService;
 use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
-use Webaccess\ProjectSquarePayment\Requests\Platforms\FundPlatformAccountRequest;
-use Webaccess\ProjectSquarePayment\Responses\Platforms\FundPlatformAccountResponse;
 
 class PaymentController extends Controller
 {
@@ -46,60 +46,41 @@ class PaymentController extends Controller
         $transactionIdentifier = $parameters['transactionReference'];
         $amount = floatval($parameters['amount']) / 100;
 
-        Logger::info('New result from bank : ', $parameters);
+        Logger::info('New call from the bank : ', $parameters);
 
-        if (!$transaction = $this->getTransactionByIdentifier($transactionIdentifier)) {
-            Logger::error('Transaction not found', 'PaymentController', '43', [
-                'transactionID' => $transactionIdentifier,
+        try {
+            $response = app()->make('HandleBankCallInteractor')->execute(new HandleBankCallRequest([
+                'transactionIdentifier' => $transactionIdentifier,
                 'amount' => $amount,
-                'platformID' => $transaction->platform_id,
-            ]);
-        } elseif (!MercanetService::checkSignature($request->Data, $request->Seal)) {
-            Logger::error('Signature check failed', 'PaymentController', '52', [
-                'transactionID' => $transactionIdentifier,
-                'amount' => $amount,
-                'platformID' => $transaction->platform_id,
-            ]);
-        } elseif ($transaction->amount != $amount) {
-            Logger::error('Amount verification failed', 'PaymentController', '58', [
-                'transactionID' => $transactionIdentifier,
-                'amount' => $amount,
-                'platformID' => $transaction->platform_id,
-            ]);
-        } elseif ($transaction->status == Transaction::TRANSACTION_STATUS_IN_PROGRESS) {
-            try {
-                $response = app()->make('FundPlatformAccountInteractor')->execute(new FundPlatformAccountRequest([
-                    'platformID' => $transaction->platform_id,
+                'data' => $request->Data,
+                'seal' => $request->Seal,
+                'parameters' => $parameters,
+            ]));
+
+            if (!$response->success) {
+                Logger::error('An error has occured in HandleBankCallInteractor class', 'PaymentController', null, [
+                    'transactionIdentifier' => $transactionIdentifier,
+                    'parameters' => $parameters,
                     'amount' => $amount,
-                ]));
+                    'errorCode' => $response->errorCode,
+                ]);
 
-                if (!$response->success) {
-                    Logger::error('FundPlatformAccountInteractor error', 'PaymentController', 70, [
-                        'transactionID' => $transactionIdentifier,
-                        'amount' => $amount,
-                        'platformID' => $transaction->platform_id,
-                        'errorCode' => $response->errorCode,
-                    ]);
-                } else {
-                    $transaction = $this->getTransactionByIdentifier($transactionIdentifier);
-                    $transaction->payment_mean = $parameters['paymentMeanType'] . ' - ' . $parameters['paymentMeanBrand'];
-                    $transaction->status = Transaction::TRANSACTION_STATUS_VALIDATED;
-                    $transaction->response_code = $parameters['responseCode'];
-                    $transaction->save();
+                $request->session()->flash('error', trans('projectsquare-payment::payment.generic_error'));
 
-                    Logger::info('Nouvelle transaction effectuée avec succès : ', [
-                        'transactionIdentifier' => $transactionIdentifier,
-                        'platformID' => $transaction->platform_id,
-                        'amount' => $transaction->amount,
-                    ]);
-                }
-
-            } catch (Exception $e) {
-                Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
+                return redirect()->route('my-account');
+            } else {
+                Logger::info('New transaction successfully processed ! : ', $response);
             }
+
+        } catch (Exception $e) {
+            Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
+
+            $request->session()->flash('error', trans('projectsquare-payment::payment.generic_error'));
+
+            return redirect()->route('my-account');
         }
 
-        return redirect()->route('payment_result', ['transactionID' => $transactionIdentifier]);
+        return redirect()->route('payment_result', ['transaction_identifier' => $transactionIdentifier]);
     }
 
     /**

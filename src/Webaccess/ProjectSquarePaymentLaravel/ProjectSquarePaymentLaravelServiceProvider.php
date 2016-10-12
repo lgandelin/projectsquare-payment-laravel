@@ -5,9 +5,8 @@ namespace Webaccess\ProjectSquarePaymentLaravel;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
-use Webaccess\ProjectSquarePayment\Context;
+use Webaccess\ProjectSquarePayment\Interactors\Payment\HandleBankCallInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\DebitPlatformsAccountsInteractor;
-use Webaccess\ProjectSquarePayment\Interactors\Platforms\FundPlatformAccountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\GetPlatformUsageAmountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformUsersCountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformsStatusesInteractor;
@@ -17,10 +16,12 @@ use Webaccess\ProjectSquarePaymentLaravel\Commands\DebitPlatformsAccounts;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\UpdatePlatformsStatuses;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\SetNodeAvailable;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentNodeRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Guzzle\GuzzleRemotePlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentAdministratorRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Services\DigitalOceanService;
+use Webaccess\ProjectSquarePaymentLaravel\Services\MercanetService;
 
 class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 {
@@ -83,9 +84,11 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
             );
         });
 
-        App::bind('FundPlatformAccountInteractor', function() {
-            return new FundPlatformAccountInteractor(
-                new EloquentPlatformRepository()
+        App::bind('HandleBankCallInteractor', function() {
+            return new HandleBankCallInteractor(
+                new EloquentPlatformRepository(),
+                new EloquentTransactionRepository(),
+                new MercanetService()
             );
         });
 
