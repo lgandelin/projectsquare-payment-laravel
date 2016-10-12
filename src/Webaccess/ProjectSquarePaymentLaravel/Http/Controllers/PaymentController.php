@@ -48,6 +48,7 @@ class PaymentController extends Controller
 
         Logger::info('New call from the bank : ', $parameters);
 
+        $success = false;
         try {
             $response = app()->make('HandleBankCallInteractor')->execute(new HandleBankCallRequest([
                 'transactionIdentifier' => $transactionIdentifier,
@@ -58,41 +59,35 @@ class PaymentController extends Controller
             ]));
 
             if (!$response->success) {
-                Logger::error('An error has occured in HandleBankCallInteractor class', 'PaymentController', null, [
+                Logger::error('HandleBankCallInteractor call return an error (' . $response->errorCode . ')', 'PaymentController', null, [
                     'transactionIdentifier' => $transactionIdentifier,
                     'parameters' => $parameters,
                     'amount' => $amount,
                     'errorCode' => $response->errorCode,
                 ]);
-
-                $request->session()->flash('error', trans('projectsquare-payment::payment.generic_error'));
-
-                return redirect()->route('my-account');
             } else {
-                Logger::info('New transaction successfully processed ! : ', $response);
+                $success = true;
+                Logger::info('New transaction successfully processed ! : (' . $transactionIdentifier . ')', $response);
             }
 
         } catch (Exception $e) {
             Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
-
-            $request->session()->flash('error', trans('projectsquare-payment::payment.generic_error'));
-
-            return redirect()->route('my-account');
         }
 
-        return redirect()->route('payment_result', ['transaction_identifier' => $transactionIdentifier]);
+        return redirect()->route('payment_result', ['success' => ($success === true) ? '1' : '0', 'transaction_identifier' => $transactionIdentifier]);
     }
 
     /**
      * @param $transactionIdentifier
      * @return mixed
      */
-    public function payment_result($transactionIdentifier)
+    public function payment_result($success, $transactionIdentifier)
     {
         $transaction = $this->getTransactionByIdentifier($transactionIdentifier);
 
         return view('projectsquare-payment::my_account.payment_result', [
-            'transaction' => $transaction
+            'success' => $success,
+            'transaction' => $transaction,
         ]);
     }
 
