@@ -5,6 +5,7 @@ namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Barryvdh\DomPDF\Facade as PDF;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
 use Webaccess\ProjectSquarePayment\Requests\Platforms\UpdatePlatformUsersCountRequest;
@@ -62,6 +63,17 @@ class MyAccountController extends Controller
         }
     }
 
+    public function invoice(Request $request)
+    {
+        $transaction = $this->getInvoice($request->invoice_identifier);
+
+        $pdf = PDF::loadView('projectsquare-payment::my_account.invoice', [
+            'invoice' => $transaction
+        ]);
+
+        return (isset($request->download) && $request->download == 1) ? $pdf->download('facture-projectsquare-' . $request->invoice_identifier . '.pdf') : $pdf->stream();
+    }
+
     private function getCurrentPlatformID()
     {
         $user = auth()->user();
@@ -86,11 +98,19 @@ class MyAccountController extends Controller
 
     private function getInvoices($platformID)
     {
-        $transactions = $this->transactionRepository->getByPlatformID($platformID);
-        foreach ($transactions as $transaction) {
-            $transaction->creation_date = \DateTime::createFromFormat('Y-m-d H:i:s', $transaction->created_at)->format('d/m/Y H:i:s');
+        $invoices = $this->transactionRepository->getByPlatformID($platformID);
+        foreach ($invoices as $invoice) {
+            $invoice->creation_date = \DateTime::createFromFormat('Y-m-d H:i:s', $invoice->created_at)->format('d/m/Y H:i:s');
         }
 
-        return $transactions;
+        return $invoices;
+    }
+
+    private function getInvoice($transactionIdentifier)
+    {
+        $invoice = $this->transactionRepository->getByIdentifier($transactionIdentifier);
+        $invoice->creation_date = \DateTime::createFromFormat('Y-m-d H:i:s', $invoice->getCreationDate())->format('d/m/Y H:i:s');
+
+        return $invoice;
     }
 }

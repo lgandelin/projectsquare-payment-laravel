@@ -11,6 +11,16 @@ class EloquentTransactionRepository implements TransactionRepository
     /**
      * @param $transactionIdentifier
      * @return mixed
+     * @param $platformID
+     */
+    public function getByPlatformID($platformID)
+    {
+        return Transaction::where('platform_id', '=', $platformID)->where('status', '=', TransactionEntity::TRANSACTION_STATUS_VALIDATED)->where('response_code', '=', '00')->get();
+    }
+
+    /**
+     * @param $transactionIdentifier
+     * @return mixed
      */
     public function getByIdentifier($transactionIdentifier)
     {
@@ -39,14 +49,6 @@ class EloquentTransactionRepository implements TransactionRepository
         return $transactionModel->id;
     }
 
-    /**
-     * @param $platformID
-     */
-    public function getByPlatformID($platformID)
-    {
-        return Transaction::where('platform_id', '=', $platformID)->where('status', '=', TransactionEntity::TRANSACTION_STATUS_VALIDATED)->where('response_code', '=', '00')->get();
-    }
-
     private function convertModelToEntity($transactionModel)
     {
         $transaction = new TransactionEntity();
@@ -57,6 +59,7 @@ class EloquentTransactionRepository implements TransactionRepository
         $transaction->setPlatformID($transactionModel->platform_id);
         $transaction->setAmount($transactionModel->amount);
         $transaction->setStatus($transactionModel->status);
+        $transaction->setCreationDate($transactionModel->created_at);
 
         return $transaction;
     }

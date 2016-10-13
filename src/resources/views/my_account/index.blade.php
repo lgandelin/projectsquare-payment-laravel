@@ -77,7 +77,7 @@
                             <th>Date</th>
                             <th>Montant</th>
                             <th>Moyen de paiement</th>
-                            <th width="160">Action</th>
+                            <th width="190" align="right">Action</th>
                         </tr>
                         @foreach ($invoices as $invoice)
                         <tr>
@@ -85,7 +85,10 @@
                             <td>{{ $invoice->creation_date }}</td>
                             <td>{{ number_format($invoice->amount, 2) }}€</td>
                             <td>{{ $invoice->payment_mean }}</td>
-                            <td><a href="#" class="btn btn-info">Voir</a> <a href="#" class="btn btn-success">Télécharger</a></td>
+                            <td>
+                                <a href="{{ route('invoice', ['invoice_identifier' => $invoice->identifier, 'download' => false]) }}" target="_blank" class="btn btn-info">Voir</a>
+                                <a href="{{ route('invoice', ['invoice_identifier' => $invoice->identifier, 'download' => true]) }}" class="btn btn-success">Télécharger</a>
+                            </td>
                         </tr>
                         @endforeach
                     </table>

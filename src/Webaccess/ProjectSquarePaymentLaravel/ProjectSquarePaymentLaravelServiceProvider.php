@@ -125,5 +125,7 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
             DebitPlatformsAccounts::class,
             UpdatePlatformsStatuses::class,
         ]);
+
+        App::register(\Barryvdh\DomPDF\ServiceProvider::class);
     }
 }
