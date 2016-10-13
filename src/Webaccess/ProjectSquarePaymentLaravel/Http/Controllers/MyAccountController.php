@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
 use Webaccess\ProjectSquarePayment\Requests\Platforms\UpdatePlatformUsersCountRequest;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\UpdatePlatformUsersCountResponse;
 
@@ -15,6 +16,7 @@ class MyAccountController extends Controller
     {
         $this->middleware('auth');
         $this->platformRepository = new EloquentPlatformRepository();
+        $this->transactionRepository = new EloquentTransactionRepository();
     }
 
     /**
@@ -32,6 +34,7 @@ class MyAccountController extends Controller
             'balance' => $platform->getAccountBalance(),
             'daily_cost' => app()->make('GetPlatformUsageAmountInteractor')->getDailyCost($this->getCurrentPlatformID()),
             'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),
+            'invoices' => $this->getInvoices($this->getCurrentPlatformID())
         ]);
     }
 
@@ -79,5 +82,15 @@ class MyAccountController extends Controller
         ];
 
         return (isset($errorMessages[$errorCode])) ? $errorMessages[$errorCode] :  trans('projectsquare-payment::my_account.update_platform_users_count_generic_error');
+    }
+
+    private function getInvoices($platformID)
+    {
+        $transactions = $this->transactionRepository->getByPlatformID($platformID);
+        foreach ($transactions as $transaction) {
+            $transaction->creation_date = \DateTime::createFromFormat('Y-m-d H:i:s', $transaction->created_at)->format('d/m/Y H:i:s');
+        }
+
+        return $transactions;
     }
 }

@@ -39,6 +39,14 @@ class EloquentTransactionRepository implements TransactionRepository
         return $transactionModel->id;
     }
 
+    /**
+     * @param $platformID
+     */
+    public function getByPlatformID($platformID)
+    {
+        return Transaction::where('platform_id', '=', $platformID)->where('status', '=', TransactionEntity::TRANSACTION_STATUS_VALIDATED)->where('response_code', '=', '00')->get();
+    }
+
     private function convertModelToEntity($transactionModel)
     {
         $transaction = new TransactionEntity();

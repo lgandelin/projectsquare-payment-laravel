@@ -68,7 +68,32 @@
 
                 <hr>
 
-                <h3>Abonnement</h3>
+                <h3>Historique de facturation</h3>
+
+                @if ($invoices)
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Identifiant</th>
+                            <th>Date</th>
+                            <th>Montant</th>
+                            <th>Moyen de paiement</th>
+                            <th width="160">Action</th>
+                        </tr>
+                        @foreach ($invoices as $invoice)
+                        <tr>
+                            <td>{{ $invoice->identifier }}</td>
+                            <td>{{ $invoice->creation_date }}</td>
+                            <td>{{ number_format($invoice->amount, 2) }}€</td>
+                            <td>{{ $invoice->payment_mean }}</td>
+                            <td><a href="#" class="btn btn-info">Voir</a> <a href="#" class="btn btn-success">Télécharger</a></td>
+                        </tr>
+                        @endforeach
+                    </table>
+                @endif
+
+                <hr>
+
+                <h3>Se désinscrire</h3>
                 <input type="button" class="btn btn-danger" value="Se désinscrire" />
             </div>
         </div>
