@@ -9,9 +9,8 @@ use Webaccess\ProjectSquarePaymentLaravel\Models\Transaction;
 class EloquentTransactionRepository implements TransactionRepository
 {
     /**
-     * @param $transactionIdentifier
-     * @return mixed
      * @param $platformID
+     * @return mixed
      */
     public function getByPlatformID($platformID)
     {
@@ -49,6 +48,10 @@ class EloquentTransactionRepository implements TransactionRepository
         return $transactionModel->id;
     }
 
+    /**
+     * @param $transactionModel
+     * @return TransactionEntity
+     */
     private function convertModelToEntity($transactionModel)
     {
         $transaction = new TransactionEntity();

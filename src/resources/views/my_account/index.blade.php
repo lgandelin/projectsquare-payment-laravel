@@ -83,7 +83,7 @@
                         <tr>
                             <td>{{ $invoice->identifier }}</td>
                             <td>{{ $invoice->creation_date }}</td>
-                            <td>{{ number_format($invoice->amount, 2) }}€</td>
+                            <td>{{ number_format($invoice->amount, 2) }}€ TTC</td>
                             <td>{{ $invoice->payment_mean }}</td>
                             <td>
                                 <a href="{{ route('invoice', ['invoice_identifier' => $invoice->identifier, 'download' => false]) }}" target="_blank" class="btn btn-info">Voir</a>
@@ -98,6 +98,7 @@
 
                 <h3>Se désinscrire</h3>
                 <input type="button" class="btn btn-danger" value="Se désinscrire" />
+
             </div>
         </div>
     </div>

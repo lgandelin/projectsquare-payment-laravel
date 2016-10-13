@@ -17,6 +17,15 @@ class EloquentAdministratorRepository implements AdministratorRepository
         return false;
     }
 
+    public function getByPlatformID($platformID)
+    {
+        if ($administratorModel = Administrator::where('platform_id', '=', $platformID)->first()) {
+            return $this->convertModelToEntity($administratorModel);
+        }
+
+        return false;
+    }
+
     public function persist(AdministratorEntity $administrator)
     {
         $administratorModel = ($administrator->getId()) ? Administrator::find($administrator->getID()) : new Administrator();
@@ -44,7 +53,7 @@ class EloquentAdministratorRepository implements AdministratorRepository
         $administrator->setBillingAddress($administratorModel->billing_address);
         $administrator->setZipCode($administratorModel->zipcode);
         $administrator->setCity($administratorModel->city);
-        $administrator->setPlatformID($administratorModel->administrator_id);
+        $administrator->setPlatformID($administratorModel->platform_id);
 
         return $administrator;
     }

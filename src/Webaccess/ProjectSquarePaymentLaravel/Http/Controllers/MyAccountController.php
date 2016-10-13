@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Barryvdh\DomPDF\Facade as PDF;
+use stdClass;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentAdministratorRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
 use Webaccess\ProjectSquarePayment\Requests\Platforms\UpdatePlatformUsersCountRequest;
@@ -18,6 +20,7 @@ class MyAccountController extends Controller
         $this->middleware('auth');
         $this->platformRepository = new EloquentPlatformRepository();
         $this->transactionRepository = new EloquentTransactionRepository();
+        $this->administratorRepository = new EloquentAdministratorRepository();
     }
 
     /**
@@ -67,11 +70,15 @@ class MyAccountController extends Controller
     {
         $transaction = $this->getInvoice($request->invoice_identifier);
 
-        $pdf = PDF::loadView('projectsquare-payment::my_account.invoice', [
+        /*$pdf = PDF::loadView('projectsquare-payment::my_account.invoice', [
             'invoice' => $transaction
         ]);
 
-        return (isset($request->download) && $request->download == 1) ? $pdf->download('facture-projectsquare-' . $request->invoice_identifier . '.pdf') : $pdf->stream();
+        return (isset($request->download) && $request->download == 1) ? $pdf->download('facture-' . $request->invoice_identifier . '.pdf') : $pdf->stream();*/
+
+        return view('projectsquare-payment::my_account.invoice', [
+            'invoice' => $transaction
+        ]);
     }
 
     private function getCurrentPlatformID()
@@ -108,8 +115,17 @@ class MyAccountController extends Controller
 
     private function getInvoice($transactionIdentifier)
     {
-        $invoice = $this->transactionRepository->getByIdentifier($transactionIdentifier);
-        $invoice->creation_date = \DateTime::createFromFormat('Y-m-d H:i:s', $invoice->getCreationDate())->format('d/m/Y H:i:s');
+        $transaction = $this->transactionRepository->getByIdentifier($transactionIdentifier);
+        $transaction->creation_date = \DateTime::createFromFormat('Y-m-d H:i:s', $transaction->getCreationDate())->format('d/m/Y H:i:s');
+
+        $administrator = $this->administratorRepository->getByPlatformID($transaction->getPlatformID());
+
+        $platform = $this->platformRepository->getByID($transaction->getPlatformID());
+
+        $invoice = new StdClass();
+        $invoice->transaction = $transaction;
+        $invoice->administrator = $administrator;
+        $invoice->platform = $platform;
 
         return $invoice;
     }
