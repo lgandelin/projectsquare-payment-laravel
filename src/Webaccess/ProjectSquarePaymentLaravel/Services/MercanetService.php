@@ -6,7 +6,7 @@ use Webaccess\ProjectSquarePayment\Contracts\BankService;
 
 class MercanetService implements BankService
 {
-    public static function generateFormFields($amount, $transactionReference)
+    public function generateFormFields($transactionIdentifier, $amount)
     {
         $merchantID = env('MERCANET_MERCHANT_ID');
         $keyVersion = env('MERCANET_KEY_VERSION');
@@ -15,7 +15,7 @@ class MercanetService implements BankService
             'currencyCode' => 978,
             'merchantId' => $merchantID,
             'normalReturnUrl' => env('MERCANET_RETURN_URL'),
-            'transactionReference' => $transactionReference,
+            'transactionReference' => $transactionIdentifier,
             'keyVersion' => $keyVersion
         ];
 

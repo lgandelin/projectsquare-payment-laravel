@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
 use Webaccess\ProjectSquarePayment\Interactors\Payment\HandleBankCallInteractor;
+use Webaccess\ProjectSquarePayment\Interactors\Payment\InitTransactionInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\DebitPlatformsAccountsInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\GetPlatformUsageAmountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformUsersCountInteractor;
@@ -95,6 +96,14 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
         App::bind('UpdatePlatformsStatusesInteractor', function() {
             return new UpdatePlatformsStatusesInteractor(
                 new EloquentPlatformRepository()
+            );
+        });
+
+        App::bind('InitTransactionInteractor', function() {
+            return new InitTransactionInteractor(
+                new EloquentPlatformRepository(),
+                new EloquentTransactionRepository(),
+                new MercanetService()
             );
         });
 

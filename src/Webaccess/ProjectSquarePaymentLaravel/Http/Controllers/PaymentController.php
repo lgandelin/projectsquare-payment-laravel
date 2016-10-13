@@ -5,8 +5,8 @@ namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
+use Webaccess\ProjectSquarePayment\Requests\Payment\InitTransactionRequest;
 use Webaccess\ProjectSquarePayment\Requests\Payment\HandleBankCallRequest;
-use Webaccess\ProjectSquarePayment\Responses\Payment\HandleBankCallResponse;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Services\MercanetService;
 use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
@@ -26,14 +26,15 @@ class PaymentController extends Controller
      */
     public function payment_form(Request $request)
     {
-        $transactionIdentifier = $this->transactionRepository->initTransaction($this->getCurrentPlatformID(), $request->amount);
-
-        list($data, $seal) = MercanetService::generateFormFields($request->amount, $transactionIdentifier);
+        $response = app()->make('InitTransactionInteractor')->execute(new InitTransactionRequest([
+            'platformID' => $this->getCurrentPlatformID(),
+            'amount' => $request->amount
+        ]));
 
         return response()->json([
             'success' => true,
-            'data' => $data,
-            'seal' => $seal,
+            'data' => $response->data,
+            'seal' => $response->seal,
         ], 200);
     }
 
@@ -86,7 +87,7 @@ class PaymentController extends Controller
      */
     public function payment_result($success, $transactionIdentifier)
     {
-        $transaction = $this->getTransactionByIdentifier($transactionIdentifier);
+        $transaction = $this->transactionRepository->getByIdentifier($transactionIdentifier);
 
         return view('projectsquare-payment::my_account.payment_result', [
             'success' => $success,
@@ -95,14 +96,8 @@ class PaymentController extends Controller
     }
 
     /**
-     * @param $transactionIdentifier
-     * @return bool
+     * @return mixed
      */
-    private function getTransactionByIdentifier($transactionIdentifier)
-    {
-        return $this->transactionRepository->getByIdentifier($transactionIdentifier);
-    }
-
     private function getCurrentPlatformID()
     {
         $user = auth()->user();

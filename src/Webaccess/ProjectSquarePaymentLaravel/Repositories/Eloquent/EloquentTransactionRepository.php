@@ -9,20 +9,16 @@ use Webaccess\ProjectSquarePaymentLaravel\Models\Transaction;
 class EloquentTransactionRepository implements TransactionRepository
 {
     /**
-     * @param $platformID
-     * @param $amount
-     * @return string
+     * @param $transactionIdentifier
+     * @return mixed
      */
-    public function initTransaction($platformID, $amount)
+    public function getByIdentifier($transactionIdentifier)
     {
-        $transaction = new Transaction();
-        $transaction->identifier = uniqid();
-        $transaction->platform_id = $platformID;
-        $transaction->amount = $amount;
-        $transaction->status = Transaction::TRANSACTION_STATUS_IN_PROGRESS;
-        $transaction->save();
+        if ($transactionModel = Transaction::where('identifier', '=', $transactionIdentifier)->first()) {
+            return $this->convertModelToEntity($transactionModel);
+        }
 
-        return $transaction->identifier;
+        return false;
     }
 
     /**
@@ -41,19 +37,6 @@ class EloquentTransactionRepository implements TransactionRepository
         $transactionModel->save();
 
         return $transactionModel->id;
-    }
-
-    /**
-     * @param $transactionIdentifier
-     * @return mixed
-     */
-    public function getByIdentifier($transactionIdentifier)
-    {
-        if ($transactionModel = Transaction::where('identifier', '=', $transactionIdentifier)->first()) {
-            return $this->convertModelToEntity($transactionModel);
-        }
-
-        return false;
     }
 
     private function convertModelToEntity($transactionModel)
