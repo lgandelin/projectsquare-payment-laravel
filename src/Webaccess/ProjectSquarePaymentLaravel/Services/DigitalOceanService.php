@@ -2,9 +2,9 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Services;
 
-use Webaccess\ProjectSquarePayment\Services\RemoteInfrastructureGenerator;
+use Webaccess\ProjectSquarePayment\Contracts\RemoteInfrastructureService;
 
-class DigitalOceanService implements RemoteInfrastructureGenerator
+class DigitalOceanService implements RemoteInfrastructureService
 {
     /**
      * @param $nodeIdentifier

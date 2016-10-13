@@ -74,7 +74,10 @@ class PaymentController extends Controller
             Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
         }
 
-        return redirect()->route('payment_result', ['success' => ($success === true) ? '1' : '0', 'transaction_identifier' => $transactionIdentifier]);
+        return redirect()->route('payment_result', [
+            'success' => ($success === true) ? '1' : '0',
+            'transaction_identifier' => $transactionIdentifier
+        ]);
     }
 
     /**

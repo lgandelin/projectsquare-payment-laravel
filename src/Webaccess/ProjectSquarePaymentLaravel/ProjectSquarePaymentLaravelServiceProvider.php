@@ -17,10 +17,10 @@ use Webaccess\ProjectSquarePaymentLaravel\Commands\UpdatePlatformsStatuses;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\SetNodeAvailable;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentNodeRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
-use Webaccess\ProjectSquarePaymentLaravel\Repositories\Guzzle\GuzzleRemotePlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentAdministratorRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Services\DigitalOceanService;
+use Webaccess\ProjectSquarePaymentLaravel\Services\GuzzleRemotePlatformService;
 use Webaccess\ProjectSquarePaymentLaravel\Services\MercanetService;
 
 class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
@@ -74,7 +74,7 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
         App::bind('UpdatePlatformUsersCountInteractor', function() {
             return new UpdatePlatformUsersCountInteractor(
                 new EloquentPlatformRepository(),
-                new GuzzleRemotePlatformRepository(env('API_TOKEN'))
+                new GuzzleRemotePlatformService(env('API_TOKEN'))
             );
         });
 

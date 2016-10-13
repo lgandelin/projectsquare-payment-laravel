@@ -2,13 +2,13 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Utils;
 
-class String
+class PasswordGenerator
 {
     /**
      * @param int $length
      * @return string
      */
-    public static function generateNewPassword($length = 8)
+    public static function generate($length = 8)
     {
         $chars = 'abcdefghkmnpqrstuvwxyz23456789';
         $count = mb_strlen($chars);

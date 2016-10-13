@@ -1,12 +1,12 @@
 <?php
 
-namespace Webaccess\ProjectSquarePaymentLaravel\Repositories\Guzzle;
+namespace Webaccess\ProjectSquarePaymentLaravel\Services;
 
 use GuzzleHttp\Client;
+use Webaccess\ProjectSquarePayment\Contracts\RemotePlatformService;
 use Webaccess\ProjectSquarePayment\Entities\Platform;
-use Webaccess\ProjectSquarePayment\Repositories\RemotePlatformRepository;
 
-class GuzzleRemotePlatformRepository implements RemotePlatformRepository
+class GuzzleRemotePlatformService implements RemotePlatformService
 {
     private $apiToken;
 
@@ -43,7 +43,7 @@ class GuzzleRemotePlatformRepository implements RemotePlatformRepository
         ]);
     }
 
-    private function getPlatformURL(Platform $platform)
+    public function getPlatformURL(Platform $platform)
     {
         return 'http://' . $platform->getSlug() . '.projectsquare.io';
     }

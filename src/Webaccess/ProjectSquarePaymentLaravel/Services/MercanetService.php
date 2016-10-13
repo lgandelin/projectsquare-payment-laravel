@@ -2,7 +2,7 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Services;
 
-use Webaccess\ProjectSquarePayment\Services\BankService;
+use Webaccess\ProjectSquarePayment\Contracts\BankService;
 
 class MercanetService implements BankService
 {

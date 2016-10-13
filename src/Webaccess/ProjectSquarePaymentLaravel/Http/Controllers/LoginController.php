@@ -7,7 +7,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Webaccess\ProjectSquareLaravel\Models\Administrator;
-use Webaccess\ProjectSquarePaymentLaravel\Utils\String;
+use Webaccess\ProjectSquarePaymentLaravel\Utils\PasswordGenerator;
 
 class LoginController extends Controller
 {
@@ -71,7 +71,7 @@ class LoginController extends Controller
         $userEmail = $request->email;
 
         try {
-            $newPassword = String::generateNewPassword();
+            $newPassword = PasswordGenerator::generate();
             if ($user = Administrator::where('email', '=', $userEmail)->first()) {
                 $user->password = bcrypt($newPassword);
                 $user->save();
