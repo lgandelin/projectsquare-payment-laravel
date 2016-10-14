@@ -71,7 +71,7 @@ class LoginController extends Controller
         $userEmail = $request->email;
 
         try {
-            $newPassword = PasswordGenerator::generate();
+            $newPassword = self::generate(8);
             if ($user = Administrator::where('email', '=', $userEmail)->first()) {
                 $user->password = bcrypt($newPassword);
                 $user->save();
@@ -99,5 +99,22 @@ class LoginController extends Controller
                 ->from('no-reply@projectsquare.fr')
                 ->subject('[projectsquare] Votre nouveau mot de passe pour accéder à votre compte');
         });
+    }
+
+    /**
+     * @param int $length
+     * @return string
+     */
+    private static function generate($length = 8)
+    {
+        $chars = 'abcdefghkmnpqrstuvwxyz23456789';
+        $count = mb_strlen($chars);
+
+        for ($i = 0, $result = ''; $i < $length; ++$i) {
+            $index = rand(0, $count - 1);
+            $result .= mb_substr($chars, $index, 1);
+        }
+
+        return $result;
     }
 }

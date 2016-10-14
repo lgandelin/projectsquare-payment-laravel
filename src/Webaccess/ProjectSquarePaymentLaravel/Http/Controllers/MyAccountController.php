@@ -6,7 +6,6 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
-use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
 use Webaccess\ProjectSquarePayment\Requests\Platforms\UpdatePlatformUsersCountRequest;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\UpdatePlatformUsersCountResponse;
 
@@ -51,7 +50,7 @@ class MyAccountController extends Controller
                 'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),
             ], 200);
         } catch (Exception $e) {
-            Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
+            app()->make('LaravelLoggerService')->error($e->getMessage(), $request->all(), $e->getFile(), $e->getLine());
 
             return response()->json([
                 'success' => false,

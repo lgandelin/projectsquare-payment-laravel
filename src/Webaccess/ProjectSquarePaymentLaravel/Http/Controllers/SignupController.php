@@ -11,7 +11,6 @@ use Webaccess\ProjectSquarePayment\Requests\Signup\SignupRequest;
 use Webaccess\ProjectSquarePayment\Responses\Administrators\CreateAdministratorResponse;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
 use Webaccess\ProjectSquarePayment\Responses\Signup\CheckPlatformSlugResponse;
-use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
 
 class SignupController extends Controller
 {
@@ -67,7 +66,7 @@ class SignupController extends Controller
             return redirect()->route('signup_confirmation');
         } catch (Exception $e) {
             $request->session()->flash('error', trans('projectsquare-payment::signup.platform_generic_error'));
-            Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
+            app()->make('LaravelLoggerService')->error($e->getMessage(), $request->all(), $e->getFile(), $e->getLine());
         }
 
         return redirect()->route('signup');
@@ -89,7 +88,7 @@ class SignupController extends Controller
                 'error' => $response->errorCode
             ], 200);
         } catch (Exception $e) {
-            Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
+            app()->make('LaravelLoggerService')->error($e->getMessage(), $request->all(), $e->getFile(), $e->getLine());
 
             return response()->json([
                 'success' => false,

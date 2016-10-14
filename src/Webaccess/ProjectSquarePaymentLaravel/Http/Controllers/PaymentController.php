@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller;
 use Webaccess\ProjectSquarePayment\Requests\Payment\InitTransactionRequest;
 use Webaccess\ProjectSquarePayment\Requests\Payment\HandleBankCallRequest;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
-use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
 
 class PaymentController extends Controller
 {
@@ -42,33 +41,17 @@ class PaymentController extends Controller
      */
     public function payment_handler(Request $request)
     {
-        Logger::info('New call from the bank : ', $request->Data);
-
-        $success = false;
         try {
             $response = app()->make('HandleBankCallInteractor')->execute(new HandleBankCallRequest([
                 'data' => $request->Data,
                 'seal' => $request->Seal,
             ]));
-
-            if (!$response->success) {
-                Logger::error('HandleBankCallInteractor call return an error (' . $response->errorCode . ')', 'PaymentController', null, [
-                    'transactionIdentifier' => $response->transactionIdentifier,
-                    'parameters' => $response->Data,
-                    'amount' => $response->amount,
-                    'errorCode' => $response->errorCode,
-                ]);
-            } else {
-                $success = true;
-                Logger::info('New transaction successfully processed ! : (' . $response->transactionIdentifier . ')', $response);
-            }
-
         } catch (Exception $e) {
-            Logger::error($e->getMessage(), $e->getFile(), $e->getLine(), $request->all());
+            app()->make('LaravelLoggerService')->error($e->getMessage(), $request->all(), $e->getFile(), $e->getLine());
         }
 
         return redirect()->route('payment_result', [
-            'success' => ($success === true) ? '1' : '0',
+            'success' => ($response->success === true) ? '1' : '0',
             'transaction_identifier' => $response->transactionIdentifier
         ]);
     }

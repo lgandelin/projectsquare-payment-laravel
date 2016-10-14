@@ -22,6 +22,7 @@ use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentAdminist
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Services\DigitalOceanService;
 use Webaccess\ProjectSquarePaymentLaravel\Services\GuzzleRemotePlatformService;
+use Webaccess\ProjectSquarePaymentLaravel\Services\LaravelLoggerService;
 use Webaccess\ProjectSquarePaymentLaravel\Services\MercanetService;
 
 class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
@@ -56,32 +57,37 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
                  new EloquentPlatformRepository(),
                  new EloquentAdministratorRepository(),
                  new EloquentNodeRepository(),
-                 new DigitalOceanService()
+                 new DigitalOceanService(),
+                 new LaravelLoggerService()
              );
         });
 
         App::bind('CheckPlatformSlugInteractor', function() {
             return new CheckPlatformSlugInteractor(
-                new EloquentPlatformRepository()
+                new EloquentPlatformRepository(),
+                new LaravelLoggerService()
             );
         });
 
         App::bind('GetPlatformUsageAmountInteractor', function() {
             return new GetPlatformUsageAmountInteractor(
-                new EloquentPlatformRepository()
+                new EloquentPlatformRepository(),
+                new LaravelLoggerService()
             );
         });
 
         App::bind('UpdatePlatformUsersCountInteractor', function() {
             return new UpdatePlatformUsersCountInteractor(
                 new EloquentPlatformRepository(),
-                new GuzzleRemotePlatformService(env('API_TOKEN'))
+                new GuzzleRemotePlatformService(env('API_TOKEN')),
+                new LaravelLoggerService()
             );
         });
 
         App::bind('DebitPlatformsAccountsInteractor', function() {
             return new DebitPlatformsAccountsInteractor(
-                new EloquentPlatformRepository()
+                new EloquentPlatformRepository(),
+                new LaravelLoggerService()
             );
         });
 
@@ -89,13 +95,15 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
             return new HandleBankCallInteractor(
                 new EloquentPlatformRepository(),
                 new EloquentTransactionRepository(),
-                new MercanetService()
+                new MercanetService(),
+                new LaravelLoggerService()
             );
         });
 
         App::bind('UpdatePlatformsStatusesInteractor', function() {
             return new UpdatePlatformsStatusesInteractor(
-                new EloquentPlatformRepository()
+                new EloquentPlatformRepository(),
+                new LaravelLoggerService()
             );
         });
 
@@ -103,8 +111,13 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
             return new InitTransactionInteractor(
                 new EloquentPlatformRepository(),
                 new EloquentTransactionRepository(),
-                new MercanetService()
+                new MercanetService(),
+                new LaravelLoggerService()
             );
+        });
+
+        App::bind('LaravelLoggerService', function() {
+            return new LaravelLoggerService();
         });
 
         $this->commands([
