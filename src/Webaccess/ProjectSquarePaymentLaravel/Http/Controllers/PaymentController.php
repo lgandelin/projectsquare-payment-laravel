@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller;
 use Webaccess\ProjectSquarePayment\Requests\Payment\InitTransactionRequest;
 use Webaccess\ProjectSquarePayment\Requests\Payment\HandleBankCallRequest;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
-use Webaccess\ProjectSquarePaymentLaravel\Services\MercanetService;
 use Webaccess\ProjectSquarePaymentLaravel\Utils\Logger;
 
 class PaymentController extends Controller
@@ -43,32 +42,25 @@ class PaymentController extends Controller
      */
     public function payment_handler(Request $request)
     {
-        $parameters = MercanetService::extractParametersFromData($request->Data);
-        $transactionIdentifier = $parameters['transactionReference'];
-        $amount = floatval($parameters['amount']) / 100;
-
-        Logger::info('New call from the bank : ', $parameters);
+        Logger::info('New call from the bank : ', $request->Data);
 
         $success = false;
         try {
             $response = app()->make('HandleBankCallInteractor')->execute(new HandleBankCallRequest([
-                'transactionIdentifier' => $transactionIdentifier,
-                'amount' => $amount,
                 'data' => $request->Data,
                 'seal' => $request->Seal,
-                'parameters' => $parameters,
             ]));
 
             if (!$response->success) {
                 Logger::error('HandleBankCallInteractor call return an error (' . $response->errorCode . ')', 'PaymentController', null, [
-                    'transactionIdentifier' => $transactionIdentifier,
-                    'parameters' => $parameters,
-                    'amount' => $amount,
+                    'transactionIdentifier' => $response->transactionIdentifier,
+                    'parameters' => $response->Data,
+                    'amount' => $response->amount,
                     'errorCode' => $response->errorCode,
                 ]);
             } else {
                 $success = true;
-                Logger::info('New transaction successfully processed ! : (' . $transactionIdentifier . ')', $response);
+                Logger::info('New transaction successfully processed ! : (' . $response->transactionIdentifier . ')', $response);
             }
 
         } catch (Exception $e) {
@@ -77,7 +69,7 @@ class PaymentController extends Controller
 
         return redirect()->route('payment_result', [
             'success' => ($success === true) ? '1' : '0',
-            'transaction_identifier' => $transactionIdentifier
+            'transaction_identifier' => $response->transactionIdentifier
         ]);
     }
 

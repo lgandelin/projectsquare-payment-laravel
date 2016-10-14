@@ -61,7 +61,7 @@ class MercanetService implements BankService
      * @param $data
      * @return array
      */
-    public static function extractParametersFromData($data)
+    public function extractParametersFromData($data)
     {
         $parameters = [];
         $pairs = explode('|', $data);
