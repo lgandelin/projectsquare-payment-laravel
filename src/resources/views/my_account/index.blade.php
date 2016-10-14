@@ -59,12 +59,72 @@
                     <input type="hidden" name="Seal" value="">
                 </form>
 
-                <hr>
-
+                <br>
                 <p>
                     <input type="checkbox" name="email_alert" /> M'envoyer un email lorsque le solde du compte est inférieur à <input class="form-control" type="text" value="20" style="display: inline-block; width: 50px"/> €
                     <input type="button" class="btn btn-success" value="Valider" />
                 </p>
+
+                <hr>
+
+                <h3>Mes informations</h3>
+
+                @if (isset($error))
+                    <div class="info bg-danger">
+                        {{ $error }}
+                    </div>
+                @endif
+
+                @if (isset($confirmation))
+                    <div class="info bg-success">
+                        {{ $confirmation }}
+                    </div>
+                @endif
+
+                <form action="{{ route('update_administrator') }}" method="post">
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label for="administrator_email">{{ trans('projectsquare-payment::signup.email') }}</label>
+                            <input class="form-control required" type="text"{{-- placeholder="{{ trans('projectsquare-payment::signup.placeholder_email') }}"--}} name="administrator_email" value="{{ $user->email }}" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="administrator_password">{{ trans('projectsquare-payment::signup.password') }}</label>
+                            <input class="form-control required" type="password"{{-- placeholder="{{ trans('projectsquare-payment::signup.placeholder_password') }}"--}} name="administrator_password" value="" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="administrator_last_name">{{ trans('projectsquare-payment::signup.last_name') }}</label>
+                            <input class="form-control required" type="text"{{-- placeholder="{{ trans('projectsquare-payment::signup.placeholder_last_name') }}"--}} name="administrator_last_name" value="{{ $user->last_name }}" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="administrator_first_name">{{ trans('projectsquare-payment::signup.first_name') }}</label>
+                            <input class="form-control required" type="text"{{-- placeholder="{{ trans('projectsquare-payment::signup.placeholder_first_name') }}"--}} name="administrator_first_name" value="{{ $user->first_name }}" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label for="administrator_billing_address">{{ trans('projectsquare-payment::signup.billing_address') }}</label>
+                            <textarea rows="5" class="form-control required" name="administrator_billing_address" style="height: 113px">{{ $user->billing_address }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="administrator_zipcode">{{ trans('projectsquare-payment::signup.zipcode') }}</label>
+                            <input class="form-control required" type="text"{{-- placeholder="{{ trans('projectsquare-payment::signup.placeholder_zipcode') }}"--}} name="administrator_zipcode" value="{{ $user->zipcode }}" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="administrator_city">{{ trans('projectsquare-payment::signup.city') }}</label>
+                            <input class="form-control required" type="text"{{-- placeholder="{{ trans('projectsquare-payment::signup.placeholder_city') }}"--}} name="administrator_city" value="{{ $user->city }}" />
+                        </div>
+                    </div>
+                    {{ csrf_field() }}
+
+                    <input type="submit" class="btn btn-success" value="Valider" />
+                </form>
 
                 <hr>
 
@@ -102,7 +162,6 @@
             </div>
         </div>
     </div>
-    {{ csrf_field() }}
 
     <script>var route_update_users_count = "{{ route('update_users_count') }}";</script>
     <script>var route_payment_form = "{{ route('payment_form') }}";</script>

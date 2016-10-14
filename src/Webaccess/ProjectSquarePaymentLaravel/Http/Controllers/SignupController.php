@@ -115,6 +115,9 @@ class SignupController extends Controller
             CreateAdministratorResponse::ADMINISTRATOR_FIRST_NAME_REQUIRED => trans('projectsquare-payment::signup.administrator_first_name_required_error'),
             CreateAdministratorResponse::ADMINISTRATOR_EMAIL_REQUIRED => trans('projectsquare-payment::signup.administrator_email_required_error'),
             CreateAdministratorResponse::ADMINISTRATOR_PASSWORD_REQUIRED => trans('projectsquare-payment::signup.administrator_password_required_error'),
+            CreateAdministratorResponse::ADMINISTRATOR_CITY_REQUIRED => trans('projectsquare-payment::signup.administrator_city_required_error'),
+            CreateAdministratorResponse::ADMINISTRATOR_BILLING_ADDRESS_REQUIRED => trans('projectsquare-payment::signup.administrator_billing_address_required_error'),
+            CreateAdministratorResponse::ADMINISTRATOR_ZIPCODE_REQUIRED => trans('projectsquare-payment::signup.administrator_zipcode_required_error'),
             CreateAdministratorResponse::PLATFORM_ID_REQUIRED => $errorMessage = trans('projectsquare-payment::signup.generic_error'),
         ];
 

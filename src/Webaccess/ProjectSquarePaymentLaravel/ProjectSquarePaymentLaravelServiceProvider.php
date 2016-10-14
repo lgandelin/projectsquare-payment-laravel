@@ -5,6 +5,7 @@ namespace Webaccess\ProjectSquarePaymentLaravel;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
+use Webaccess\ProjectSquarePayment\Interactors\Administrators\UpdateAdministratorInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Payment\HandleBankCallInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Payment\InitTransactionInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\DebitPlatformsAccountsInteractor;
@@ -118,6 +119,13 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 
         App::bind('LaravelLoggerService', function() {
             return new LaravelLoggerService();
+        });
+
+        App::bind('UpdateAdministratorInteractor', function() {
+            return new UpdateAdministratorInteractor(
+                new EloquentAdministratorRepository(),
+                new LaravelLoggerService()
+            );
         });
 
         $this->commands([

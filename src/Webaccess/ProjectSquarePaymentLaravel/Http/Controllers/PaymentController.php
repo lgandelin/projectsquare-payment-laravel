@@ -64,7 +64,7 @@ class PaymentController extends Controller
     {
         $transaction = $this->transactionRepository->getByIdentifier($transactionIdentifier);
 
-        return view('projectsquare-payment::my_account.payment_result', [
+        return view('projectsquare-payment::payment.result', [
             'success' => $success,
             'transaction' => $transaction,
         ]);
