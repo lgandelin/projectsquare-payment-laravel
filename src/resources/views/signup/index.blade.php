@@ -5,7 +5,7 @@
 @endsection
 
 @section('main-content')
-    <form action="{{ route('signup_handler') }}" method="post" class="template inscription_template">
+    <form action="{{ route('signup_handler') }}" method="post" class="template signup_template">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <ul class="fil-ariane">

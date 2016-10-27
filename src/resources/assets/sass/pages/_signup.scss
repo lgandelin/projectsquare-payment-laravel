@@ -1,4 +1,4 @@
-.inscription_template {
+.signup_template {
 
     .title {
         padding-bottom: 52px;
@@ -67,22 +67,12 @@
         }
     }
 
-    label {
-        font-family: $typo2;
-        font-size: 16px;
-        color: $touareg;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 1rem;
+    .button {
+        padding: 18px 50px 18px 50px;
     }
 
     .form-control {
         width: 368px;
-        min-height: 60px;
-        border: none;
-        border-radius: 0;
-        padding-left: 1.5rem;
-        font-size: 19px;
     }
 
     .form-group {
@@ -105,6 +95,10 @@
                 padding: 9px 15px;
                 display: block;
                 margin-top: 1rem;
+            }
+
+            .check-slug-btn:hover {
+                background : $touareg !important;
             }
         }
 
@@ -225,27 +219,8 @@
     }
 
     .valid-step-1, .back-step-1, .valid-step-2, .back-step-2, .valid-step-3 {
-        color: white;
-        border: none;
-        background: $blue;
-        padding:25px 35px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 14px;
         display: block;
         margin-right: 25px;
         float: right;
-    }
-
-    .check-slug-btn:hover, .valid-step-1:hover, .back-step-1:hover, .valid-step-2:hover, .back-step-2:hover, .valid-step-3:hover {
-        background : $touareg !important;
-    }
-
-    .valid-step-3 {
-        background: $green;
-    }
-
-    .valid-step-3:hover {
-        background: lighten($green, 10%) !important;
     }
 }

@@ -1,29 +1,30 @@
 .button {
-	background: $gray_blue;
-	display: block;
-	padding: 18px 50px 18px 50px; 
+	border: none;
+	border-radius: 0;
+ 
+	background: $blue;
+	color: white;
+	padding: 10px 20px 10px 20px;
+
 	transition: background 0.50s ease;
+
+	letter-spacing: 1px;
+	font-size: 14px;
+	text-transform: uppercase;
 }
 
 .button:hover {
-	background: $blue;
+	background: $touareg;
 	color: white;
 	text-decoration: none;
 }
 
-.twitter-share-button {
+.button-valid {
+	background: $green;
+	color: white;
+}
 
-	.btn-o {
-
-		.btn {
-
-			background-color: red;
-			i {
-			
-			background: url(../img/header/twitter.png) no-repeat;
-			
-			}
-		}
-		
-	}
+.button-valid:hover {
+	background: lighten($green, 10%);
+	color: white;
 }
