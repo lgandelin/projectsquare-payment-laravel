@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 
 use Webaccess\ProjectSquarePayment\Requests\Payment\InitTransactionRequest;
 use Webaccess\ProjectSquarePayment\Requests\Payment\HandleBankCallRequest;
+use Webaccess\ProjectSquarePaymentLaravel\Models\Transaction;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
 
 class PaymentController extends Controller
@@ -51,7 +52,6 @@ class PaymentController extends Controller
         }
 
         return redirect()->route('payment_result', [
-            'success' => ($response->success === true) ? '1' : '0',
             'transaction_identifier' => $response->transactionIdentifier
         ]);
     }
@@ -65,8 +65,7 @@ class PaymentController extends Controller
         $transaction = $this->transactionRepository->getByIdentifier($transactionIdentifier);
 
         return view('projectsquare-payment::payment.result', [
-            'success' => $success,
-            'transaction' => $transaction,
+            'status' => $transaction->getStatus(),
         ]);
     }
 
