@@ -1,14 +1,29 @@
 .my_account_template {
 
     section {
-        margin-bottom: 2.5rem;
         overflow: hidden;
         clear: both;
     }
 
+    .first-section {
+        margin-top: 5rem;
+    }
+
+    hr {
+        clear: both;
+        margin-top: 3.5rem;
+    }
+
+    .form-control {
+        border: 1px solid #ddd;
+    }
+
     .btn-logout {
         float: right;
-        margin-top: 3rem;
+    }
+    
+    .btn-valid-fund-account {
+        margin-left: 1rem;
     }
 
     .button-valid-information {
@@ -16,4 +31,3 @@
         clear: both;
     }
 }
-

@@ -16,4 +16,21 @@ return [
     'administrator_zipcode_error' => 'Vous devez renseigner votre code postal.',
 
     'update_administrator_update_success' => 'Vos informations ont été mises à jour avec succès',
+
+    'disconnect' => 'Se déconnecter',
+    'platform' => 'Plateforme',
+    'users_number' => 'Nombre d\'utilisateurs',
+    'account' => 'Mon compte',
+    'my_data' => 'Mes informations',
+    'account_balance' => 'Solde du compte',
+    'daily_usage' => 'Usage quotidien',
+    'monthly_usage' => 'Usage mensuel',
+    'refund' => 'Réapprovisionner',
+
+    'billing_history' => 'Historique de facturation',
+    'bill_identifier' => 'Identifiant',
+    'bill_date' => 'Date',
+    'bill_amount' => 'Montant',
+    'bill_payment_mean' => 'Moyen de paiement',
+
 ];

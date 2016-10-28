@@ -8949,60 +8949,60 @@ button.close {
   font-family: "MyriadPro-Semibold";
   src: url("../fonts/MyriadPro-Semibold.woff"), url("../fonts/MyriadPro-Semibold.otf"), url("../fonts/MyriadPro-Semibold.svg"), url("../fonts/MyriadPro-Semibold.eot"), url("../fonts/MyriadPro-Semibold.ttf");
 }
-/* line 42, ../sass/includes/_typography.scss */
+/* line 43, ../sass/includes/_typography.scss */
 em {
   font-style: italic;
 }
 
-/* line 48, ../sass/includes/_typography.scss */
+/* line 49, ../sass/includes/_typography.scss */
 p a {
   color: #096a85;
   font-weight: bold;
 }
-/* line 53, ../sass/includes/_typography.scss */
+/* line 54, ../sass/includes/_typography.scss */
 p a:hover {
   color: #096a85;
 }
 
-/* line 57, ../sass/includes/_typography.scss */
+/* line 59, ../sass/includes/_typography.scss */
 strong {
   font-weight: bold;
   color: rgba(55, 57, 57, 0.84);
 }
 
-/* line 62, ../sass/includes/_typography.scss */
+/* line 64, ../sass/includes/_typography.scss */
 ul {
   list-style: none;
 }
 
-/* line 65, ../sass/includes/_typography.scss */
+/* line 68, ../sass/includes/_typography.scss */
 body {
   font-family: "MyriadPro-Regular";
   color: #6a6a6a;
   font-size: 18px;
 }
 
-/* line 76, ../sass/includes/_typography.scss */
+/* line 79, ../sass/includes/_typography.scss */
 .title, h2 {
   font-family: "AvantGarde-Book";
   font-size: 36px;
   padding-bottom: 40px;
 }
 
-/* line 82, ../sass/includes/_typography.scss */
+/* line 85, ../sass/includes/_typography.scss */
 .sub_title {
   font-family: "AvantGarde-Medium";
   margin-bottom: 25px;
   font-size: 32px;
 }
 
-/* line 88, ../sass/includes/_typography.scss */
+/* line 91, ../sass/includes/_typography.scss */
 .title, h2, .sub_title {
   color: #096a85;
   text-align: center;
 }
 
-/* line 93, ../sass/includes/_typography.scss */
+/* line 96, ../sass/includes/_typography.scss */
 .title_maj {
   text-transform: uppercase;
   font-family: "AvantGarde-Medium";
@@ -9013,7 +9013,7 @@ body {
   margin-bottom: 30px;
 }
 
-/* line 103, ../sass/includes/_typography.scss */
+/* line 106, ../sass/includes/_typography.scss */
 a {
   transition: color 0.75s ease;
 }
@@ -9067,57 +9067,57 @@ a {
   float: right;
 }
 
-/* line 17, ../sass/includes/_utils.scss */
+/* line 18, ../sass/includes/_utils.scss */
 a:focus {
   text-decoration: none;
 }
 
-/* line 21, ../sass/includes/_utils.scss */
+/* line 22, ../sass/includes/_utils.scss */
 .content {
   margin-left: 5%;
   margin-right: 5%;
 }
 
-/* line 26, ../sass/includes/_utils.scss */
+/* line 27, ../sass/includes/_utils.scss */
 .right {
   margin-left: 0;
 }
 
-/* line 30, ../sass/includes/_utils.scss */
+/* line 31, ../sass/includes/_utils.scss */
 ul {
   margin-bottom: 0;
 }
 
-/* line 34, ../sass/includes/_utils.scss */
+/* line 35, ../sass/includes/_utils.scss */
 .pages {
   margin-top: 5%;
   margin-bottom: 5%;
 }
-/* line 39, ../sass/includes/_utils.scss */
+/* line 40, ../sass/includes/_utils.scss */
 .pages ul {
   list-style: disc;
   list-style: inherit;
   list-style-position: inside;
   margin-bottom: 15px;
 }
-/* line 46, ../sass/includes/_utils.scss */
+/* line 47, ../sass/includes/_utils.scss */
 .pages ol {
   list-style-position: inside;
 }
 
-/* line 51, ../sass/includes/_utils.scss */
+/* line 52, ../sass/includes/_utils.scss */
 .page_404 {
   text-align: center;
   display: block;
   margin-bottom: 3%;
 }
-/* line 56, ../sass/includes/_utils.scss */
+/* line 57, ../sass/includes/_utils.scss */
 .page_404 .title, .page_404 h2 {
   padding-top: 3%;
   margin-bottom: 3%;
 }
 
-/* line 62, ../sass/includes/_utils.scss */
+/* line 63, ../sass/includes/_utils.scss */
 .liens {
   position: fixed;
   bottom: 25px;
@@ -9125,7 +9125,7 @@ ul {
   z-index: 2;
   display: none;
 }
-/* line 70, ../sass/includes/_utils.scss */
+/* line 71, ../sass/includes/_utils.scss */
 .liens .lien_contact, .liens .haut_page {
   padding: 17px;
   z-index: 999;
@@ -9134,62 +9134,62 @@ ul {
   margin-bottom: 3px;
   display: block;
 }
-/* line 79, ../sass/includes/_utils.scss */
+/* line 80, ../sass/includes/_utils.scss */
 .liens .lien_contact {
   background: #096a85 url(../img/lien-contact.png) no-repeat center;
 }
-/* line 82, ../sass/includes/_utils.scss */
+/* line 84, ../sass/includes/_utils.scss */
 .liens .haut_page {
   background: #096a85 url(../img/fleche-haut-de-page.png) no-repeat center;
 }
-/* line 85, ../sass/includes/_utils.scss */
+/* line 88, ../sass/includes/_utils.scss */
 .liens .haut_page:hover, .liens .lien_contact:hover {
   opacity: 0.7;
 }
 
-/* line 91, ../sass/includes/_utils.scss */
+/* line 94, ../sass/includes/_utils.scss */
 .template .background_blue {
   background: #e8eff1;
   margin: 0;
 }
 
-/* line 97, ../sass/includes/_utils.scss */
+/* line 100, ../sass/includes/_utils.scss */
 .border {
   border-bottom: 2px solid #e8eff1;
   margin-bottom: 50px;
 }
 
-/* line 104, ../sass/includes/_utils.scss */
+/* line 107, ../sass/includes/_utils.scss */
 .thank-you-page h1 {
   padding-top: 50px;
 }
 
-/* line 109, ../sass/includes/_utils.scss */
+/* line 112, ../sass/includes/_utils.scss */
 .inscription {
   width: 50%;
   margin: auto;
 }
 
-/* line 114, ../sass/includes/_utils.scss */
+/* line 117, ../sass/includes/_utils.scss */
 body {
   min-height: 100%;
   position: relative;
   padding-bottom: 75px;
 }
 
-/* line 120, ../sass/includes/_utils.scss */
+/* line 123, ../sass/includes/_utils.scss */
 html {
   height: 100%;
 }
 
-/* line 126, ../sass/includes/_utils.scss */
+/* line 129, ../sass/includes/_utils.scss */
 .table td {
   padding: 10px 20px !important;
   border: 1px solid #424242;
   vertical-align: middle;
 }
 
-/* line 134, ../sass/includes/_utils.scss */
+/* line 137, ../sass/includes/_utils.scss */
 .footer {
   position: absolute;
   left: 0;
@@ -9198,7 +9198,7 @@ html {
   z-index: 1;
 }
 
-/* line 142, ../sass/includes/_utils.scss */
+/* line 145, ../sass/includes/_utils.scss */
 .texte_inscription {
   margin-top: 50px;
 }
@@ -9216,7 +9216,7 @@ label {
 /* line 10, ../sass/includes/_form.scss */
 .form-control {
   min-height: 60px;
-  border: 1px solid #ddd;
+  border: none;
   border-radius: 0;
   padding-left: 1.5rem;
   font-size: 19px;
@@ -9225,6 +9225,12 @@ label {
 /* line 18, ../sass/includes/_form.scss */
 h3 {
   margin-bottom: 2rem;
+}
+
+/* line 22, ../sass/includes/_form.scss */
+.info {
+  padding: 15px 30px;
+  margin: 0 0 3rem 0;
 }
 
 /* line 88, header/*.png */
@@ -9724,16 +9730,31 @@ h3 {
 
 /* line 3, ../sass/pages/_my-account.scss */
 .my_account_template section {
-  margin-bottom: 2.5rem;
   overflow: hidden;
   clear: both;
 }
-/* line 9, ../sass/pages/_my-account.scss */
+/* line 8, ../sass/pages/_my-account.scss */
+.my_account_template .first-section {
+  margin-top: 5rem;
+}
+/* line 12, ../sass/pages/_my-account.scss */
+.my_account_template hr {
+  clear: both;
+  margin-top: 3.5rem;
+}
+/* line 17, ../sass/pages/_my-account.scss */
+.my_account_template .form-control {
+  border: 1px solid #ddd;
+}
+/* line 21, ../sass/pages/_my-account.scss */
 .my_account_template .btn-logout {
   float: right;
-  margin-top: 3rem;
 }
-/* line 14, ../sass/pages/_my-account.scss */
+/* line 25, ../sass/pages/_my-account.scss */
+.my_account_template .btn-valid-fund-account {
+  margin-left: 1rem;
+}
+/* line 29, ../sass/pages/_my-account.scss */
 .my_account_template .button-valid-information {
   display: block;
   clear: both;

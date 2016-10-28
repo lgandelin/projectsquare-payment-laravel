@@ -22,34 +22,34 @@
         </div>
 
         <div class="row">
-            <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <a href="{{ route('logout') }}" class="button btn-logout">Se déconnecter</a>
+            <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12 first-section">
+                <a href="{{ route('logout') }}" class="button btn-logout">{{ trans('projectsquare-payment::my_account.disconnect') }}</a>
 
-                <h3>Plateforme</h3>
+                <h3>{{ trans('projectsquare-payment::my_account.platform') }}</h3>
 
-                <p>
-                    <label for="users_count">Nombre d'utilisateurs : </label>
-                    <span class="users-count-display">
-                        <span class="value" style="font-size:3.5rem; display: inline-block; vertical-align: middle; margin-right: 1rem;">{{ $users_count }}</span> <input type="button" class="button btn-users-count" value="Modifier" />
-                    </span>
 
-                    <span class="users-count-update" style="display: none">
-                        <input class="form-control" type="number" value="{{ $users_count }}" name="users_count" style="display: inline-block; width: 75px" />
-                        <input type="button" class="button button-valid btn-valid-users-count-update" value="Valider" />
-                        <input type="button" class="button btn-valid-users-count-cancel" value="Annuler" />
-                    </span>
-                </p>
+                <label for="users_count">{{ trans('projectsquare-payment::my_account.users_number') }} :</label>
+                <span class="users-count-display">
+                    <span class="value" style="font-size:3.5rem; display: inline-block; vertical-align: middle; margin-right: 1rem;">{{ $users_count }}</span> <input type="button" class="button btn-users-count" value="{{ trans('projectsquare-payment::generic.modify') }}" />
+                </span>
+
+                <span class="users-count-update" style="display: none">
+                    <input class="form-control" type="number" value="{{ $users_count }}" name="users_count" style="display: inline-block; width: 75px" />
+                    <input type="button" class="button button-valid btn-valid-users-count-update" value="{{ trans('projectsquare-payment::generic.valid') }}" />
+                    <input type="button" class="button btn-valid-users-count-cancel" value="{{ trans('projectsquare-payment::generic.cancel') }}" />
+                </span>
+                <hr>
             </section>
 
             <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h3>Compte</h3>
+                <h3>{{ trans('projectsquare-payment::my_account.account') }}</h3>
 
-                <p><label for="">Solde du compte :</label> <span style="font-size:3.5rem;">{{ number_format($balance, 2) }}€</span></p>
-                <p class="daily-usage">Usage quotidien : <span class="value">{{ number_format($daily_cost, 2) }}</span>€</p>
-                <p class="monthly-usage">Usage mensuel : <span class="value">{{ number_format($monthly_cost, 2) }}</span>€</p>
+                <p><label for="">{{ trans('projectsquare-payment::my_account.account_balance') }} :</label> <span style="font-size:3.5rem;">{{ number_format($balance, 2) }}€</span></p>
+                <p class="daily-usage">{{ trans('projectsquare-payment::my_account.daily_usage') }} : <span class="value">{{ number_format($daily_cost, 2) }}</span>€</p>
+                <p class="monthly-usage">{{ trans('projectsquare-payment::my_account.monthly_usage') }} : <span class="value">{{ number_format($monthly_cost, 2) }}</span>€</p>
 
                 <input type="text" class="form-control amount" name="amount" style="width:100px; display: inline-block;" placeholder="ex: 50.00" /> €
-                <input type="button" class="button button-valid btn-valid-fund-account" value="Réapprovisionner" />
+                <input type="button" class="button button-valid btn-valid-fund-account" value="{{ trans('projectsquare-payment::my_account.refund') }}" />
 
                 <form id="payment-form" method="post" action="{{ env('MERCANET_PAYMENT_URL') }}">
                     <input type="hidden" name="Data" value="">
@@ -61,11 +61,12 @@
                     <input type="checkbox" name="email_alert" /> M'envoyer un email lorsque le solde du compte est inférieur à <input class="form-control" type="text" value="20" style="display: inline-block; width: 50px"/> €
                     <input type="button" class="button button-valid button-valid-information" value="Valider" />
                 </p>
+                <hr>
             </section>
 
             <section>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <h3>Mes informations</h3>
+                    <h3>{{ trans('projectsquare-payment::my_account.my_data') }}</h3>
 
                     @if (isset($error))
                         <div class="info bg-danger">
@@ -103,7 +104,7 @@
                             <input class="form-control required" type="text"{{-- placeholder="{{ trans('projectsquare-payment::signup.placeholder_first_name') }}"--}} name="administrator_first_name" value="{{ $user->first_name }}" />
                         </div>
 
-                        <input type="submit" class="button button-valid" value="Valider" />
+                        <input type="submit" class="button button-valid" value="{{ trans('projectsquare-payment::generic.valid') }}" />
                     </div>
 
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -122,22 +123,26 @@
                             <input class="form-control required" type="text"{{-- placeholder="{{ trans('projectsquare-payment::signup.placeholder_city') }}"--}} name="administrator_city" value="{{ $user->city }}" />
                         </div>
                     </div>
+
+                    <div class="clearfix"></div>
+
                     {{ csrf_field() }}
                 </form>
+                <hr>
             </section>
 
             <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                <h3>Historique de facturation</h3>
+                <h3>{{ trans('projectsquare-payment::my_account.billing_history') }}</h3>
 
                 @if ($invoices)
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-striped">
                         <tr>
-                            <th>Identifiant</th>
-                            <th>Date</th>
-                            <th>Montant</th>
-                            <th>Moyen de paiement</th>
-                            <th width="260" align="right">Action</th>
+                            <th>{{ trans('projectsquare-payment::my_account.bill_identifier') }}</th>
+                            <th>{{ trans('projectsquare-payment::my_account.bill_date') }}</th>
+                            <th>{{ trans('projectsquare-payment::my_account.bill_amount') }}</th>
+                            <th>{{ trans('projectsquare-payment::my_account.bill_payment_mean') }}</th>
+                            <th width="260" align="right">{{ trans('projectsquare-payment::generic.action') }}</th>
                         </tr>
                         @foreach ($invoices as $invoice)
                         <tr>
@@ -146,8 +151,8 @@
                             <td>{{ number_format($invoice->amount, 2) }}€ TTC</td>
                             <td>{{ $invoice->payment_mean }}</td>
                             <td>
-                                <a href="{{ route('invoice', ['invoice_identifier' => $invoice->identifier, 'download' => false]) }}" target="_blank" class="button">Voir</a>
-                                <a href="{{ route('invoice', ['invoice_identifier' => $invoice->identifier, 'download' => true]) }}" class="button button-valid">Télécharger</a>
+                                <a href="{{ route('invoice', ['invoice_identifier' => $invoice->identifier, 'download' => false]) }}" target="_blank" class="button">{{ trans('projectsquare-payment::generic.see') }}</a>
+                                <a href="{{ route('invoice', ['invoice_identifier' => $invoice->identifier, 'download' => true]) }}" class="button button-valid">{{ trans('projectsquare-payment::generic.download') }}</a>
                             </td>
                         </tr>
                         @endforeach
