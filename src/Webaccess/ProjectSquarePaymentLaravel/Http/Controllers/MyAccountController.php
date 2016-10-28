@@ -73,23 +73,29 @@ class MyAccountController extends Controller
 
     public function update_administrator(Request $request)
     {
-        $response = app()->make('UpdateAdministratorInteractor')->execute(new UpdateAdministratorRequest([
-            'administratorID' => auth()->user()->id,
-            'lastName' => $request->administrator_last_name,
-            'firstName' => $request->administrator_first_name,
-            'email' => $request->administrator_email,
-            'password' => ($request->administrator_password) ? Hash::make($request->administrator_password) : null,
-            'city' => $request->administrator_city,
-            'billingAddress' => $request->administrator_billing_address,
-            'zipcode' => $request->administrator_zipcode,
-        ]));
+        try {
+            $response = app()->make('UpdateAdministratorInteractor')->execute(new UpdateAdministratorRequest([
+                'administratorID' => auth()->user()->id,
+                'lastName' => $request->administrator_last_name,
+                'firstName' => $request->administrator_first_name,
+                'email' => $request->administrator_email,
+                'password' => ($request->administrator_password) ? Hash::make($request->administrator_password) : null,
+                'city' => $request->administrator_city,
+                'billingAddress' => $request->administrator_billing_address,
+                'zipcode' => $request->administrator_zipcode,
+            ]));
 
-        if ($response->success)
-            $request->session()->flash('confirmation', trans('projectsquare-payment::my_account.update_administrator_update_success'));
-        else
-            $request->session()->flash('error', $this->getErrorMessage($response->errorCode));
+            if ($response->success)
+                $request->session()->flash('confirmation', trans('projectsquare-payment::my_account.update_administrator_update_success'));
+            else
+                $request->session()->flash('error', $this->getErrorMessage($response->errorCode));
 
-        return redirect()->route('my_account');
+            return redirect()->route('my_account');
+        } catch (Exception $e) {
+            app()->make('LaravelLoggerService')->error($e->getMessage(), $request->all(), $e->getFile(), $e->getLine());
+
+            return redirect()->route('my_account');
+        }
     }
 
     public function invoice(Request $request)

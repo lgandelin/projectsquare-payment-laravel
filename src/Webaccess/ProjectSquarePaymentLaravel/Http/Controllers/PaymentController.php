@@ -25,16 +25,23 @@ class PaymentController extends Controller
      */
     public function payment_form(Request $request)
     {
-        $response = app()->make('InitTransactionInteractor')->execute(new InitTransactionRequest([
-            'platformID' => $this->getCurrentPlatformID(),
-            'amount' => $request->amount
-        ]));
+        try {
+            $response = app()->make('InitTransactionInteractor')->execute(new InitTransactionRequest([
+                'platformID' => $this->getCurrentPlatformID(),
+                'amount' => $request->amount
+            ]));
 
-        return response()->json([
-            'success' => true,
-            'data' => $response->data,
-            'seal' => $response->seal,
-        ], 200);
+            return response()->json([
+                'success' => true,
+                'data' => $response->data,
+                'seal' => $response->seal,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => trans('projectsquare-payment::payment.generic_error'),
+            ], 500);
+        }
     }
 
     /**
