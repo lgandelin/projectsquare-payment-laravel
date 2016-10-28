@@ -33,4 +33,6 @@ return [
     'bill_amount' => 'Montant',
     'bill_payment_mean' => 'Moyen de paiement',
 
+    'email_alert_amount' => 'M\'envoyer un email lorsque le solde du compte est inférieur à',
+
 ];

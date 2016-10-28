@@ -30,4 +30,38 @@
         display: block;
         clear: both;
     }
+
+    .users-count-display {
+
+        .value {
+            font-size:3.5rem;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 1rem;
+        }
+    }
+
+    .users-count-update {
+        display: inline-block;
+        width: 75px;
+
+        .users-count-input {
+            display: inline-block;
+            width: 75px;
+        }
+    }
+
+    .account-balance {
+        font-size: 3.5rem;
+    }
+
+    .amount {
+        width:100px;
+        display: inline-block;
+    }
+
+    .email-alert-amount {
+        display: inline-block;
+        width: 50px;
+    }
 }
