@@ -9488,6 +9488,23 @@ h3 {
   background-position: 0 0;
 }
 
+/* line 3, ../sass/pages/_login.scss */
+.login_template form {
+  width: 60%;
+  margin: auto;
+}
+/* line 8, ../sass/pages/_login.scss */
+.login_template .panel {
+  border-radius: 0;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  box-shadow: none;
+}
+/* line 15, ../sass/pages/_login.scss */
+.login_template .form-control {
+  border: 1px solid #ddd;
+}
+
 /* line 3, ../sass/pages/_signup.scss */
 .signup_template .title, .signup_template h2 {
   padding-bottom: 52px;
@@ -9624,16 +9641,16 @@ h3 {
 .signup_template #step-1 .right-column .slider .tooltip.top {
   display: none;
 }
-/* line 143, ../sass/pages/_signup.scss */
+/* line 141, ../sass/pages/_signup.scss */
 .signup_template #step-1 .right-column .slider .slider-handle {
   cursor: pointer;
   background: #c8dc1e !important;
 }
-/* line 148, ../sass/pages/_signup.scss */
+/* line 146, ../sass/pages/_signup.scss */
 .signup_template #step-1 .right-column .slider .slider-track, .signup_template #step-1 .right-column .slider .slider-selection {
   background-image: linear-gradient(to bottom, #096a85 0%, #096a85 100%);
 }
-/* line 153, ../sass/pages/_signup.scss */
+/* line 151, ../sass/pages/_signup.scss */
 .signup_template #step-1 .right-column .users_count {
   display: block !important;
   font-size: 80px;
@@ -9642,7 +9659,7 @@ h3 {
   width: 230px;
   margin-bottom: 30px;
 }
-/* line 166, ../sass/pages/_signup.scss */
+/* line 164, ../sass/pages/_signup.scss */
 .signup_template #step-3 h3 {
   font-family: "MyriadPro-Semibold";
   font-size: 2.2rem;
@@ -9651,7 +9668,7 @@ h3 {
   letter-spacing: 1px;
   margin-bottom: 7rem;
 }
-/* line 175, ../sass/pages/_signup.scss */
+/* line 173, ../sass/pages/_signup.scss */
 .signup_template #step-3 h4 {
   font-family: "AvantGarde-Medium";
   font-size: 16px;
@@ -9660,43 +9677,43 @@ h3 {
   letter-spacing: 1px;
   margin-bottom: 3rem;
 }
-/* line 184, ../sass/pages/_signup.scss */
+/* line 182, ../sass/pages/_signup.scss */
 .signup_template #step-3 label {
   display: inline-block;
   text-transform: none;
   color: #6a6a6a;
   font-family: "MyriadPro-Semibold";
 }
-/* line 191, ../sass/pages/_signup.scss */
+/* line 189, ../sass/pages/_signup.scss */
 .signup_template #step-3 .form-group {
   margin-bottom: 0rem;
 }
-/* line 195, ../sass/pages/_signup.scss */
+/* line 193, ../sass/pages/_signup.scss */
 .signup_template #step-3 .free {
   text-decoration: underline;
   font-family: "MyriadPro-Semibold";
   text-transform: uppercase;
 }
-/* line 201, ../sass/pages/_signup.scss */
+/* line 199, ../sass/pages/_signup.scss */
 .signup_template #step-3 section {
   margin-bottom: 7rem;
 }
-/* line 205, ../sass/pages/_signup.scss */
+/* line 203, ../sass/pages/_signup.scss */
 .signup_template #step-3 .url {
   text-decoration: underline;
   color: #096a85;
 }
-/* line 211, ../sass/pages/_signup.scss */
+/* line 209, ../sass/pages/_signup.scss */
 .signup_template .amount {
   color: #096a85;
   font-family: "MyriadPro-Semibold";
   font-size: 30px;
 }
-/* line 217, ../sass/pages/_signup.scss */
+/* line 215, ../sass/pages/_signup.scss */
 .signup_template .invalid {
   border: 1px solid #960216;
 }
-/* line 221, ../sass/pages/_signup.scss */
+/* line 219, ../sass/pages/_signup.scss */
 .signup_template .valid-step-1, .signup_template .back-step-1, .signup_template .valid-step-2, .signup_template .back-step-2, .signup_template .valid-step-3 {
   display: block;
   margin-right: 25px;
@@ -9758,4 +9775,31 @@ h3 {
 .my_account_template .button-valid-information {
   display: block;
   clear: both;
+}
+/* line 36, ../sass/pages/_my-account.scss */
+.my_account_template .users-count-display .value {
+  font-size: 3.5rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 1rem;
+}
+/* line 46, ../sass/pages/_my-account.scss */
+.my_account_template .users-count-update .users-count-input {
+  display: inline-block;
+  width: 75px;
+  margin-right: 2rem;
+}
+/* line 53, ../sass/pages/_my-account.scss */
+.my_account_template .account-balance {
+  font-size: 3.5rem;
+}
+/* line 57, ../sass/pages/_my-account.scss */
+.my_account_template .amount {
+  width: 100px;
+  display: inline-block;
+}
+/* line 62, ../sass/pages/_my-account.scss */
+.my_account_template .email-alert-amount {
+  display: inline-block;
+  width: 50px;
 }

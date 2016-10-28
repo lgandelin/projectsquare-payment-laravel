@@ -1,63 +1,63 @@
 @extends('projectsquare-payment::master')
 
+@section('page-title')
+    {{ trans('projectsquare-payment::pages.seo_title_login') }}
+@endsection
+
 @section('main-content')
-<div class="container">
+    <div class="template login_template">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <ul class="fil-ariane">
+                    <li>
+                        <a href="http://projectsquare.io/">{{ trans('projectsquare-payment::pages.home_title') }}</a>
+                    </li>
+                    <li class="page_fille">
+                        {{ trans('projectsquare-payment::login.title') }}
+                    </li>
+                </ul>
 
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default" style="margin-top: 5rem">
-                <div class="panel-heading">{{ trans('projectsquare-payment::login.panel_title') }}</div>
-                <div class="panel-body">
+                <h1 class="title background_blue">{{ trans('projectsquare-payment::login.title') }}</h1>
+            </div>
+        </div>
 
-                    @if (isset($error))
-                        <div class="info bg-danger">
-                            {{ $error }}
-                        </div>
-                    @endif
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ trans('projectsquare-payment::login.title') }}</div>
+                    <div class="panel-body">
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login_handler') }}">
+                        @if (isset($error))
+                            <div class="info bg-danger">
+                                {{ $error }}
+                            </div>
+                        @endif
 
-                        {!! csrf_field() !!}
+                        <form class="form-horizontal" role="form" method="POST" action="{{ route('login_handler') }}">
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">{{ trans('projectsquare-payment::login.email') }}</label>
-
-                            <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{ trans('projectsquare-payment::login.email') }}</label>
                                 <input type="email" class="form-control" name="email" />
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">{{ trans('projectsquare-payment::login.password') }}</label>
-
-                            <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{{ trans('projectsquare-payment::login.password') }}</label>
                                 <input type="password" class="form-control" name="password" autocomplete="off" />
                             </div>
-                        </div>
 
-                        {{--<div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember_token" />{{ trans('projectsquare-payment::login.remember') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>--}}
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn valid">
-                                    <i class="fa fa-btn fa-sign-in"></i>{{ trans('projectsquare-payment::login.login') }} <span class="glyphicon glyphicon-log-in" style="margin-left: 1rem"></span>
+                            <div class="form-group">
+                                <button type="submit" class="button button-valid">
+                                    {{ trans('projectsquare-payment::login.login') }}
                                 </button>
 
                                 <a class="btn btn-link" href="{{ route('forgotten_password') }}">{{ trans('projectsquare-payment::login.forgotten_password') }}</a>
                             </div>
-                        </div>
-                    </form>
+
+                            {!! csrf_field() !!}
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
