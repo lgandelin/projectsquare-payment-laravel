@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 
 use Webaccess\ProjectSquarePayment\Requests\Payment\InitTransactionRequest;
 use Webaccess\ProjectSquarePayment\Requests\Payment\HandleBankCallRequest;
-use Webaccess\ProjectSquarePaymentLaravel\Models\Transaction;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
 
 class PaymentController extends Controller
