@@ -47,7 +47,7 @@
 
                     <p>{{ trans('projectsquare-payment::payment.payment_success_text_info') }}</p>
                 @else
-                    <p></p>{{ trans('projectsquare-payment::payment.payment_in_progress_text') }}</p>
+                    <p>{{ trans('projectsquare-payment::payment.payment_in_progress_text') }}</p>
                 @endif
 
                 <a class="btn btn-primary" href="{{ route('my_account') }}">{{ trans('projectsquare-payment::payment.back_to_my_account') }}</a>

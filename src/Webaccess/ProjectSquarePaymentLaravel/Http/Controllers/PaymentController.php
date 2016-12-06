@@ -45,6 +45,7 @@ class PaymentController extends Controller
 
     /**
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function payment_handler(Request $request)
     {
@@ -66,7 +67,7 @@ class PaymentController extends Controller
      * @param $transactionIdentifier
      * @return mixed
      */
-    public function payment_result($success, $transactionIdentifier)
+    public function payment_result($transactionIdentifier)
     {
         $transaction = $this->transactionRepository->getByIdentifier($transactionIdentifier);
 

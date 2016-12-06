@@ -17,7 +17,7 @@ Route::group(['middleware' => ['web']], function () {
 
     //PAIEMENT
     Route::post('/payment_form', array('as' => 'payment_form', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_form'));
-    Route::get('/payment_result/{success}/{transaction_identifier}', array('as' => 'payment_result', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_result'));
+    Route::get('/payment_result/{transaction_identifier}', array('as' => 'payment_result', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_result'));
 
     //SIGNUP
     Route::get('/inscription/{users_count?}', array('as' => 'signup', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\SignupController@index'));
