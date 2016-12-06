@@ -72,8 +72,8 @@
 </div>
 
 <div class="submit col-lg-12 col-md-12" style="clear: both; overflow: hidden">
-    <input type="button" class="pull-left back-step-2" value="{{ trans('projectsquare-payment::signup.previous_step') }}" />
-    <input type="submit" class="pull-right valid-step-3" value="{{ trans('projectsquare-payment::signup.valid_platform_creation') }}" />
+    <input type="button" class="pull-left button back-step-2" value="{{ trans('projectsquare-payment::signup.previous_step') }}" />
+    <input type="submit" class="pull-right button button-valid valid-step-3" value="{{ trans('projectsquare-payment::signup.valid_platform_creation') }}" />
 </div>
 
 {{ csrf_field() }}

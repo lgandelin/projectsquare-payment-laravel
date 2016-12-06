@@ -38,6 +38,6 @@
     </div>--}}
 
     <div style="clear:both; margin-top: 15rem;">
-        <input type="button" class="valid-step-1" value="{{ trans('projectsquare-payment::signup.next_step') }}" />
+        <input type="button" class="button valid-step-1" value="{{ trans('projectsquare-payment::signup.next_step') }}" />
     </div>
 </div>

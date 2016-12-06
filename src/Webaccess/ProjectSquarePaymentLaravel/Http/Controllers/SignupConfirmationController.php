@@ -4,21 +4,31 @@ namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Webaccess\ProjectSquarePaymentLaravel\Services\PlatformManager;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Services\GuzzleRemotePlatformService;
 
 class SignupConfirmationController extends Controller
 {
+    public function __construct()
+    {
+        $this->platformRepository = new EloquentPlatformRepository();
+    }
+
     public function index()
     {
         return view('projectsquare-payment::signup.confirmation');
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function check_platform_url(Request $request)
     {
         $platformURL = '';
         if ($request->session()->has('platformID')) {
-            if ($platform = (new PlatformManager())->getPlatformByID($request->session()->get('platformID'))) {
-                $platformURL = 'http://' . $platform->slug . '.projectsquare.io';
+            if ($platform = $this->platformRepository->getByID($request->session()->get('platformID'))) {
+                $platformURL = (new GuzzleRemotePlatformService(''))->getPlatformURL($platform);
             }
         }
 

@@ -40,6 +40,6 @@
 </div>
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit" style="margin-top: 5rem;">
-    <input type="button" class="pull-left back-step-1" value="{{ trans('projectsquare-payment::signup.previous_step') }}" />
-    <input type="button" class="pull-right valid-step-2" value="{{ trans('projectsquare-payment::signup.next_step') }}" />
+    <input type="button" class="pull-left button back-step-1" value="{{ trans('projectsquare-payment::signup.previous_step') }}" />
+    <input type="button" class="pull-right button valid-step-2" value="{{ trans('projectsquare-payment::signup.next_step') }}" />
 </div>
