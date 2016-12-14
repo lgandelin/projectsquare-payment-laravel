@@ -16,7 +16,22 @@
         margin-top: 5rem;
         margin-left: auto;
         margin-right: auto;
-        width: 290px;
+        width: 350px;
+
+        .button {
+            font-size: 18px;
+            background: #e8eff1;
+            color: #337ab7;
+            display: block;
+            padding: 18px 50px 18px 50px;
+            transition: background 0.50s ease;
+        }
+
+        .button:hover {
+            background: #6ca6b6;
+            color: white;
+            text-decoration: none;
+        }
     }
 
     .contact-us {

@@ -9737,9 +9737,24 @@ h3 {
   margin-top: 5rem;
   margin-left: auto;
   margin-right: auto;
-  width: 290px;
+  width: 350px;
 }
-/* line 22, ../sass/pages/_signup-confirmation.scss */
+/* line 21, ../sass/pages/_signup-confirmation.scss */
+.signup_confirmation_template .platform-ready .button {
+  font-size: 18px;
+  background: #e8eff1;
+  color: #337ab7;
+  display: block;
+  padding: 18px 50px 18px 50px;
+  transition: background 0.50s ease;
+}
+/* line 30, ../sass/pages/_signup-confirmation.scss */
+.signup_confirmation_template .platform-ready .button:hover {
+  background: #6ca6b6;
+  color: white;
+  text-decoration: none;
+}
+/* line 37, ../sass/pages/_signup-confirmation.scss */
 .signup_confirmation_template .contact-us {
   font-style: italic;
   margin-top: 10rem;
