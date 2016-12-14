@@ -2,6 +2,7 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -41,6 +42,8 @@ class MyAccountController extends Controller
             'balance' => $platform->getAccountBalance(),
             'daily_cost' => app()->make('GetPlatformUsageAmountInteractor')->getDailyCost($this->getCurrentPlatformID()),
             'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),
+            'trial_version' => ($platform->getCreationDate()->addMonths(1) > new Carbon()) ? true : false,
+            'date_end_trial_version' => $platform->getCreationDate()->addMonths(1),
             'invoices' => $this->getInvoices($this->getCurrentPlatformID()),
             'error' => ($request->session()->has('error')) ? $request->session()->get('error') : null,
             'confirmation' => ($request->session()->has('confirmation')) ? $request->session()->get('confirmation') : null,

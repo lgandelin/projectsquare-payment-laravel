@@ -41,6 +41,10 @@ $(document).ready(function() {
 
     //Fund account
     $('.btn-valid-fund-account').click(function() {
+
+        if ($('input[name="amount"]').val() == "")
+            return false;
+        
         $.ajax({
             type: "POST",
             url: route_payment_form,

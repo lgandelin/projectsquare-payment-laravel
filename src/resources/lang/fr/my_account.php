@@ -35,4 +35,5 @@ return [
 
     'email_alert_amount' => 'M\'envoyer un email lorsque le solde du compte est inférieur à',
 
+    'trial_version_until' => 'En version d\'essai jusqu\'au : ',
 ];
