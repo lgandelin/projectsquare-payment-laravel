@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Webaccess\ProjectSquareLaravel\Models\Administrator;
+use Webaccess\ProjectSquarePaymentLaravel\Models\Administrator;
 use Webaccess\ProjectSquarePaymentLaravel\Utils\PasswordGenerator;
 
 class LoginController extends Controller
