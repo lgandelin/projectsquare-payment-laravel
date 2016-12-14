@@ -14,10 +14,13 @@ class SetNodeAvailable extends Command
     public function handle()
     {
         $identifier = $this->argument('identifier');
-        $node = Node::where('identifier', '=', $identifier)->first();
-        $node->available = true;
-        $node->save();
 
-        $this->info('Node ' . $identifier . ' disponible !');
+        if ($node = Node::where('identifier', '=', $identifier)->first()) {
+            $node->available = true;
+            $node->save();
+            $this->info('Node ' . $identifier . ' disponible !');
+        } else {
+            $this->error('Node ' . $identifier . ' non trouvée');
+        }
     }
 }

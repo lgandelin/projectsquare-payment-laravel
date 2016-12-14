@@ -1,0 +1,66 @@
+.my_account_template {
+
+    section {
+        overflow: hidden;
+        clear: both;
+    }
+
+    .first-section {
+        margin-top: 5rem;
+    }
+
+    hr {
+        clear: both;
+        margin-top: 3.5rem;
+    }
+
+    .form-control {
+        border: 1px solid #ddd;
+    }
+
+    .btn-logout {
+        float: right;
+    }
+    
+    .btn-valid-fund-account {
+        margin-left: 1rem;
+    }
+
+    .button-valid-information {
+        display: block;
+        clear: both;
+    }
+
+    .users-count-display {
+
+        .value {
+            font-size:3.5rem;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 1rem;
+        }
+    }
+
+    .users-count-update {
+
+        .users-count-input {
+            display: inline-block;
+            width: 75px;
+            margin-right: 2rem;
+        }
+    }
+
+    .account-balance {
+        font-size: 3.5rem;
+    }
+
+    .amount {
+        width:100px;
+        display: inline-block;
+    }
+
+    .email-alert-amount {
+        display: inline-block;
+        width: 50px;
+    }
+}

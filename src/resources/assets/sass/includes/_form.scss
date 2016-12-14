@@ -1,133 +1,25 @@
-// PRE-INSCRIPTION
-
-.form {
-
-	margin-bottom: 50px;
-
-	#mc_embed_signup {
-		margin-top: 50px;
-
-		.validate {
-			width: 50%;
-
-			.mc-field-group {	
-
-				width: 100%;
-
-				label {
-					color: $touareg;
-					text-transform: uppercase;
-					margin-bottom: 10px;
-					font-family: $typo4;
-					font-size: 16px;
-				}
-
-				input {
-					background: $gray_blue;
-					height: 50px;
-					padding-left: 10px;
-					border:none;
-					border-radius: none;
-					border-radius: 0;
-				}
-		
-			}
-
-			.submit-button {
-				float: right;
-				margin-top: 30px;
-				font-family: Helvetica;
-
-
-				.button {
-					background: $gray_blue;
-					color: $touareg;
-					text-transform: uppercase;
-					height: 40px;
-					line-height: 40px;
-					border-radius: 0;
-				}
-
-				.button:hover {
-					background: $blue;
-					color: white;
-				}
-			}
-
-			.loading{
-			    display: block;
-			    margin: auto;
-			    font-size: 1.75rem;
-			    margin-left: 140px;
-			    margin-top: 20px;
-			    color: #096a85;
-			    height: 55px;
-			    padding-left: 80px;
-			    background: url("../img/loading.gif") left center no-repeat;
-			    vertical-align: middle;
-			    padding-top: 10px;
-			}
-
-			.error {
-				text-transform: none !important;
-				color: red !important;
-				margin-left: 0 !important;
-				margin-bottom: 0 !important;
-				padding-bottom: 0 !important;
-			}
-
-			.mc-error {
-				color: red;
-				font-size: 1.5rem;
-			}
-		}
-	}
+label {
+	font-family: $typo2;
+	font-size: 16px;
+	color: $touareg;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin-bottom: 1rem;
 }
-.newsletter {
 
-	#mc_embed_signup {
-		position: relative;
-		.validate {
-			padding: 0;
+.form-control {
+	min-height: 60px;
+	border: none;
+	border-radius: 0;
+	padding-left: 1.5rem;
+	font-size: 19px;
+}
 
-			input[type="email"]  {
-				height: 60px;
-				width: 100%;
-				padding-left: 30px;
+h3 {
+	margin-bottom: 2rem;
+}
 
-				border: none;
-				background: $gray_blue;
-				font-family: $typo1;
-				font-size: 16px;
-				letter-spacing: 1px;
-				border-radius: 0;
-			}
-
-			.clear {
-
-				position: absolute;
-			    right: 0;
-			    top: 0;
-			    bottom: 0;
-			    width: auto;
-
-				.button {
-					background: $blue;
-					color: white;
-					text-transform: uppercase;
-					height: 60px;
-					line-height: 60px;
-					border-radius: 0;
-					font-size: 18px;
-					font-family: $typo1;
-					margin-left: -4px;
-					width: auto;
-				}
-
-				.button:hover {
-					background: $touareg;
-				}
-			}
-		}
-	}
+.info {
+	padding: 15px 30px;
+	margin: 0 0 3rem 0;
 }

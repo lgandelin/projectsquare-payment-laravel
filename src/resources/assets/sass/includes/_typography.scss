@@ -30,6 +30,7 @@
 		 url('../fonts/MyriadPro-Regular.eot'),
 		 url('../fonts/MyriadPro-Regular.ttf');
 }
+
 @font-face {
 	font-family: "MyriadPro-Semibold";
 	src: url('../fonts/MyriadPro-Semibold.woff'),
@@ -54,6 +55,7 @@ p {
 		color: $touareg;
 	}
 }
+
 strong {
 	font-weight: bold;
 	color: rgba(55,57,57,0.84);
@@ -62,6 +64,7 @@ strong {
 ul {
 	list-style: none;
 }
+
 body {
 	font-family: $typo3;
 	color: $gray;

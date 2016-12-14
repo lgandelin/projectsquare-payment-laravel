@@ -118,7 +118,7 @@ function displayTab(tab) {
 function loadEnteredValues() {
     $('.name_value').text($('input[name="name"]').val());
     $('.slug_value').text($('input[name="slug"]').val() + ".projectsquare.io");
-    $('.users_count_value').text(users_count);
+    $('.users_count_value').text($('input[name="users_count"]').val());
     $('.administrator_email_value').text($('input[name="administrator_email"]').val());
     $('.administrator_last_name_value').text($('input[name="administrator_last_name"]').val());
     $('.administrator_first_name_value').text($('input[name="administrator_first_name"]').val());

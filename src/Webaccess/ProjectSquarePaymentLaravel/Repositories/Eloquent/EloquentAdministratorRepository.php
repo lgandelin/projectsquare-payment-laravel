@@ -1,6 +1,6 @@
 <?php
 
-namespace Webaccess\ProjectSquarePaymentLaravel\Repositories;
+namespace Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent;
 
 use Webaccess\ProjectSquarePayment\Entities\Administrator as AdministratorEntity;
 use Webaccess\ProjectSquarePayment\Repositories\AdministratorRepository;
@@ -11,6 +11,15 @@ class EloquentAdministratorRepository implements AdministratorRepository
     public function getByID($administratorID)
     {
         if ($administratorModel = Administrator::find($administratorID)) {
+            return $this->convertModelToEntity($administratorModel);
+        }
+
+        return false;
+    }
+
+    public function getByPlatformID($platformID)
+    {
+        if ($administratorModel = Administrator::where('platform_id', '=', $platformID)->first()) {
             return $this->convertModelToEntity($administratorModel);
         }
 
@@ -44,7 +53,7 @@ class EloquentAdministratorRepository implements AdministratorRepository
         $administrator->setBillingAddress($administratorModel->billing_address);
         $administrator->setZipCode($administratorModel->zipcode);
         $administrator->setCity($administratorModel->city);
-        $administrator->setPlatformID($administratorModel->administrator_id);
+        $administrator->setPlatformID($administratorModel->platform_id);
 
         return $administrator;
     }
