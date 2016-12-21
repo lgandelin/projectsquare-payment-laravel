@@ -26,11 +26,12 @@
         </h2>
 
         <div class="try">
-            <form action="" method="post">
+            <form action="{{ route('landing_free_trial_handler') }}" method="post">
                 <input type="text" placeholder="E-MAIL" name="email" />
                 <input type="password" placeholder="MOT DE PASSE" name="password" />
                 <input type="text" placeholder="URL" name="url" style="margin-right:6px"/> <span class="url-suffix">.projectsquare.io</span>
                 <input type="submit" class="button" value="COMMENCER" />
+                {{ csrf_field() }}
             </form>
         </div>
     </div>
