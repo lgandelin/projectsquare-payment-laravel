@@ -1,0 +1,415 @@
+.landing-free-trial-template {
+
+    .header {
+        background: url('../img/landing-free-trial/bg-header.jpg') no-repeat center top;
+        height: 570px;
+        margin-bottom: 100px;
+        padding-top: 70px;
+
+        .title {
+            margin: 0;
+            color: white;
+            font-size: 32px;
+            line-height: 55px;
+
+            .size1 {
+                font-family: $typo2;
+                font-size: 50px;
+            }
+
+            .size2 {
+                font-size: 38px;
+            }
+        }
+
+        .subtitle {
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            line-height: 35px;
+
+            .free-trial {
+                display: block;
+                color: $green;
+                text-transform: uppercase;
+                font-size: 26px;
+                font-family: $typo2;
+            }
+
+            strong {
+                font-family: $typo2;
+                color: $green;
+            }
+        }
+
+        .try {
+            width: 92%;
+            margin: auto;
+            padding: 20px 20px 15px 20px;
+            position: relative;
+            bottom: -5px;
+            background: $green;
+            overflow: hidden;
+
+            input[type="text"],
+            input[type="password"] {
+                float: left;
+                font-size: 12px;
+                margin-right: 20px;
+                color: $blue;
+                font-family: $typo2;
+                padding: 10px;
+                border: none;
+                width: 21%;
+                height: 48px;
+            }
+
+            input[type="submit"] {
+                float: right;
+                height: 48px;
+                font-size: 12px;
+                font-family: $typo2;
+                background: $touareg;
+            }
+
+            input[type="submit"]:hover {
+                background: $blue;
+            }
+
+            ::-webkit-input-placeholder {
+                color: $blue;
+            }
+
+            :-moz-placeholder {
+                color: $blue;
+                opacity:  1;
+            }
+
+            ::-moz-placeholder {
+                color: $blue;
+                opacity:  1;
+            }
+
+            :-ms-input-placeholder {
+                color: $blue;
+            }
+
+            .url-suffix {
+                color: $touareg;
+                font-family: $typo2;
+                font-size: 14px;
+                display: inline-block;
+                margin-top: 13px;
+            }
+        }
+    }
+
+    .simplifiez-vous {
+        padding-bottom: 30px;
+
+        .title {
+            padding-bottom: 80px;
+        }
+
+        .atouts {
+            display: inline-block;
+            margin-bottom: 72px;
+
+            .atout {
+
+                .sub_title {
+                    padding-bottom: 0px;
+                }
+
+                .img {
+                    margin: auto;
+                    width: 206px;
+                    height: 184px;
+                    margin-bottom: 15px;
+                }
+
+                .nuage {
+                    @include landing-free-trial-sprite(picto-nuage-hover);
+                }
+
+                .gestion {
+                    @include landing-free-trial-sprite(picto-gestion-hover);
+                }
+
+                .oiseau {
+                    @include landing-free-trial-sprite(picto-oiseau-hover);
+                }
+
+                p {
+                    text-align: center;
+                    padding-left : 15px;
+                    padding-right: 15px;
+                    font-size : 22px;
+                }
+            }
+        }
+
+        hr {
+            height: 2px;
+            width: 80%;
+            display: block;
+            background: #e8eff1;
+            border: none;
+        }
+    }
+
+    .bloc_fonctionalites {
+        overflow: hidden;
+        margin-bottom: 60px;
+
+        .bloc_fonctionnalite {
+            cursor: pointer;
+            height: 285px;
+            position: relative;
+            padding-top: 50px;
+
+            .active {
+                opacity: 1;
+                transition-property: opacity;
+                transition-duration: 0.3s;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                padding-top: 50px;
+                text-align: center;
+
+                .img {
+                    display: inline-block;
+                    margin-bottom: 30px;
+                }
+
+                .img-relation-client {
+                    width: 98px;
+                    height: 110px;
+                    @include landing-free-trial-sprite(picto-relation);
+                }
+
+                .img-organisation {
+                    width: 84px;
+                    height: 85px;
+                    margin-top: 20px;
+                    @include landing-free-trial-sprite(picto-organisation);
+                }
+
+                .img-maintenance {
+                    width: 103px;
+                    height: 102px;
+                    @include landing-free-trial-sprite(picto-maintenance);
+                }
+
+                .img-connexion {
+                    width: 88px;
+                    height: 85px;
+                    @include landing-free-trial-sprite(picto-connexion);
+                }
+            }
+        }
+
+        .bloc_fonctionnalite1 {
+            background : $green;
+        }
+
+        .bloc_fonctionnalite2 {
+            background : $blue;
+
+            .active {
+
+                img {
+                    margin-top: 26px;
+                }
+            }
+
+            .title_maj {
+                color: white;
+            }
+        }
+
+        .bloc_fonctionnalite3, .bloc_fonctionnalite4 {
+
+            .active {
+
+                img {
+                    margin-top: 30px;
+                }
+            }
+        }
+
+        .bloc_fonctionnalite2:hover {
+            background: $blue;
+
+            .texte {
+                color: white;
+            }
+        }
+
+        .bloc_fonctionnalite3 {
+            background : $touareg;
+
+            .title_maj {
+                color: white;
+            }
+        }
+
+        .bloc_fonctionnalite4 {
+            background : $gray_blue;
+        }
+    }
+
+    .features-description {
+        margin-top: 40px;
+
+        .features {
+
+            li {
+                padding-top: 20px;
+                padding-bottom: 20px;
+                padding-left: 80px;
+                padding-right: 20px;
+                font-size: 22px;
+                color: $gray;
+                cursor: pointer;
+                margin-bottom: 0px;
+
+                .feature {
+                    font-size: 24px;
+                    color: $touareg;
+                    margin-bottom: 15px;
+                    display: inline-block;
+                }
+            }
+
+            li:hover {
+                background: lighten($gray_blue, 5%);
+            }
+
+            .active, .active:hover {
+                background: $gray_blue;
+            }
+
+            i {
+                vertical-align: middle;
+                display: inline-block;
+                margin-right: 10px;
+                position: relative;
+                top: -3px;
+            }
+
+            .icon-feature-1 {
+                width: 29px;
+                height: 26px;
+                background: url('../img/landing-free-trial/features/icon-feature-1.png') no-repeat center center;
+            }
+
+            .icon-feature-2 {
+                width: 24px;
+                height: 22px;
+                background: url('../img/landing-free-trial/features/icon-feature-2.png') no-repeat center center;
+            }
+
+            .icon-feature-3 {
+                width: 26px;
+                height: 26px;
+                background: url('../img/landing-free-trial/features/icon-feature-3.png') no-repeat center center;
+            }
+
+            .icon-feature-4 {
+                width: 33px;
+                height: 32px;
+                background: url('../img/landing-free-trial/features/icon-feature-4.png') no-repeat center center;
+            }
+
+            .icon-feature-6 {
+                width: 30px;
+                height: 30px;
+                background: url('../img/landing-free-trial/features/icon-feature-6.png') no-repeat center center;
+            }
+
+            .icon-feature-7 {
+                width: 27px;
+                height: 27px;
+                background: url('../img/landing-free-trial/features/icon-feature-7.png') no-repeat center center;
+            }
+
+            .icon-feature-8 {
+                width: 28px;
+                height: 20px;
+                background: url('../img/landing-free-trial/features/icon-feature-8.png') no-repeat center center;
+            }
+
+            .icon-feature-9 {
+                width: 24px;
+                height: 24px;
+                background: url('../img/landing-free-trial/features/icon-feature-9.png') no-repeat center center;
+            }
+        }
+
+        #bloc_fonctionnalite4-content {
+            margin-top: 50px;
+            .feature-text {
+                overflow: hidden;
+                margin-bottom: 65px;
+                padding-left: 70px;
+
+                .description {
+                    width: 285px;
+                    float: left;
+
+                    .feature {
+                        display: block;
+                        color: $touareg;
+                        font-size: 24px;
+                    }
+                }
+
+                img {
+                    float: left;
+                    margin-right: 20px;
+                }
+            }
+        }
+    }
+    
+    .footer {
+        height: auto;
+        line-height: inherit;
+        position: static;
+
+        .blue-wrapper {
+            background: $gray_blue;
+            padding: 35px;
+
+            .start-free-trial {
+                margin: auto;
+                display: block;
+                font-size: 14px;
+                font-family: $typo2;
+                padding: 20px 30px;
+                width: 360px;
+                background: $touareg;
+                cursor: pointer;
+                text-align: center;
+            }
+
+            .start-free-trial:hover {
+                background: $blue;
+            }
+        }
+        
+        .green-wrapper {
+            overflow: hidden;
+            padding-left: 8%;
+            padding-right: 8%;
+            color: $touareg;
+            height: 70px;
+            line-height: 70px;
+            background: $green;
+        }
+    }
+}

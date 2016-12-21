@@ -48,7 +48,7 @@
             @endif
 
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="background_blue signup-wrapper"">
+                <div class="background_blue signup-wrapper">
                     <div class="setup-content" id="step-1">
                         @include('projectsquare-payment::signup.steps.step1')
                     </div>
