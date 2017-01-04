@@ -27,8 +27,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/signup_confirmation_check_platform_url', array('as' => 'signup_confirmation_check_platform_url', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\SignupConfirmationController@check_platform_url'));
 
     //LANDING FREE TRIAL
-    Route::get('/essai-gratuit-projectsquare-gestion-de-projet', array('as' => 'landing_free_trial', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\LandingFreeTrialController@index'));
-    Route::post('/essai-gratuit-projectsquare-gestion-de-projet/handler', array('as' => 'landing_free_trial_handler', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\LandingFreeTrialController@handler'));
+    Route::get('/essai-gratuit-projectsquare-gestion-de-projet', array('as' => 'landing_free_trial', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\SignupController@landing_free_trial'));
+    Route::post('/essai-gratuit-projectsquare-gestion-de-projet/handler', array('as' => 'landing_free_trial_handler', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\SignupController@handler'));
 });
 
 Route::post('/payment_handler', array('as' => 'payment_return_url', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_handler'));

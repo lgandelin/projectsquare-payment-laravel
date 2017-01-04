@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    @if (isset($no_header) && $no_header == true)
+    @if (!isset($no_header))
         <div class="container">
             @include('projectsquare-payment::partials.header')
         </div>
