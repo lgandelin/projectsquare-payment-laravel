@@ -2,8 +2,8 @@
 
     .header {
         background: url('../img/landing-free-trial/bg-header.jpg') no-repeat center top;
-        height: 570px;
-        margin-bottom: 100px;
+        height: 650px;
+        margin-bottom: 50px;
         padding-top: 70px;
 
         .title {
@@ -45,6 +45,7 @@
         .try {
             width: 92%;
             margin: auto;
+            margin-bottom: 20px;
             padding: 20px 20px 15px 20px;
             position: relative;
             bottom: -5px;
@@ -101,6 +102,20 @@
                 font-size: 14px;
                 display: inline-block;
                 margin-top: 13px;
+            }
+
+            .loading {
+                font-family: $typo2;
+                font-size: 12px;
+                text-transform: uppercase;
+                background: #1fbdff !important;
+                display:inline-block;
+                color: white;
+                padding-left: 20px;
+                padding-right: 20px;
+                height: 48px;
+                line-height: 48px;
+                float: right;
             }
         }
     }

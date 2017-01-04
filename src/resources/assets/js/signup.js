@@ -154,7 +154,6 @@ function checkSlug() {
                     $('.check-slug-btn').removeClass('verification-success');
                     $('.check-slug-btn').val('Vérifier');
                 }, 2000);
-
             } else {
                 $('input[name="slug"]').attr('data-verified', 1);
                 $('.check-slug-btn').removeClass('verification-in-progress').addClass('verification-success');

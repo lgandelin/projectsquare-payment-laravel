@@ -22,18 +22,19 @@
         </h1>
 
         <h2 class="subtitle">
-            <span class="free-trial">1 mois gratuit</span>Nombre de projets, de collaborateaurs et de clients <strong>ILLIMITÉ</strong>
+            <span class="free-trial">1 mois gratuit</span>Nombre de projets, de collaborateurs et de clients <strong>ILLIMITÉ</strong>
         </h2>
 
         <div class="try">
-            <form action="{{ route('landing_free_trial_handler') }}" method="post">
-                <input type="text" placeholder="E-MAIL" name="email" />
-                <input type="password" placeholder="MOT DE PASSE" name="password" />
-                <input type="text" placeholder="URL" name="url" style="margin-right:6px"/> <span class="url-suffix">.projectsquare.io</span>
-                <input type="submit" class="button" value="COMMENCER" />
-                {{ csrf_field() }}
-            </form>
+            <input type="text" placeholder="E-MAIL" name="email" />
+            <input type="password" placeholder="MOT DE PASSE" name="password" />
+            <input type="text" placeholder="URL" name="url" style="margin-right:6px"/> <span class="url-suffix">.projectsquare.io</span>
+            <input type="submit" class="button" value="COMMENCER" />
+            <span class="loading" style="display: none">Chargement ...</span>
+            {{ csrf_field() }}
         </div>
+
+        <div class="alert alert-danger error" style="display: none"></div>
     </div>
     <!-- HEADER -->
 
@@ -265,8 +266,37 @@
     <!-- FOOTER -->
 
     <script>var route_check_slug = "{{ route('signup_check_slug') }}";</script>
+    <script>var route_free_trial_handler = "{{ route('landing_free_trial_handler') }}";</script>
     <script src="{{ asset('js/signup.js') }}"></script>
     <script>
+
+        //Free trial validation
+        $('.landing-free-trial-template .try input[type="submit"]').click(function() {
+            $('.try .loading').show();
+            $('.landing-free-trial-template .error').hide();
+            var submit_button = $(this);
+            submit_button.hide();
+            $.ajax({
+                type: "POST",
+                url: route_free_trial_handler,
+                data: {
+                    _token: $('input[name="_token"]').val(),
+                    email: $('.landing-free-trial-template .try input[name="email"]').val(),
+                    password: $('.landing-free-trial-template .try input[name="password"]').val(),
+                    url: $('.landing-free-trial-template .try input[name="url"]').val()
+                },
+                success: function (data) {
+                    if (data.success == false) {
+                        $('.landing-free-trial-template .try .loading').hide();
+                        submit_button.show();
+                        $('.landing-free-trial-template .error').show().text(data.error);
+                    } else {
+                        window.location.href = data.redirection_url;
+                    }
+                }
+            });
+        });
+
         //Anchor
         $('a[href^="#"]').click(function(){
             var id = $(this).attr("href");

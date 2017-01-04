@@ -32,18 +32,12 @@ class LandingFreeTrialController
         $errorMessage = null;
         try {
             $response = app()->make('SignupInteractor')->execute(new SignupRequest([
-                'platformName' => '',
-                'platformSlug' => $request->slug,
+                'platformSlug' => $request->url,
                 'platformUsersCount' => 99,
                 'platformPlatformMonthlyCost' => env('PLATFORM_MONTHLY_COST'),
                 'platformUserMonthlyCost' => env('USER_MONTHLY_COST'),
-                'administratorEmail' => $request->administrator_email,
-                'administratorPassword' => Hash::make($request->administrator_password),
-                'administratorLastName' => '',
-                'administratorFirstName' => '',
-                'administratorBillingAddress' => '',
-                'administratorZipcode' => '',
-                'administratorCity' => '',
+                'administratorEmail' => $request->email,
+                'administratorPassword' => $request->password ? Hash::make($request->password) : null,
             ]));
 
             if (!$response->success) {
@@ -58,7 +52,8 @@ class LandingFreeTrialController
 
         return response()->json([
             'success' => $response->success,
-            'error' => $errorMessage
+            'error' => $errorMessage,
+            'redirection_url' => route('signup_confirmation')
         ], 200);
     }
 
@@ -76,13 +71,8 @@ class LandingFreeTrialController
             CheckPlatformSlugResponse::PLATFORM_SLUG_INVALID => trans('projectsquare-payment::signup.platform_slug_invalid_error'),
             CreatePlatformResponse::PLATFORM_USERS_COUNT_REQUIRED => trans('projectsquare-payment::signup.platform_users_count_required_error'),
             CreateAdministratorResponse::REPOSITORY_CREATION_FAILED => trans('projectsquare-payment::signup.generic_error'),
-            CreateAdministratorResponse::ADMINISTRATOR_LAST_NAME_REQUIRED => trans('projectsquare-payment::signup.administrator_last_name_required_error'),
-            CreateAdministratorResponse::ADMINISTRATOR_FIRST_NAME_REQUIRED => trans('projectsquare-payment::signup.administrator_first_name_required_error'),
             CreateAdministratorResponse::ADMINISTRATOR_EMAIL_REQUIRED => trans('projectsquare-payment::signup.administrator_email_required_error'),
             CreateAdministratorResponse::ADMINISTRATOR_PASSWORD_REQUIRED => trans('projectsquare-payment::signup.administrator_password_required_error'),
-            CreateAdministratorResponse::ADMINISTRATOR_CITY_REQUIRED => trans('projectsquare-payment::signup.administrator_city_required_error'),
-            CreateAdministratorResponse::ADMINISTRATOR_BILLING_ADDRESS_REQUIRED => trans('projectsquare-payment::signup.administrator_billing_address_required_error'),
-            CreateAdministratorResponse::ADMINISTRATOR_ZIPCODE_REQUIRED => trans('projectsquare-payment::signup.administrator_zipcode_required_error'),
             CreateAdministratorResponse::PLATFORM_ID_REQUIRED => $errorMessage = trans('projectsquare-payment::signup.generic_error'),
         ];
 
