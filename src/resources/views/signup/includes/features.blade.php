@@ -50,7 +50,7 @@
                     <i class="icon-feature-2"></i>
                     <span class="feature">Calendrier projet</span>
                     <p class="description">
-                        Définissez les phases de vos projets, les étapes de livrables et validations et partagez-le avec vos collaborateurs et vos clients.
+                        Définissez les phases de vos projets, les étapes de livrables et validations et partagez-les avec vos collaborateurs et vos clients.
                     </p>
                 </li>
 
@@ -72,7 +72,7 @@
                     <i class="icon-feature-4"></i>
                     <span class="feature">Planning</span>
                     <p class="description">
-                        Le planning d’équipe permet au chef de projet d’inviter des collaborateurs à un projet et de leur attribuer des tâches.
+                        Le planning d’équipe permet au chef de projet de visualiser et d’attribuer les tâches d'un projet à ses collaborateurs.
                     </p>
                 </li>
 
@@ -80,7 +80,7 @@
                     <i class="icon-feature-2"></i>
                     <span class="feature">Calendrier projet</span>
                     <p class="description">
-                        Définissez les phases de vos projets, les étapes de livrables et validations et partagez-le avec vos collaborateurs et vos clients.
+                        Définissez les phases de vos projets, les étapes de livrables et validations et partagez-les avec vos collaborateurs et vos clients.
                     </p>
                 </li>
 
@@ -88,7 +88,7 @@
                     <i class="icon-feature-6"></i>
                     <span class="feature">Rentablité</span>
                     <p class="description">
-                        Partagez et mettez à disposition de vos clients tous les éléments relatifs à leur projet.
+                        Suivez le pourcentage d'avancement, le temps passé ainsi que le taux de rentabilité de vos différents projets.
                     </p>
                 </li>
             </ul>
@@ -102,7 +102,7 @@
                     <i class="icon-feature-7"></i>
                     <span class="feature">Analyse du trafic</span>
                     <p class="description">
-                        Customisez les informations SEO que vous souhaitez afficher et proposez les à vos clients.
+                        Proposez à vos clients le suivi Google Analytics de leur site directement dans la plateforme.
                     </p>
                 </li>
 
@@ -110,7 +110,7 @@
                     <i class="icon-feature-8"></i>
                     <span class="feature">Tickets de maintenance</span>
                     <p class="description">
-                        Créer des tickets, intégrés au planning, classés par état et partagés avec vos clients.
+                        Donnez la possibilité à vos clients de créer des tickets de maintenance, pouvant être directement intégrés au planning et classés par état.
                     </p>
                 </li>
 
