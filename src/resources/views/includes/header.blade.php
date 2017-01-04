@@ -8,6 +8,9 @@
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        @include('projectsquare-payment::partials.header')
-    </div>
+
+    @if (!isset($no_header))
+        <div class="container">
+            @include('projectsquare-payment::partials.header')
+        </div>
+    @endif

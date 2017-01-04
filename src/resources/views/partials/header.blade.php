@@ -20,8 +20,8 @@
             <ul id="menu-header" class="menu"><li id="menu-item-93" class="menu-item menu-item-type-post_type menu-item-object-page page_item page-item-6 current_page_item menu-item-93"><a href="http://projectsquare.io/">Accueil</a></li>
                 <li id="menu-item-31" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31"><a href="http://projectsquare.io/presentation/">Présentation</a></li>
                 <li id="menu-item-99" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-99"><a href="http://projectsquare.io/fonctionnalites/">Fonctionnalités</a></li>
+                <li id="menu-item-27" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27"><a href="http://projectsquare.io/notre-offre/">Notre offre</a></li>
                 <li id="menu-item-28" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-28"><a href="http://projectsquare.io/actualites/">Blog</a></li>
-                <li id="menu-item-27" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-27"><a href="http://projectsquare.io/contact/">Contact</a></li>
             </ul>
         </div>
     </div>

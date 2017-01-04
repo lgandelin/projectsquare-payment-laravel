@@ -1,5 +1,8 @@
 @import "compass/utilities/sprites";
 
+@import "landing-free-trial/*.png";
+@include all-landing-free-trial-sprites;
+
 @import "header/*.png";
 @include all-header-sprites;
 

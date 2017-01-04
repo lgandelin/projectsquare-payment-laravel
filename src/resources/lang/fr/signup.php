@@ -43,7 +43,7 @@ return [
     'platform_generic_error' => 'Une erreur est survenue lors de la création de votre plateforme. Veuillez nous excuser pour la gêne occasionnée.',
 
     'platform_name_required_error' => 'Le nom de votre agence est obligatoire.',
-    'platform_slug_required_error' => 'L\'URL de la plateforme est oblogatoire.',
+    'platform_slug_required_error' => 'L\'URL de la plateforme est obligatoire.',
     'platform_slug_unavailable_error' => 'L\'URL que vous souhaitez avoir n\'est plus disponible, veuillez rééssayer avec une autre URL.',
     'platform_slug_invalid_error' => 'L\'URL que vous souhaitez avoir n\'est pas valide. Caractères autorisés : [a..z], [0..9] et -',
     'platform_users_count_required_error' => 'Le nombre d\'utilisateurs de la plateforme est obligatoire',
