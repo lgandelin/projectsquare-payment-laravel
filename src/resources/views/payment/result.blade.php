@@ -32,25 +32,23 @@
         </div>
 
         <div class="row">
-
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center; margin-top: 5rem;">
 
                 @if ($status == 4)
-                    <p>{{ trans('projectsquare-payment::payment.payment_cancelled_text') }}</p>
+                    <h3>{{ trans('projectsquare-payment::payment.payment_cancelled_text') }}</h3>
                 @elseif ($status == 3)
-
-                    <p>{{ trans('projectsquare-payment::payment.payment_error_text') }}</p>
+                    <h3>{{ trans('projectsquare-payment::payment.payment_error_text') }}</h3>
 
                     <p>{{ trans('projectsquare-payment::payment.payment_error_text_info') }}</p>
                 @elseif ($status == 2)
-                    <p>{{ trans('projectsquare-payment::payment.payment_success_text') }}</p>
+                    <h3>{{ trans('projectsquare-payment::payment.payment_success_text') }}</h3>
 
                     <p>{{ trans('projectsquare-payment::payment.payment_success_text_info') }}</p>
                 @else
-                    <p>{{ trans('projectsquare-payment::payment.payment_in_progress_text') }}</p>
+                    <h3>{{ trans('projectsquare-payment::payment.payment_in_progress_text') }}</h3>
                 @endif
 
-                <a class="btn btn-primary" href="{{ route('my_account') }}">{{ trans('projectsquare-payment::payment.back_to_my_account') }}</a>
+                <a class="button" style="display: inline-block; margin-top: 0.5rem" href="{{ route('my_account') }}">{{ trans('projectsquare-payment::payment.back_to_my_account') }}</a>
             </div>
         </div>
     </div>

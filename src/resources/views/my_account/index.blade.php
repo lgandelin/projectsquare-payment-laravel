@@ -29,7 +29,7 @@
 
                 <label for="users_count">{{ trans('projectsquare-payment::my_account.users_number') }} :</label>
                 <span class="users-count-display">
-                    <span class="value">{{ $users_count }}</span> <input type="button" class="button btn-users-count" value="{{ trans('projectsquare-payment::generic.modify') }}" />
+                    <span class="value">{{ $users_count }}</span> <input type="button" style="margin-left: 1rem" class="button btn-users-count" value="{{ trans('projectsquare-payment::generic.modify') }}" />
                 </span>
 
                 <span class="users-count-update" style="display: none">
