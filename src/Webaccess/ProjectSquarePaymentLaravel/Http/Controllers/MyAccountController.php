@@ -36,18 +36,14 @@ class MyAccountController extends Controller
     {
         $user = auth()->user();
         $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
-        $endTrialDate = $platform->getCreationDate()->addMonths(1);
 
         return view('projectsquare-payment::my_account.index', [
             'user' => $user,
+            'subscription' => $user->subscription('user'),
             'users_count' => $platform->getUsersCount(),
-            'balance' => $platform->getAccountBalance(),
-            'daily_cost' => app()->make('GetPlatformUsageAmountInteractor')->getDailyCost($this->getCurrentPlatformID()),
             'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),
-            'trial_version' => ($endTrialDate > new Carbon()) ? true : false,
-            'date_end_trial_version' => $endTrialDate,
             //'invoices' => $this->getInvoices($this->getCurrentPlatformID()),
-            'invoices' => $user->invoices(),
+            'invoices' => ($user->subscription('user')) ? $user->invoices() : [],
             'error' => ($request->session()->has('error')) ? $request->session()->get('error') : null,
             'confirmation' => ($request->session()->has('confirmation')) ? $request->session()->get('confirmation') : null,
         ]);

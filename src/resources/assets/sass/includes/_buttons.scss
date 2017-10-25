@@ -28,3 +28,13 @@
 	background: lighten($green, 10%);
 	color: white;
 }
+
+.button-red {
+	display: inline-block;
+	background: #ff6164;
+	padding: 1rem 2rem 1rem 2rem;
+	
+	&:hover {
+		background: red;
+	}
+}

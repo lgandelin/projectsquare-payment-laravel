@@ -1,0 +1,51 @@
+.payment_template {
+
+    .infos {
+        padding-top: 3.5rem;
+        margin: 2rem auto;
+
+        text-align: left;
+
+        ul {
+            list-style: disc;
+            list-style-position: inside;
+            padding-left: 2rem;
+        }
+    }
+
+    form {
+        display: block;
+        margin: auto;
+        margin-top: 3rem;
+
+        text-align: center;
+
+        font-size: 4rem;
+        padding: 2rem;
+
+        .stripe-button-el, .stripe-button-el span {
+            background: $green !important;
+            -webkit-border-radius: 0 !important;
+            -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            border: none !important;
+            text-shadow: none !important;
+            font-size: 2.0rem !important;
+            text-transform: uppercase;
+            font-family: $typo1 !important;
+
+            &:hover {
+                background: $touareg !important;
+
+                span {
+                    background: $touareg !important;
+                }
+            }
+        }
+
+        .stripe-button-el {
+            padding: 1.5rem 2rem 1.5rem 2rem !important;
+        }
+    }
+}

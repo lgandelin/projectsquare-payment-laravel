@@ -27,6 +27,18 @@
 
                 <h3>{{ trans('projectsquare-payment::my_account.platform') }}</h3>
 
+                @if ($subscription)
+                    @if ($subscription->onTrial())
+                        <p class="form-group"><label>{{ trans('projectsquare-payment::my_account.trial_version_until') }}</label> {{ (new \DateTime($subscription->trial_ends_at))->format('d/m/Y') }}</p>
+                    @elseif ($subscription->onGracePeriod())
+                        <p class="form-group"><label>{{ trans('projectsquare-payment::my_account.grace_period_until') }}</label> {{ (new \DateTime($subscription->ends_at))->format('d/m/Y') }}</p>
+                    @else
+                        <p class="form-group"><label>{{ trans('projectsquare-payment::my_account.monthly_usage') }} :</label> <span class="value">{{ number_format($monthly_cost, 2) }}</span>€</p>
+                    @endif
+                @else
+                    <p class="form-group"><label>Abonnement :</label> Pas d'abonnement en cours</p>
+                @endif
+
                 <label for="users_count">{{ trans('projectsquare-payment::my_account.users_number') }} :</label>
                 <span class="users-count-display">
                     <span class="value">{{ $users_count }}</span> <input type="button" style="margin-left: 1rem" class="button btn-users-count" value="{{ trans('projectsquare-payment::generic.modify') }}" />
@@ -37,22 +49,8 @@
                     <input type="button" class="button button-valid btn-valid-users-count-update" value="{{ trans('projectsquare-payment::generic.valid') }}" />
                     <input type="button" class="button btn-valid-users-count-cancel" value="{{ trans('projectsquare-payment::generic.cancel') }}" />
                 </span>
+
                 <hr>
-            </section>
-
-            <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h3>{{ trans('projectsquare-payment::my_account.account') }}</h3>
-
-                @if ($trial_version)
-                    <label>{{ trans('projectsquare-payment::my_account.trial_version_until') }} {{ $date_end_trial_version->format('d/m/Y') }}</label>
-                @else
-
-                    <p><label for="">{{ trans('projectsquare-payment::my_account.account_balance') }} :</label> <span class="account-banlance">{{ number_format($balance, 2) }}€</span></p>
-                    <p><label class="">{{ trans('projectsquare-payment::my_account.daily_usage') }}</label><span class="value">{{ number_format($daily_cost, 2) }}</span>€</p>
-                    <p class="monthly-usage">{{ trans('projectsquare-payment::my_account.monthly_usage') }} : <span class="value">{{ number_format($monthly_cost, 2) }}</span>€</p>
-
-                @endif
-
             </section>
 
             <section>
@@ -145,18 +143,24 @@
                         </tr>
                         @endforeach
                     </table>
+                @else
+                    <p>Aucune facture n'est disponible pour le moment.</p>
                 @endif
 
-                {{--
-                    <hr>
-                    <h3>Se désinscrire</h3>
-                    <input type="button" class="btn btn-danger" value="Se désinscrire" />
-                --}}
+                <hr>
             </section>
+
+            @if ($subscription && !$subscription->onGracePeriod() && $subscription->onTrial())
+
+                <section class="cancel-subscription col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5rem">
+                    <h3>Annulation de l'abonnement</h3>
+                    <a class="button button-red" href="{{ route('cancel_subscription') }}">Se désinscrire</a>
+                </section>
+            @endif
+
         </div>
     </div>
 
     <script>var route_update_users_count = "{{ route('update_users_count') }}";</script>
-    <script>var route_payment_form = "{{ route('payment_form') }}";</script>
     <script src="{{ asset('js/my_account.js') }}"></script>
 @endsection

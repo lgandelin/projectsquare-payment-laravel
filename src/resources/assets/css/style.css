@@ -9050,6 +9050,17 @@ a {
   color: white;
 }
 
+/* line 32, ../sass/includes/_buttons.scss */
+.button-red {
+  display: inline-block;
+  background: #ff6164;
+  padding: 1rem 2rem 1rem 2rem;
+}
+/* line 37, ../sass/includes/_buttons.scss */
+.button-red:hover {
+  background: red;
+}
+
 /* line 1, ../sass/includes/_utils.scss */
 .aligncenter {
   display: block;
@@ -9239,49 +9250,49 @@ h3 {
   background-repeat: no-repeat;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .landing-free-trial-picto-connexion {
   background-position: 0 0;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .landing-free-trial-picto-gestion {
   background-position: 0 -269px;
 }
-/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .landing-free-trial-picto-gestion:hover, .landing-free-trial-picto-gestion.picto-gestion-hover {
   background-position: 0 -85px;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .landing-free-trial-picto-maintenance {
   background-position: 0 -453px;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .landing-free-trial-picto-nuage {
   background-position: 0 -739px;
 }
-/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .landing-free-trial-picto-nuage:hover, .landing-free-trial-picto-nuage.picto-nuage-hover {
   background-position: 0 -555px;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .landing-free-trial-picto-oiseau {
   background-position: 0 -1107px;
 }
-/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .landing-free-trial-picto-oiseau:hover, .landing-free-trial-picto-oiseau.picto-oiseau-hover {
   background-position: 0 -923px;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .landing-free-trial-picto-organisation {
   background-position: 0 -1291px;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .landing-free-trial-picto-relation {
   background-position: 0 -1376px;
 }
@@ -9292,30 +9303,30 @@ h3 {
   background-repeat: no-repeat;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .header-linkedin {
   background-position: 0 -31px;
 }
-/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .header-linkedin:hover, .header-linkedin.linkedin-hover {
   background-position: 0 0;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .header-logo-projectsquare-inline {
   background-position: 0 -62px;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .header-logo-projectsquare {
   background-position: 0 -115px;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .header-twitter {
   background-position: 0 -306px;
 }
-/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .header-twitter:hover, .header-twitter.twitter-hover {
   background-position: 0 -275px;
 }
@@ -9326,20 +9337,20 @@ h3 {
   background-repeat: no-repeat;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .footer-linkedin {
   background-position: 0 -31px;
 }
-/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .footer-linkedin:hover, .footer-linkedin.linkedin-hover {
   background-position: 0 0;
 }
 
-/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 84, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .footer-twitter {
   background-position: 0 -93px;
 }
-/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .footer-twitter:hover, .footer-twitter.twitter-hover {
   background-position: 0 -62px;
 }
@@ -9436,7 +9447,7 @@ h3 {
 .header .reseaux-sociaux .twitter {
   background-position: 0 -306px;
 }
-/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .header .reseaux-sociaux .twitter:hover, .header .reseaux-sociaux .twitter.twitter-hover {
   background-position: 0 -275px;
 }
@@ -9448,7 +9459,7 @@ h3 {
 .header .reseaux-sociaux .linkedin {
   background-position: 0 -31px;
 }
-/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .header .reseaux-sociaux .linkedin:hover, .header .reseaux-sociaux .linkedin.linkedin-hover {
   background-position: 0 0;
 }
@@ -9521,7 +9532,7 @@ h3 {
 .footer .reseaux-sociaux .twitter {
   background-position: 0 -93px;
 }
-/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .footer .reseaux-sociaux .twitter:hover, .footer .reseaux-sociaux .twitter.twitter-hover {
   background-position: 0 -62px;
 }
@@ -9533,7 +9544,7 @@ h3 {
 .footer .reseaux-sociaux .linkedin {
   background-position: 0 -31px;
 }
-/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.1/stylesheets/compass/utilities/sprites/_base.scss */
+/* line 59, ../../var/lib/gems/1.9.1/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
 .footer .reseaux-sociaux .linkedin:hover, .footer .reseaux-sociaux .linkedin.linkedin-hover {
   background-position: 0 0;
 }
@@ -10016,61 +10027,121 @@ h3 {
 }
 
 /* line 3, ../sass/pages/_my-account.scss */
+.my_account_template h3 {
+  font-family: "AvantGarde-Medium";
+}
+/* line 7, ../sass/pages/_my-account.scss */
 .my_account_template section {
   overflow: hidden;
   clear: both;
 }
-/* line 8, ../sass/pages/_my-account.scss */
+/* line 12, ../sass/pages/_my-account.scss */
 .my_account_template .first-section {
   margin-top: 5rem;
 }
-/* line 12, ../sass/pages/_my-account.scss */
+/* line 16, ../sass/pages/_my-account.scss */
 .my_account_template hr {
   clear: both;
   margin-top: 3.5rem;
 }
-/* line 17, ../sass/pages/_my-account.scss */
+/* line 21, ../sass/pages/_my-account.scss */
 .my_account_template .form-control {
   border: 1px solid #ddd;
 }
-/* line 21, ../sass/pages/_my-account.scss */
+/* line 25, ../sass/pages/_my-account.scss */
 .my_account_template .btn-logout {
   float: right;
 }
-/* line 25, ../sass/pages/_my-account.scss */
+/* line 29, ../sass/pages/_my-account.scss */
 .my_account_template .btn-valid-fund-account {
   margin-left: 1rem;
 }
-/* line 29, ../sass/pages/_my-account.scss */
+/* line 33, ../sass/pages/_my-account.scss */
 .my_account_template .button-valid-information {
   display: block;
   clear: both;
 }
-/* line 36, ../sass/pages/_my-account.scss */
-.my_account_template t
-.users-count-display .value {
+/* line 38, ../sass/pages/_my-account.scss */
+.my_account_template .users-count-display {
+  vertical-align: middle;
+}
+/* line 41, ../sass/pages/_my-account.scss */
+.my_account_template .users-count-display input[type="button"] {
+  vertical-align: middle;
+}
+/* line 45, ../sass/pages/_my-account.scss */
+.my_account_template .users-count-display .value {
   font-size: 3.5rem;
+  line-height: 3rem;
   display: inline-block;
   vertical-align: middle;
-  margin-right: 1rem;
+  margin-right: 1.5rem;
 }
-/* line 46, ../sass/pages/_my-account.scss */
+/* line 55, ../sass/pages/_my-account.scss */
 .my_account_template .users-count-update .users-count-input {
   display: inline-block;
   width: 75px;
   margin-right: 2rem;
+  min-height: 4rem;
 }
-/* line 53, ../sass/pages/_my-account.scss */
+/* line 63, ../sass/pages/_my-account.scss */
 .my_account_template .account-balance {
   font-size: 3.5rem;
 }
-/* line 57, ../sass/pages/_my-account.scss */
+/* line 67, ../sass/pages/_my-account.scss */
 .my_account_template .amount {
   width: 100px;
   display: inline-block;
 }
-/* line 62, ../sass/pages/_my-account.scss */
+/* line 72, ../sass/pages/_my-account.scss */
 .my_account_template .email-alert-amount {
   display: inline-block;
   width: 50px;
+}
+
+/* line 3, ../sass/pages/_payment.scss */
+.payment_template .infos {
+  padding-top: 3.5rem;
+  margin: 2rem auto;
+  text-align: left;
+}
+/* line 9, ../sass/pages/_payment.scss */
+.payment_template .infos ul {
+  list-style: disc;
+  list-style-position: inside;
+  padding-left: 2rem;
+}
+/* line 16, ../sass/pages/_payment.scss */
+.payment_template form {
+  display: block;
+  margin: auto;
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 4rem;
+  padding: 2rem;
+}
+/* line 26, ../sass/pages/_payment.scss */
+.payment_template form .stripe-button-el, .payment_template form .stripe-button-el span {
+  background: #c8dc1e !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  text-shadow: none !important;
+  font-size: 2.0rem !important;
+  text-transform: uppercase;
+  font-family: "AvantGarde-Book" !important;
+}
+/* line 38, ../sass/pages/_payment.scss */
+.payment_template form .stripe-button-el:hover, .payment_template form .stripe-button-el span:hover {
+  background: #096a85 !important;
+}
+/* line 41, ../sass/pages/_payment.scss */
+.payment_template form .stripe-button-el:hover span, .payment_template form .stripe-button-el span:hover span {
+  background: #096a85 !important;
+}
+/* line 47, ../sass/pages/_payment.scss */
+.payment_template form .stripe-button-el {
+  padding: 1.5rem 2rem 1.5rem 2rem !important;
 }

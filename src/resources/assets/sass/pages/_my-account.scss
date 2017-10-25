@@ -1,5 +1,9 @@
 .my_account_template {
 
+    h3 {
+        font-family: $typo2;
+    }
+
     section {
         overflow: hidden;
         clear: both;
@@ -29,24 +33,30 @@
     .button-valid-information {
         display: block;
         clear: both;
-    }t
+    }
 
     .users-count-display {
+        vertical-align: middle;
 
+        input[type="button"] {
+            vertical-align: middle;
+        }
+        
         .value {
             font-size:3.5rem;
+            line-height: 3rem;
             display: inline-block;
             vertical-align: middle;
-            margin-right: 1rem;
+            margin-right: 1.5rem;
         }
     }
 
     .users-count-update {
-
         .users-count-input {
             display: inline-block;
             width: 75px;
             margin-right: 2rem;
+            min-height: 4rem;
         }
     }
 

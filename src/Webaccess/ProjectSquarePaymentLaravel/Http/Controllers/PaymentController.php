@@ -22,8 +22,12 @@ class PaymentController extends Controller
 
     public function index(Request $request)
     {
-        return view('projectsquare-payment::payment.index', [
+        $user = auth()->user();
+        $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
 
+        return view('projectsquare-payment::payment.index', [
+            'user' => auth()->user(),
+            'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),
         ]);
     }
 
@@ -40,73 +44,28 @@ class PaymentController extends Controller
 
     public function pay(Request $request)
     {
-        $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
+        try {
+            $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
+            $user = auth()->user();
+            $user->newSubscription('user', 'user')->skipTrial()->quantity($platform->getUsersCount())->create($request->stripeToken);
+            $user->tab('Platform fixed cost', $platform->getPlatformMonthlyCost() * 100);
+
+            $request->session()->flash('confirmation', trans('projectsquare-payment::payment.payment_success'));
+        } catch (\Exception $e) {
+            $request->session()->flash('error', trans('projectsquare-payment::payment.payment_error'));
+        }
+
+        return redirect()->route('my_account');
+    }
+
+    public function cancel_subscription(Request $request)
+    {
         $user = auth()->user();
-        $user->newSubscription('user', 'user')->quantity($platform->getUsersCount())->create($request->stripeToken);
-        $user->tab('Platform fixed cost', 3900);
+        $user->subscription('user')->cancel();
+
+        return redirect()->route('my_account');
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function payment_form(Request $request)
-    {
-        try {
-            $response = app()->make('InitTransactionInteractor')->execute(new InitTransactionRequest([
-                'platformID' => $this->getCurrentPlatformID(),
-                'amount' => $request->amount
-            ]));
-
-            return response()->json([
-                'success' => true,
-                'data' => $response->data,
-                'seal' => $response->seal,
-            ], 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'error' => trans('projectsquare-payment::payment.generic_error'),
-            ], 500);
-        }
-    }
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function payment_handler(Request $request)
-    {
-        try {
-            $response = app()->make('HandleBankCallInteractor')->execute(new HandleBankCallRequest([
-                'data' => $request->Data,
-                'seal' => $request->Seal,
-            ]));
-        } catch (Exception $e) {
-            app()->make('LaravelLoggerService')->error($e->getMessage(), $request->all(), $e->getFile(), $e->getLine());
-        }
-
-        return redirect()->route('payment_result', [
-            'transaction_identifier' => $response->transactionIdentifier
-        ]);
-    }
-
-    /**
-     * @param $transactionIdentifier
-     * @return mixed
-     */
-    public function payment_result($transactionIdentifier)
-    {
-        $transaction = $this->transactionRepository->getByIdentifier($transactionIdentifier);
-
-        return view('projectsquare-payment::payment.result', [
-            'status' => $transaction->getStatus(),
-        ]);
-    }
-
-    /**
-     * @return mixed
-     */
     private function getCurrentPlatformID()
     {
         $user = auth()->user();
