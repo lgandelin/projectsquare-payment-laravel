@@ -46,25 +46,13 @@
                 @if ($trial_version)
                     <label>{{ trans('projectsquare-payment::my_account.trial_version_until') }} {{ $date_end_trial_version->format('d/m/Y') }}</label>
                 @else
+
                     <p><label for="">{{ trans('projectsquare-payment::my_account.account_balance') }} :</label> <span class="account-banlance">{{ number_format($balance, 2) }}€</span></p>
-                    <p class="daily-usage">{{ trans('projectsquare-payment::my_account.daily_usage') }} : <span class="value">{{ number_format($daily_cost, 2) }}</span>€</p>
+                    <p><label class="">{{ trans('projectsquare-payment::my_account.daily_usage') }}</label><span class="value">{{ number_format($daily_cost, 2) }}</span>€</p>
                     <p class="monthly-usage">{{ trans('projectsquare-payment::my_account.monthly_usage') }} : <span class="value">{{ number_format($monthly_cost, 2) }}</span>€</p>
 
-                    <input type="text" class="form-control amount" name="amount" placeholder="ex: 50.00" /> €
-                    <input type="button" class="button button-valid btn-valid-fund-account" value="{{ trans('projectsquare-payment::my_account.refund') }}" />
-
-                    <form id="payment-form" method="post" action="{{ env('MERCANET_PAYMENT_URL') }}">
-                        <input type="hidden" name="Data" value="">
-                        <input type="hidden" name="InterfaceVersion" value="{{ env('MERCANET_VERSION') }}">
-                        <input type="hidden" name="Seal" value="">
-                    </form>
                 @endif
 
-                <p style="display: none;">
-                    <input type="checkbox" name="email_alert" /> {{ trans('projectsquare-payment::my_account.email_alert_amount') }}<input class="form-control email-alert-amount" type="text" value="20" /> €
-                    <input type="button" class="button button-valid button-valid-information" value="{{ trans('projectsquare-payment::generic.valid') }}" />
-                </p>
-                <hr>
             </section>
 
             <section>
@@ -144,19 +132,16 @@
                             <th>{{ trans('projectsquare-payment::my_account.bill_identifier') }}</th>
                             <th>{{ trans('projectsquare-payment::my_account.bill_date') }}</th>
                             <th>{{ trans('projectsquare-payment::my_account.bill_amount') }}</th>
-                            <th>{{ trans('projectsquare-payment::my_account.bill_payment_mean') }}</th>
-                            <!--<th width="260" align="right">{{ trans('projectsquare-payment::generic.action') }}</th>-->
+                            <th width="150" align="right">{{ trans('projectsquare-payment::generic.action') }}</th>
                         </tr>
                         @foreach ($invoices as $invoice)
                         <tr>
-                            <td>{{ $invoice->identifier }}</td>
-                            <td>{{ $invoice->creation_date }}</td>
-                            <td>{{ number_format($invoice->amount, 2) }}€ TTC</td>
-                            <td>{{ $invoice->payment_mean }}</td>
-                            <!--<td>
-                                <a href="{{ route('invoice', ['invoice_identifier' => $invoice->identifier, 'download' => false]) }}" target="_blank" class="button">{{ trans('projectsquare-payment::generic.see') }}</a>
-                                <a href="{{ route('invoice', ['invoice_identifier' => $invoice->identifier, 'download' => true]) }}" class="button button-valid">{{ trans('projectsquare-payment::generic.download') }}</a>
-                            </td>-->
+                            <td>{{ $invoice->number }}</td>
+                            <td>{{ (new \DateTime())->setTimestamp($invoice->date)->format('d/m/Y H:i') }}</td>
+                            <td>{{ number_format($invoice->total / 100, 2) }}€ TTC</td>
+                            <td>
+                                <a href="{{ route('payment_invoice', ['invoice' => $invoice->id]) }}" class="button button-valid">{{ trans('projectsquare-payment::generic.download') }}</a>
+                            </td>
                         </tr>
                         @endforeach
                     </table>
@@ -167,7 +152,6 @@
                     <h3>Se désinscrire</h3>
                     <input type="button" class="btn btn-danger" value="Se désinscrire" />
                 --}}
-
             </section>
         </div>
     </div>

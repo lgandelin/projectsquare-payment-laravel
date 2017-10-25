@@ -83,7 +83,7 @@ class SignupController extends Controller
             CreateAdministratorResponse::REPOSITORY_CREATION_FAILED => trans('projectsquare-payment::signup.generic_error'),
             CreateAdministratorResponse::ADMINISTRATOR_EMAIL_REQUIRED => trans('projectsquare-payment::signup.administrator_email_required_error'),
             CreateAdministratorResponse::ADMINISTRATOR_PASSWORD_REQUIRED => trans('projectsquare-payment::signup.administrator_password_required_error'),
-            CreateAdministratorResponse::PLATFORM_ID_REQUIRED => $errorMessage = trans('projectsquare-payment::signup.generic_error'),
+            CreateAdministratorResponse::PLATFORM_ID_REQUIRED => trans('projectsquare-payment::signup.generic_error'),
         ];
 
         return (isset($errorMessages[$errorCode])) ? $errorMessages[$errorCode] :  trans('projectsquare-payment::signup.generic_error');

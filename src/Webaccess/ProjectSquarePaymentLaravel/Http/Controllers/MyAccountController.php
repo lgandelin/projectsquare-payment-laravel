@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Input;
 use stdClass;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentAdministratorRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
@@ -45,7 +46,8 @@ class MyAccountController extends Controller
             'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),
             'trial_version' => ($endTrialDate > new Carbon()) ? true : false,
             'date_end_trial_version' => $endTrialDate,
-            'invoices' => $this->getInvoices($this->getCurrentPlatformID()),
+            //'invoices' => $this->getInvoices($this->getCurrentPlatformID()),
+            'invoices' => $user->invoices(),
             'error' => ($request->session()->has('error')) ? $request->session()->get('error') : null,
             'confirmation' => ($request->session()->has('confirmation')) ? $request->session()->get('confirmation') : null,
         ]);
@@ -58,6 +60,11 @@ class MyAccountController extends Controller
                 'platformID' => $this->getCurrentPlatformID(),
                 'usersCount' => $request->users_count,
             ]));
+
+            if ($response->success) {
+                $user = auth()->user();
+                $user->subscription('user')->updateQuantity($request->users_count);
+            }
 
             return response()->json([
                 'success' => $response->success,
@@ -102,21 +109,6 @@ class MyAccountController extends Controller
         }
     }
 
-    public function invoice(Request $request)
-    {
-        $transaction = $this->getInvoice($request->invoice_identifier);
-
-        /*$pdf = PDF::loadView('projectsquare-payment::my_account.invoice', [
-            'invoice' => $transaction
-        ]);
-
-        return (isset($request->download) && $request->download == 1) ? $pdf->download('facture-' . $request->invoice_identifier . '.pdf') : $pdf->stream();*/
-
-        return view('projectsquare-payment::my_account.invoice', [
-            'invoice' => $transaction
-        ]);
-    }
-
     private function getCurrentPlatformID()
     {
         $user = auth()->user();
@@ -146,32 +138,5 @@ class MyAccountController extends Controller
         ];
 
         return (isset($errorMessages[$errorCode])) ? $errorMessages[$errorCode] :  trans('projectsquare-payment::my_account.update_platform_users_count_generic_error');
-    }
-
-    private function getInvoices($platformID)
-    {
-        $invoices = $this->transactionRepository->getByPlatformID($platformID);
-        foreach ($invoices as $invoice) {
-            $invoice->creation_date = \DateTime::createFromFormat('Y-m-d H:i:s', $invoice->created_at)->format('d/m/Y H:i:s');
-        }
-
-        return $invoices;
-    }
-
-    private function getInvoice($transactionIdentifier)
-    {
-        $transaction = $this->transactionRepository->getByIdentifier($transactionIdentifier);
-        $transaction->creation_date = \DateTime::createFromFormat('Y-m-d H:i:s', $transaction->getCreationDate())->format('d/m/Y H:i:s');
-
-        $administrator = $this->administratorRepository->getByPlatformID($transaction->getPlatformID());
-
-        $platform = $this->platformRepository->getByID($transaction->getPlatformID());
-
-        $invoice = new StdClass();
-        $invoice->transaction = $transaction;
-        $invoice->administrator = $administrator;
-        $invoice->platform = $platform;
-
-        return $invoice;
     }
 }

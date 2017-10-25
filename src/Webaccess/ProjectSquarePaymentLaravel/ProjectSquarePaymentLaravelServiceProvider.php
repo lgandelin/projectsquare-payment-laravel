@@ -2,6 +2,8 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel;
 
+use Laravel\Cashier\Cashier;
+
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
@@ -49,6 +51,8 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
         $this->publishes([
             $basePath.'database/migrations' => database_path('migrations'),
         ], 'migrations');
+
+        Cashier::useCurrency('eur', '€');
     }
 
     public function register()

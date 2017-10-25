@@ -13,9 +13,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/', array('as' => 'my_account', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@index'));
     Route::post('/update_users_count', array('as' => 'update_users_count', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@udpate_users_count'));
     Route::post('/update_administrator', array('as' => 'update_administrator', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@update_administrator'));
-    Route::get('/facture/{invoice_identifier}/{download?}', array('as' => 'invoice', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@invoice'));
+    Route::get('/invoice/{invoiceID}', array('as' => 'payment_invoice', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@invoice'));
 
     //PAYMENT
+    Route::get('/payment', array('as' => 'payment_index', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@index'));
+    Route::post('/payment', array('as' => 'payment_action', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@pay'));
     Route::post('/payment_form', array('as' => 'payment_form', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_form'));
     Route::get('/payment_result/{transaction_identifier}', array('as' => 'payment_result', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_result'));
 
