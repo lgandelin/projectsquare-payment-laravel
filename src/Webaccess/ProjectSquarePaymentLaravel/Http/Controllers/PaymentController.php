@@ -2,13 +2,11 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-use Webaccess\ProjectSquarePayment\Requests\Payment\InitTransactionRequest;
-use Webaccess\ProjectSquarePayment\Requests\Payment\HandleBankCallRequest;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
-use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
 
 class PaymentController extends Controller
 {
@@ -16,15 +14,11 @@ class PaymentController extends Controller
 
     public function __construct()
     {
-        $this->transactionRepository = new EloquentTransactionRepository();
         $this->platformRepository = new EloquentPlatformRepository();
     }
 
     public function index(Request $request)
     {
-        $user = auth()->user();
-        $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
-
         return view('projectsquare-payment::payment.index', [
             'user' => auth()->user(),
             'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),

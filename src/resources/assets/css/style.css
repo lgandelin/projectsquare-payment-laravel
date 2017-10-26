@@ -10078,25 +10078,8 @@ h3 {
   margin-right: 1.5rem;
 }
 /* line 55, ../sass/pages/_my-account.scss */
-.my_account_template .users-count-update .users-count-input {
-  display: inline-block;
-  width: 75px;
-  margin-right: 2rem;
-  min-height: 4rem;
-}
-/* line 63, ../sass/pages/_my-account.scss */
-.my_account_template .account-balance {
-  font-size: 3.5rem;
-}
-/* line 67, ../sass/pages/_my-account.scss */
-.my_account_template .amount {
-  width: 100px;
-  display: inline-block;
-}
-/* line 72, ../sass/pages/_my-account.scss */
-.my_account_template .email-alert-amount {
-  display: inline-block;
-  width: 50px;
+.my_account_template .button-red:focus, .my_account_template .button-red:active {
+  color: white;
 }
 
 /* line 3, ../sass/pages/_payment.scss */

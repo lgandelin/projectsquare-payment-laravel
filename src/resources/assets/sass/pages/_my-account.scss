@@ -51,26 +51,9 @@
         }
     }
 
-    .users-count-update {
-        .users-count-input {
-            display: inline-block;
-            width: 75px;
-            margin-right: 2rem;
-            min-height: 4rem;
+    .button-red {
+        &:focus, &:active {
+            color: white;
         }
-    }
-
-    .account-balance {
-        font-size: 3.5rem;
-    }
-
-    .amount {
-        width:100px;
-        display: inline-block;
-    }
-
-    .email-alert-amount {
-        display: inline-block;
-        width: 50px;
     }
 }

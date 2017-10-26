@@ -41,13 +41,7 @@
 
                 <label for="users_count">{{ trans('projectsquare-payment::my_account.users_number') }} :</label>
                 <span class="users-count-display">
-                    <span class="value">{{ $users_count }}</span> <input type="button" style="margin-left: 1rem" class="button btn-users-count" value="{{ trans('projectsquare-payment::generic.modify') }}" />
-                </span>
-
-                <span class="users-count-update" style="display: none">
-                    <input class="form-control users-count-input" type="number" value="{{ $users_count }}" name="users_count" />
-                    <input type="button" class="button button-valid btn-valid-users-count-update" value="{{ trans('projectsquare-payment::generic.valid') }}" />
-                    <input type="button" class="button btn-valid-users-count-cancel" value="{{ trans('projectsquare-payment::generic.cancel') }}" />
+                    <span class="value">{{ $users_count }}</span>
                 </span>
 
                 <hr>
@@ -150,11 +144,22 @@
                 <hr>
             </section>
 
-            @if ($subscription && !$subscription->onGracePeriod() && $subscription->onTrial())
+            {{ $subscription->onTrial() }}
+
+            @if ($subscription && !$subscription->onGracePeriod() && !$subscription->onTrial())
+
+                <section class="refund-subscription col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5rem">
+                    <h3>Demande de remboursement</h3>
+                    <p>ATTENTION ! Demander le remboursement de votre abonnement aura pour effet la suppression totale de votre plateforme et de ses données.</p>
+                    <a class="button button-red" href="#">Me rembourser</a>
+                </section>
+
+                <hr>
 
                 <section class="cancel-subscription col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5rem">
                     <h3>Annulation de l'abonnement</h3>
-                    <a class="button button-red" href="{{ route('cancel_subscription') }}">Se désinscrire</a>
+                    <p>ATTENTION ! Demander l'annulation de votre abonnement aura pour effet la suppression totale de votre plateforme et de ses données.</p>
+                    <a class="button button-red" href="{{ route('cancel_subscription') }}">Me désinscrire</a>
                 </section>
             @endif
 

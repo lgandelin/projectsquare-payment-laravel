@@ -13,7 +13,6 @@ class Platform extends Model
         'slug',
         'users_count',
         'status',
-        'balance',
         'platform_monthly_cost',
         'user_monthly_cost',
         'node_id'

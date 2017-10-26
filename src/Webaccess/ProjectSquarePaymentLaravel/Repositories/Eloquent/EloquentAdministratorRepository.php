@@ -19,11 +19,7 @@ class EloquentAdministratorRepository implements AdministratorRepository
 
     public function getByPlatformID($platformID)
     {
-        if ($administratorModel = Administrator::where('platform_id', '=', $platformID)->first()) {
-            return $this->convertModelToEntity($administratorModel);
-        }
-
-        return false;
+        return Administrator::where('platform_id', '=', $platformID)->first();
     }
 
     public function persist(AdministratorEntity $administrator)

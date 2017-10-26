@@ -2,20 +2,13 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use Barryvdh\DomPDF\Facade as PDF;
-use Illuminate\Support\Facades\Input;
-use stdClass;
-use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentAdministratorRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
-use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
 use Webaccess\ProjectSquarePayment\Requests\Administrators\UpdateAdministratorRequest;
 use Webaccess\ProjectSquarePayment\Responses\Administrators\UpdateAdministratorResponse;
-use Webaccess\ProjectSquarePayment\Requests\Platforms\UpdatePlatformUsersCountRequest;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\UpdatePlatformUsersCountResponse;
 
 class MyAccountController extends Controller
@@ -24,8 +17,6 @@ class MyAccountController extends Controller
     {
         $this->middleware('auth');
         $this->platformRepository = new EloquentPlatformRepository();
-        $this->transactionRepository = new EloquentTransactionRepository();
-        $this->administratorRepository = new EloquentAdministratorRepository();
     }
 
     /**
@@ -47,35 +38,6 @@ class MyAccountController extends Controller
             'error' => ($request->session()->has('error')) ? $request->session()->get('error') : null,
             'confirmation' => ($request->session()->has('confirmation')) ? $request->session()->get('confirmation') : null,
         ]);
-    }
-
-    public function udpate_users_count(Request $request)
-    {
-        try {
-            $response = app()->make('UpdatePlatformUsersCountInteractor')->execute(new UpdatePlatformUsersCountRequest([
-                'platformID' => $this->getCurrentPlatformID(),
-                'usersCount' => $request->users_count,
-            ]));
-
-            if ($response->success) {
-                $user = auth()->user();
-                $user->subscription('user')->updateQuantity($request->users_count);
-            }
-
-            return response()->json([
-                'success' => $response->success,
-                'error' => ($response->errorCode) ? $this->getErrorMessage($response->errorCode) : null,
-                'daily_cost' => app()->make('GetPlatformUsageAmountInteractor')->getDailyCost($this->getCurrentPlatformID()),
-                'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),
-            ], 200);
-        } catch (Exception $e) {
-            app()->make('LaravelLoggerService')->error($e->getMessage(), $request->all(), $e->getFile(), $e->getLine());
-
-            return response()->json([
-                'success' => false,
-                'error' => trans('projectsquare-payment::my_account.update_platform_users_count_generic_error'),
-            ], 500);
-        }
     }
 
     public function update_administrator(Request $request)

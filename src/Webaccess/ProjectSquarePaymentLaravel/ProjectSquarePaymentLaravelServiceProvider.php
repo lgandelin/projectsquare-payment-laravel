@@ -24,7 +24,6 @@ use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransact
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentAdministratorRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Services\DigitalOceanService;
-use Webaccess\ProjectSquarePaymentLaravel\Services\GuzzleRemotePlatformService;
 use Webaccess\ProjectSquarePaymentLaravel\Services\LaravelLoggerService;
 use Webaccess\ProjectSquarePaymentLaravel\Services\MercanetService;
 
@@ -84,7 +83,6 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
         App::bind('UpdatePlatformUsersCountInteractor', function() {
             return new UpdatePlatformUsersCountInteractor(
                 new EloquentPlatformRepository(),
-                new GuzzleRemotePlatformService(env('API_TOKEN')),
                 new LaravelLoggerService()
             );
         });
