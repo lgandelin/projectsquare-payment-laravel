@@ -28,27 +28,34 @@
                 <ul>
                     <li>L'abonnement à Projectsquare est mensuel et sera renouvelé automatiquement à la fin des 30 premiers jours.</li>
                     <li>Avant la fin du premier mois, vous aurez la possibilité de demander le remboursement de votre abonnement si vous n'êtes pas satisfaits.</li>
-                    <li>Vous pourrez également changer à tout moment le nombre d'utilisateurs que vous souhaitez avoir dans la plateforme, et la facture du mois suivant sera mise à jour en conséquence.</li>
+                    <li>A chaque modification du nombre d'utilisateurs dans la plateforme,la facture suivante sera mise à jour en conséquence.</li>
                     <li>A tout moment, vous pourrez demander l'annulation de votre abonnement.</li>
                 </ul>
 
-                <form action="{{ route('payment_action') }}" method="POST">
-                    <script
-                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                            data-key="{{ env('STRIPE_KEY') }}"
-                            data-amount="{{ $monthly_cost*100 }}"
-                            data-name="Projectsquare"
-                            data-email="{{ $user->email }}"
-                            data-description="Abonnement mensuel à la plateforme"
-                            data-image="{{ asset('img/payment/logo-projectsquare.png') }}"
-                            data-locale="auto"
-                            data-zip-code="false"
-                            data-currency="eur"
-                            data-label="Je m'abonne"
-                            data-allow-remember-me="false">
-                    </script>
-                    {{ csrf_field() }}
-                </form>
+                <div class="form-group payment-form">
+                    <form action="{{ route('subscribe_handler') }}" method="POST">
+                        <script
+                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="{{ env('STRIPE_KEY') }}"
+                                data-amount="{{ $monthly_cost*100 }}"
+                                data-name="Projectsquare"
+                                data-email="{{ $user->email }}"
+                                data-description="Abonnement mensuel à la plateforme"
+                                data-image="{{ asset('img/payment/logo-projectsquare.png') }}"
+                                data-locale="auto"
+                                data-zip-code="false"
+                                data-currency="eur"
+                                data-label="Je m'abonne"
+                                data-allow-remember-me="false">
+                        </script>
+                        {{ csrf_field() }}
+                    </form>
+
+                    <p><label>Nombre d'utilisateurs :</label> <span class="value">{{ $users_count }}</span></p>
+                    <p><label>Abonnement mensuel :</label> <span class="value">{{ $monthly_cost }} &euro;</span></p>
+                </div>
+
+                <a href="{{ route('my_account') }}" class="button button-blue">Retour</a>
 
             </div>
 

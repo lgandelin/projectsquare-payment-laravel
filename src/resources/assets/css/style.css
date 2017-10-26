@@ -10095,15 +10095,29 @@ h3 {
   padding-left: 2rem;
 }
 /* line 16, ../sass/pages/_payment.scss */
+.payment_template .payment-form {
+  margin-top: 5rem;
+  width: 65%;
+  margin-left: 19%;
+}
+/* line 21, ../sass/pages/_payment.scss */
+.payment_template .payment-form .value {
+  font-size: 3rem;
+  vertical-align: middle;
+}
+/* line 27, ../sass/pages/_payment.scss */
 .payment_template form {
   display: block;
   margin: auto;
-  margin-top: 3rem;
+  float: right;
+  position: relative;
+  top: -1rem;
+  margin-top: 0;
   text-align: center;
-  font-size: 4rem;
   padding: 2rem;
+  font-size: 4rem;
 }
-/* line 26, ../sass/pages/_payment.scss */
+/* line 39, ../sass/pages/_payment.scss */
 .payment_template form .stripe-button-el, .payment_template form .stripe-button-el span {
   background: #c8dc1e !important;
   -webkit-border-radius: 0 !important;
@@ -10116,15 +10130,22 @@ h3 {
   text-transform: uppercase;
   font-family: "AvantGarde-Book" !important;
 }
-/* line 38, ../sass/pages/_payment.scss */
+/* line 51, ../sass/pages/_payment.scss */
 .payment_template form .stripe-button-el:hover, .payment_template form .stripe-button-el span:hover {
   background: #096a85 !important;
 }
-/* line 41, ../sass/pages/_payment.scss */
+/* line 54, ../sass/pages/_payment.scss */
 .payment_template form .stripe-button-el:hover span, .payment_template form .stripe-button-el span:hover span {
+  color: #c8dc1e !important;
   background: #096a85 !important;
 }
-/* line 47, ../sass/pages/_payment.scss */
+/* line 61, ../sass/pages/_payment.scss */
 .payment_template form .stripe-button-el {
   padding: 1.5rem 2rem 1.5rem 2rem !important;
+}
+/* line 66, ../sass/pages/_payment.scss */
+.payment_template .button-blue {
+  display: inline-block;
+  margin-top: 7rem;
+  padding: 1.7rem 4rem;
 }

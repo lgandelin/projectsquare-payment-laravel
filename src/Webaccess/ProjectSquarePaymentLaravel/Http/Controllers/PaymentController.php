@@ -19,8 +19,11 @@ class PaymentController extends Controller
 
     public function index(Request $request)
     {
+        $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
+
         return view('projectsquare-payment::payment.index', [
             'user' => auth()->user(),
+            'users_count' => $platform->getUsersCount(),
             'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),
         ]);
     }
@@ -36,7 +39,7 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function pay(Request $request)
+    public function subscribe(Request $request)
     {
         try {
             $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
@@ -52,7 +55,7 @@ class PaymentController extends Controller
         return redirect()->route('my_account');
     }
 
-    public function cancel_subscription(Request $request)
+    public function cancel(Request $request)
     {
         $user = auth()->user();
         $user->subscription('user')->cancel();

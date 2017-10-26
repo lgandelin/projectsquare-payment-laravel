@@ -13,15 +13,28 @@
         }
     }
 
+    .payment-form {
+        margin-top: 5rem;
+        width: 65%;
+        margin-left: 19%;
+
+        .value {
+            font-size: 3rem;
+            vertical-align: middle;
+        }
+    }
+
     form {
         display: block;
         margin: auto;
-        margin-top: 3rem;
-
+        float:right;
+        position: relative;
+        top: -1rem;
+        margin-top: 0;
         text-align: center;
+        padding: 2rem;
 
         font-size: 4rem;
-        padding: 2rem;
 
         .stripe-button-el, .stripe-button-el span {
             background: $green !important;
@@ -39,6 +52,7 @@
                 background: $touareg !important;
 
                 span {
+                    color: $green !important;
                     background: $touareg !important;
                 }
             }
@@ -47,5 +61,11 @@
         .stripe-button-el {
             padding: 1.5rem 2rem 1.5rem 2rem !important;
         }
+    }
+
+    .button-blue {
+        display: inline-block;
+        margin-top: 7rem;
+        padding: 1.7rem 4rem;
     }
 }
