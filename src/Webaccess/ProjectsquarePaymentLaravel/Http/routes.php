@@ -15,7 +15,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/', array('as' => 'my_account', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@index'));
         Route::post('/update_administrator', array('as' => 'update_administrator', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@update_administrator'));
         Route::get('/invoice/{invoiceID}', array('as' => 'payment_invoice', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@invoice'));
-        Route::get('/cancel', array('as' => 'cancel_subscription', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@cancel'));
+        Route::post('/cancel', array('as' => 'cancel', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@cancel'));
+        Route::post('/refund', array('as' => 'refund', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@refund'));
 
         //PAYMENT
         Route::get('/subscribe', array('as' => 'subscribe', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@index'));

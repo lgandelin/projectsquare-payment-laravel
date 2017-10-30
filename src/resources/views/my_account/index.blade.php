@@ -149,7 +149,11 @@
                 <section class="refund-subscription col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5rem">
                     <h3>Demande de remboursement</h3>
                     <p>ATTENTION ! Demander le remboursement de votre abonnement aura pour effet la suppression totale de votre plateforme et de ses données.</p>
-                    <a class="button button-red" href="#">Me rembourser</a>
+
+                    <form action="{{ route('refund') }}" method="POST">
+                        <input type="submit" class="button button-red" value="Me rembourser" />
+                        {{ csrf_field() }}
+                    </form>
                 </section>
 
                 <hr>
@@ -157,7 +161,11 @@
                 <section class="cancel-subscription col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5rem">
                     <h3>Annulation de l'abonnement</h3>
                     <p>ATTENTION ! Demander l'annulation de votre abonnement aura pour effet la suppression totale de votre plateforme et de ses données.</p>
-                    <a class="button button-red" href="{{ route('cancel_subscription') }}">Me désinscrire</a>
+
+                    <form action="{{ route('cancel') }}" method="POST">
+                        <input type="submit" class="button button-red" value="Me désinscrire" />
+                        {{ csrf_field() }}
+                    </form>
                 </section>
             @endif
 

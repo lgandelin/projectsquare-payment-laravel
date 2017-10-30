@@ -63,7 +63,7 @@ class SignupController extends Controller
         }
 
         //Delay payment email by 8 hours
-        $emailData = (object) ['administratorEmail' => $request->email, 'platformSlug' => $request->url];
+        $emailData = (object) ['administratorEmail' => $request->email, 'platformSlug' => $request->url . '.projectsquare.io'];
         PaymentEmailJob::dispatch($emailData)->onQueue('emails')->delay(Carbon::now()->addHours(8));
 
         return response()->json([

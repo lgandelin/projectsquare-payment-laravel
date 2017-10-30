@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
+use Webaccess\ProjectSquarePaymentLaravel\Jobs\CancelEmailJob;
+use Webaccess\ProjectSquarePaymentLaravel\Jobs\RefundEmailJob;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
 
 class PaymentController extends Controller
@@ -55,10 +57,51 @@ class PaymentController extends Controller
         return redirect()->route('my_account');
     }
 
+    public function refund(Request $request)
+    {
+        try {
+            $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
+            $user = auth()->user();
+
+            $user->subscription('user')->cancel();
+            $user->subscription('platform')->cancel();
+
+            $emailData = (object)[
+                'administratorEmail' => $user->email,
+                'platformSlug' => $platform->getSlug(),
+            ];
+
+            RefundEmailJob::dispatch($emailData)->onQueue('emails');
+
+            $request->session()->flash('confirmation', trans('projectsquare-payment::payment.refund_success'));
+        } catch (\Exception $e) {
+            $request->session()->flash('error', trans('projectsquare-payment::payment.refund_error'));
+        }
+
+        $this->cancel($request);
+    }
+
     public function cancel(Request $request)
     {
-        $user = auth()->user();
-        $user->subscription('user')->cancel();
+        try {
+            $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
+            $user = auth()->user();
+
+            $user->subscription('user')->cancel();
+            $user->subscription('platform')->cancel();
+
+            $emailData = (object) [
+                'administratorEmail' => $user->email,
+                'platformSlug' => $platform->getSlug(),
+                'endDate' => $user->subscription('user')->ends_at->format('d/m/Y'),
+            ];
+
+            CancelEmailJob::dispatch($emailData)->onQueue('emails');
+
+            $request->session()->flash('confirmation', trans('projectsquare-payment::payment.cancel_success'));
+        } catch (\Exception $e) {
+            $request->session()->flash('error', trans('projectsquare-payment::payment.cancel_error'));
+        }
 
         return redirect()->route('my_account');
     }
