@@ -18,6 +18,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         return view('projectsquare-payment::auth.login', [
+            'route' => $request->route,
             'error' => ($request->session()->has('error')) ? $request->session()->get('error') : null,
         ]);
     }
@@ -32,6 +33,9 @@ class LoginController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ])) {
+            if ($request->route != '') {
+                return redirect()->intended($request->route);
+            }
             return redirect()->intended('/');
         }
 

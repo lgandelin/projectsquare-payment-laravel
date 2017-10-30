@@ -27,43 +27,23 @@
 
                 <h3>{{ trans('projectsquare-payment::my_account.platform') }}</h3>
 
-                <label for="users_count">{{ trans('projectsquare-payment::my_account.users_number') }} :</label>
-                <span class="users-count-display">
-                    <span class="value">{{ $users_count }}</span> <input type="button" style="margin-left: 1rem" class="button btn-users-count" value="{{ trans('projectsquare-payment::generic.modify') }}" />
-                </span>
-
-                <span class="users-count-update" style="display: none">
-                    <input class="form-control users-count-input" type="number" value="{{ $users_count }}" name="users_count" />
-                    <input type="button" class="button button-valid btn-valid-users-count-update" value="{{ trans('projectsquare-payment::generic.valid') }}" />
-                    <input type="button" class="button btn-valid-users-count-cancel" value="{{ trans('projectsquare-payment::generic.cancel') }}" />
-                </span>
-                <hr>
-            </section>
-
-            <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <h3>{{ trans('projectsquare-payment::my_account.account') }}</h3>
-
-                @if ($trial_version)
-                    <label>{{ trans('projectsquare-payment::my_account.trial_version_until') }} {{ $date_end_trial_version->format('d/m/Y') }}</label>
+                @if ($subscription)
+                    @if ($subscription->onTrial())
+                        <p class="form-group"><label>{{ trans('projectsquare-payment::my_account.trial_version_until') }}</label> {{ (new \DateTime($subscription->trial_ends_at))->format('d/m/Y') }}</p>
+                    @elseif ($subscription->onGracePeriod())
+                        <p class="form-group"><label>{{ trans('projectsquare-payment::my_account.grace_period_until') }}</label> {{ (new \DateTime($subscription->ends_at))->format('d/m/Y') }}</p>
+                    @else
+                        <p class="form-group"><label>{{ trans('projectsquare-payment::my_account.monthly_usage') }} :</label> <span class="value">{{ number_format($monthly_cost, 2) }}</span>€</p>
+                    @endif
                 @else
-                    <p><label for="">{{ trans('projectsquare-payment::my_account.account_balance') }} :</label> <span class="account-banlance">{{ number_format($balance, 2) }}€</span></p>
-                    <p class="daily-usage">{{ trans('projectsquare-payment::my_account.daily_usage') }} : <span class="value">{{ number_format($daily_cost, 2) }}</span>€</p>
-                    <p class="monthly-usage">{{ trans('projectsquare-payment::my_account.monthly_usage') }} : <span class="value">{{ number_format($monthly_cost, 2) }}</span>€</p>
-
-                    <input type="text" class="form-control amount" name="amount" placeholder="ex: 50.00" /> €
-                    <input type="button" class="button button-valid btn-valid-fund-account" value="{{ trans('projectsquare-payment::my_account.refund') }}" />
-
-                    <form id="payment-form" method="post" action="{{ env('MERCANET_PAYMENT_URL') }}">
-                        <input type="hidden" name="Data" value="">
-                        <input type="hidden" name="InterfaceVersion" value="{{ env('MERCANET_VERSION') }}">
-                        <input type="hidden" name="Seal" value="">
-                    </form>
+                    <p class="form-group"><label>Pas d'abonnement en cours :</label> <a class="buttn button-valid button-subscribe" href="{{ route('subscribe') }}">Je m'abonne</a></p>
                 @endif
 
-                <p style="display: none;">
-                    <input type="checkbox" name="email_alert" /> {{ trans('projectsquare-payment::my_account.email_alert_amount') }}<input class="form-control email-alert-amount" type="text" value="20" /> €
-                    <input type="button" class="button button-valid button-valid-information" value="{{ trans('projectsquare-payment::generic.valid') }}" />
-                </p>
+                <label for="users_count">{{ trans('projectsquare-payment::my_account.users_number') }} :</label>
+                <span class="users-count-display">
+                    <span class="value">{{ $users_count }}</span>
+                </span>
+
                 <hr>
             </section>
 
@@ -144,35 +124,54 @@
                             <th>{{ trans('projectsquare-payment::my_account.bill_identifier') }}</th>
                             <th>{{ trans('projectsquare-payment::my_account.bill_date') }}</th>
                             <th>{{ trans('projectsquare-payment::my_account.bill_amount') }}</th>
-                            <th>{{ trans('projectsquare-payment::my_account.bill_payment_mean') }}</th>
-                            <!--<th width="260" align="right">{{ trans('projectsquare-payment::generic.action') }}</th>-->
+                            <th width="150" align="right">{{ trans('projectsquare-payment::generic.action') }}</th>
                         </tr>
                         @foreach ($invoices as $invoice)
                         <tr>
-                            <td>{{ $invoice->identifier }}</td>
-                            <td>{{ $invoice->creation_date }}</td>
-                            <td>{{ number_format($invoice->amount, 2) }}€ TTC</td>
-                            <td>{{ $invoice->payment_mean }}</td>
-                            <!--<td>
-                                <a href="{{ route('invoice', ['invoice_identifier' => $invoice->identifier, 'download' => false]) }}" target="_blank" class="button">{{ trans('projectsquare-payment::generic.see') }}</a>
-                                <a href="{{ route('invoice', ['invoice_identifier' => $invoice->identifier, 'download' => true]) }}" class="button button-valid">{{ trans('projectsquare-payment::generic.download') }}</a>
-                            </td>-->
+                            <td>{{ $invoice->number }}</td>
+                            <td>{{ (new \DateTime())->setTimestamp($invoice->date)->format('d/m/Y H:i') }}</td>
+                            <td>{{ number_format($invoice->total / 100, 2) }}€ TTC</td>
+                            <td>
+                                <a href="{{ route('payment_invoice', ['invoice' => $invoice->id]) }}" class="button button-valid">{{ trans('projectsquare-payment::generic.download') }}</a>
+                            </td>
                         </tr>
                         @endforeach
                     </table>
+                @else
+                    <p>Aucune facture n'est disponible pour le moment.</p>
                 @endif
 
-                {{--
-                    <hr>
-                    <h3>Se désinscrire</h3>
-                    <input type="button" class="btn btn-danger" value="Se désinscrire" />
-                --}}
-
+                <hr>
             </section>
+
+            @if ($subscription && !$subscription->onGracePeriod() && !$subscription->onTrial())
+
+                <section class="refund-subscription col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5rem">
+                    <h3>Demande de remboursement</h3>
+                    <p>ATTENTION ! Demander le remboursement de votre abonnement aura pour effet la suppression totale de votre plateforme et de ses données.</p>
+
+                    <form action="{{ route('refund') }}" method="POST">
+                        <input type="submit" class="button button-red" value="Me rembourser" />
+                        {{ csrf_field() }}
+                    </form>
+                </section>
+
+                <hr>
+
+                <section class="cancel-subscription col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5rem">
+                    <h3>Annulation de l'abonnement</h3>
+                    <p>ATTENTION ! Demander l'annulation de votre abonnement aura pour effet la suppression totale de votre plateforme et de ses données.</p>
+
+                    <form action="{{ route('cancel') }}" method="POST">
+                        <input type="submit" class="button button-red" value="Me désinscrire" />
+                        {{ csrf_field() }}
+                    </form>
+                </section>
+            @endif
+
         </div>
     </div>
 
     <script>var route_update_users_count = "{{ route('update_users_count') }}";</script>
-    <script>var route_payment_form = "{{ route('payment_form') }}";</script>
     <script src="{{ asset('js/my_account.js') }}"></script>
 @endsection

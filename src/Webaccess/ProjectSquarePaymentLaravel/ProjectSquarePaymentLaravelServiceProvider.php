@@ -2,36 +2,35 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel;
 
+use Illuminate\Routing\Router;
+use Laravel\Cashier\Cashier;
+
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
 use Webaccess\ProjectSquarePayment\Interactors\Administrators\UpdateAdministratorInteractor;
-use Webaccess\ProjectSquarePayment\Interactors\Payment\HandleBankCallInteractor;
-use Webaccess\ProjectSquarePayment\Interactors\Payment\InitTransactionInteractor;
-use Webaccess\ProjectSquarePayment\Interactors\Platforms\DebitPlatformsAccountsInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\GetPlatformUsageAmountInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformUsersCountInteractor;
-use Webaccess\ProjectSquarePayment\Interactors\Platforms\UpdatePlatformsStatusesInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\CheckPlatformSlugInteractor;
 use Webaccess\ProjectSquarePayment\Interactors\Signup\SignupInteractor;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\DebitPlatformsAccounts;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\UpdatePlatformsStatuses;
 use Webaccess\ProjectSquarePaymentLaravel\Commands\SetNodeAvailable;
+use Webaccess\ProjectSquarePaymentLaravel\Http\Middlewares\AdministratorMiddleware;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentNodeRepository;
-use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentAdministratorRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
 use Webaccess\ProjectSquarePaymentLaravel\Services\DigitalOceanService;
-use Webaccess\ProjectSquarePaymentLaravel\Services\GuzzleRemotePlatformService;
 use Webaccess\ProjectSquarePaymentLaravel\Services\LaravelLoggerService;
-use Webaccess\ProjectSquarePaymentLaravel\Services\MercanetService;
 
 class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
 {
     protected $defer = false;
 
-    public function boot()
+    public function boot(Router $router)
     {
+        setlocale(LC_TIME, 'fr_FR.utf8');
+
         $basePath = __DIR__.'/../../';
 
         include __DIR__.'/Http/routes.php';
@@ -49,6 +48,10 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
         $this->publishes([
             $basePath.'database/migrations' => database_path('migrations'),
         ], 'migrations');
+
+        Cashier::useCurrency('eur', '€');
+
+        $router->aliasMiddleware('administrator', AdministratorMiddleware::class);
     }
 
     public function register()
@@ -80,39 +83,6 @@ class ProjectSquarePaymentLaravelServiceProvider extends ServiceProvider
         App::bind('UpdatePlatformUsersCountInteractor', function() {
             return new UpdatePlatformUsersCountInteractor(
                 new EloquentPlatformRepository(),
-                new GuzzleRemotePlatformService(env('API_TOKEN')),
-                new LaravelLoggerService()
-            );
-        });
-
-        App::bind('DebitPlatformsAccountsInteractor', function() {
-            return new DebitPlatformsAccountsInteractor(
-                new EloquentPlatformRepository(),
-                new LaravelLoggerService()
-            );
-        });
-
-        App::bind('HandleBankCallInteractor', function() {
-            return new HandleBankCallInteractor(
-                new EloquentPlatformRepository(),
-                new EloquentTransactionRepository(),
-                new MercanetService(),
-                new LaravelLoggerService()
-            );
-        });
-
-        App::bind('UpdatePlatformsStatusesInteractor', function() {
-            return new UpdatePlatformsStatusesInteractor(
-                new EloquentPlatformRepository(),
-                new LaravelLoggerService()
-            );
-        });
-
-        App::bind('InitTransactionInteractor', function() {
-            return new InitTransactionInteractor(
-                new EloquentPlatformRepository(),
-                new EloquentTransactionRepository(),
-                new MercanetService(),
                 new LaravelLoggerService()
             );
         });

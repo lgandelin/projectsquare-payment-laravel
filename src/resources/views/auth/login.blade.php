@@ -53,6 +53,8 @@
                                 <a class="btn btn-link" href="{{ route('forgotten_password') }}">{{ trans('projectsquare-payment::login.forgotten_password') }}</a>
                             </div>
 
+                            <input type="hidden" name="route" value="{{ $route }}" />
+
                             {!! csrf_field() !!}
                         </form>
                     </div>

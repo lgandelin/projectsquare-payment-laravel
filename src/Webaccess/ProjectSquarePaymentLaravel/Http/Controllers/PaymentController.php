@@ -2,12 +2,13 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-use Webaccess\ProjectSquarePayment\Requests\Payment\InitTransactionRequest;
-use Webaccess\ProjectSquarePayment\Requests\Payment\HandleBankCallRequest;
-use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentTransactionRepository;
+use Webaccess\ProjectSquarePaymentLaravel\Jobs\CancelEmailJob;
+use Webaccess\ProjectSquarePaymentLaravel\Jobs\RefundEmailJob;
+use Webaccess\ProjectSquarePaymentLaravel\Repositories\Eloquent\EloquentPlatformRepository;
 
 class PaymentController extends Controller
 {
@@ -15,70 +16,96 @@ class PaymentController extends Controller
 
     public function __construct()
     {
-        $this->transactionRepository = new EloquentTransactionRepository();
+        $this->platformRepository = new EloquentPlatformRepository();
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function payment_form(Request $request)
+    public function index(Request $request)
     {
-        try {
-            $response = app()->make('InitTransactionInteractor')->execute(new InitTransactionRequest([
-                'platformID' => $this->getCurrentPlatformID(),
-                'amount' => $request->amount
-            ]));
+        $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
 
-            return response()->json([
-                'success' => true,
-                'data' => $response->data,
-                'seal' => $response->seal,
-            ], 200);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'error' => trans('projectsquare-payment::payment.generic_error'),
-            ], 500);
-        }
-    }
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function payment_handler(Request $request)
-    {
-        try {
-            $response = app()->make('HandleBankCallInteractor')->execute(new HandleBankCallRequest([
-                'data' => $request->Data,
-                'seal' => $request->Seal,
-            ]));
-        } catch (Exception $e) {
-            app()->make('LaravelLoggerService')->error($e->getMessage(), $request->all(), $e->getFile(), $e->getLine());
-        }
-
-        return redirect()->route('payment_result', [
-            'transaction_identifier' => $response->transactionIdentifier
+        return view('projectsquare-payment::payment.index', [
+            'user' => auth()->user(),
+            'users_count' => $platform->getUsersCount(),
+            'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),
         ]);
     }
 
-    /**
-     * @param $transactionIdentifier
-     * @return mixed
-     */
-    public function payment_result($transactionIdentifier)
+    public function invoice($invoiceID)
     {
-        $transaction = $this->transactionRepository->getByIdentifier($transactionIdentifier);
+        error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
-        return view('projectsquare-payment::payment.result', [
-            'status' => $transaction->getStatus(),
+        $user = auth()->user();
+        return $user->downloadInvoice($invoiceID, [
+            'vendor'  => 'WEB@CCESS',
+            'product' => 'Plateforme Projectsquare',
         ]);
     }
 
-    /**
-     * @return mixed
-     */
+    public function subscribe(Request $request)
+    {
+        try {
+            $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
+            $user = auth()->user();
+            $user->newSubscription('user', 'user')->skipTrial()->quantity($platform->getUsersCount())->create($request->stripeToken);
+            $user->newSubscription('platform', 'platform')->skipTrial()->quantity(1)->create($request->stripeToken);
+
+            $request->session()->flash('confirmation', trans('projectsquare-payment::payment.payment_success'));
+        } catch (\Exception $e) {
+            $request->session()->flash('error', trans('projectsquare-payment::payment.payment_error'));
+        }
+
+        return redirect()->route('my_account');
+    }
+
+    public function refund(Request $request)
+    {
+        try {
+            $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
+            $user = auth()->user();
+
+            $user->subscription('user')->cancel();
+            $user->subscription('platform')->cancel();
+
+            $emailData = (object)[
+                'administratorEmail' => $user->email,
+                'platformSlug' => $platform->getSlug(),
+            ];
+
+            RefundEmailJob::dispatch($emailData)->onQueue('emails');
+
+            $request->session()->flash('confirmation', trans('projectsquare-payment::payment.refund_success'));
+        } catch (\Exception $e) {
+            $request->session()->flash('error', trans('projectsquare-payment::payment.refund_error'));
+        }
+
+        $this->cancel($request);
+    }
+
+    public function cancel(Request $request)
+    {
+        try {
+            $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
+            $user = auth()->user();
+
+            $user->subscription('user')->cancel();
+            $user->subscription('platform')->cancel();
+
+            $emailData = (object) [
+                'administratorEmail' => $user->email,
+                'platformSlug' => $platform->getSlug(),
+                'endDate' => $user->subscription('user')->ends_at->format('d/m/Y'),
+            ];
+
+            CancelEmailJob::dispatch($emailData)->onQueue('emails');
+
+            $request->session()->flash('confirmation', trans('projectsquare-payment::payment.cancel_success'));
+        } catch (\Exception $e) {
+            $request->session()->flash('error', trans('projectsquare-payment::payment.cancel_error'));
+        }
+
+        return redirect()->route('my_account');
+    }
+
     private function getCurrentPlatformID()
     {
         $user = auth()->user();

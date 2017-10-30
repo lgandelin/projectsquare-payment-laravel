@@ -47,7 +47,6 @@ class EloquentPlatformRepository implements PlatformRepository
         $platformModel->status = $platform->getStatus();
         $platformModel->platform_monthly_cost = $platform->getPlatformMonthlyCost();
         $platformModel->user_monthly_cost = $platform->getUserMonthlyCost();
-        $platformModel->balance = $platform->getAccountBalance();
         $platformModel->save();
 
         return $platformModel->id;
@@ -63,7 +62,6 @@ class EloquentPlatformRepository implements PlatformRepository
         $platform->setStatus($platformModel->status);
         $platform->setPlatformMonthlyCost($platformModel->platform_monthly_cost);
         $platform->setUserMonthlyCost($platformModel->user_monthly_cost);
-        $platform->setAccountBalance($platformModel->balance);
         $platform->setCreationDate($platformModel->created_at);
 
         return $platform;

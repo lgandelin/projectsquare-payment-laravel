@@ -2,10 +2,13 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Models;
 
+use Laravel\Cashier\Billable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Administrator extends Authenticatable
 {
+    use Billable;
+
     protected $table = 'administrators';
 
     protected $fillable = [
@@ -25,5 +28,9 @@ class Administrator extends Authenticatable
     public function platform()
     {
         return $this->belongsTo('Webaccess\ProjectSquareLaravelPayment\Models\Platform');
+    }
+
+    public function taxPercentage() {
+        return 20;
     }
 }

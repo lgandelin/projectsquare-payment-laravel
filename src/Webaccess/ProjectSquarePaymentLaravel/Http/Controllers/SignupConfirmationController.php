@@ -28,7 +28,7 @@ class SignupConfirmationController extends Controller
         $platformURL = '';
         if ($request->session()->has('platformID')) {
             if ($platform = $this->platformRepository->getByID($request->session()->get('platformID'))) {
-                $platformURL = (new GuzzleRemotePlatformService(''))->getPlatformURL($platform);
+                $platformURL = 'http://' . $platform->getSlug() . '.projectsquare.io';
             }
         }
 

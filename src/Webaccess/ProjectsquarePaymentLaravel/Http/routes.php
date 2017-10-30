@@ -9,15 +9,19 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/forgotten_password', array('as' => 'forgotten_password', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\LoginController@forgotten_password'));
     Route::post('/forgotten_password_handler', array('as' => 'forgotten_password_handler', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\LoginController@forgotten_password_handler'));
 
-    //MY ACCOUNT
-    Route::get('/', array('as' => 'my_account', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@index'));
-    Route::post('/update_users_count', array('as' => 'update_users_count', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@udpate_users_count'));
-    Route::post('/update_administrator', array('as' => 'update_administrator', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@update_administrator'));
-    Route::get('/facture/{invoice_identifier}/{download?}', array('as' => 'invoice', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@invoice'));
+    Route::group(['middleware' => ['administrator']], function () {
 
-    //PAYMENT
-    Route::post('/payment_form', array('as' => 'payment_form', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_form'));
-    Route::get('/payment_result/{transaction_identifier}', array('as' => 'payment_result', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_result'));
+        //MY ACCOUNT
+        Route::get('/', array('as' => 'my_account', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@index'));
+        Route::post('/update_administrator', array('as' => 'update_administrator', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\MyAccountController@update_administrator'));
+        Route::get('/invoice/{invoiceID}', array('as' => 'payment_invoice', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@invoice'));
+        Route::post('/cancel', array('as' => 'cancel', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@cancel'));
+        Route::post('/refund', array('as' => 'refund', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@refund'));
+
+        //PAYMENT
+        Route::get('/subscribe', array('as' => 'subscribe', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@index'));
+        Route::post('/subscribe', array('as' => 'subscribe_handler', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@subscribe'));
+    });
 
     //SIGNUP
     Route::get('/inscription/{users_count?}', array('as' => 'signup', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\SignupController@index'));
@@ -31,4 +35,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/essai-gratuit-projectsquare-gestion-de-projet/handler', array('as' => 'landing_free_trial_handler', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\SignupController@handler'));
 });
 
-Route::post('/payment_handler', array('as' => 'payment_return_url', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\PaymentController@payment_handler'));
+Route::group(['middleware' => ['api']], function () {
+
+   //API : UPDATE USERS COUNT
+   Route::post('/update_users_count', array('as' => 'update_users_count', 'uses' => 'Webaccess\ProjectSquarePaymentLaravel\Http\Controllers\APIController@update_users_count'));
+});

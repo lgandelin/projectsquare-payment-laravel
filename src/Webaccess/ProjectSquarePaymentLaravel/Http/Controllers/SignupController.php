@@ -2,6 +2,7 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -10,6 +11,7 @@ use Webaccess\ProjectSquarePayment\Requests\Signup\SignupRequest;
 use Webaccess\ProjectSquarePayment\Responses\Administrators\CreateAdministratorResponse;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
 use Webaccess\ProjectSquarePayment\Responses\Signup\CheckPlatformSlugResponse;
+use Webaccess\ProjectSquarePaymentLaravel\Jobs\PaymentEmailJob;
 
 class SignupController extends Controller
 {
@@ -60,6 +62,10 @@ class SignupController extends Controller
             app()->make('LaravelLoggerService')->error($e->getMessage(), $request->all(), $e->getFile(), $e->getLine());
         }
 
+        //Delay payment email by 8 hours
+        $emailData = (object) ['administratorEmail' => $request->email, 'platformSlug' => $request->url . '.projectsquare.io'];
+        PaymentEmailJob::dispatch($emailData)->onQueue('emails')->delay(Carbon::now()->addHours(8));
+
         return response()->json([
             'success' => $response->success,
             'error' => $errorMessage,
@@ -83,7 +89,7 @@ class SignupController extends Controller
             CreateAdministratorResponse::REPOSITORY_CREATION_FAILED => trans('projectsquare-payment::signup.generic_error'),
             CreateAdministratorResponse::ADMINISTRATOR_EMAIL_REQUIRED => trans('projectsquare-payment::signup.administrator_email_required_error'),
             CreateAdministratorResponse::ADMINISTRATOR_PASSWORD_REQUIRED => trans('projectsquare-payment::signup.administrator_password_required_error'),
-            CreateAdministratorResponse::PLATFORM_ID_REQUIRED => $errorMessage = trans('projectsquare-payment::signup.generic_error'),
+            CreateAdministratorResponse::PLATFORM_ID_REQUIRED => trans('projectsquare-payment::signup.generic_error'),
         ];
 
         return (isset($errorMessages[$errorCode])) ? $errorMessages[$errorCode] :  trans('projectsquare-payment::signup.generic_error');
