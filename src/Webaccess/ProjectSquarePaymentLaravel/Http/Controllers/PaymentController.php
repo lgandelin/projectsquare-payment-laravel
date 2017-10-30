@@ -45,7 +45,7 @@ class PaymentController extends Controller
             $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
             $user = auth()->user();
             $user->newSubscription('user', 'user')->skipTrial()->quantity($platform->getUsersCount())->create($request->stripeToken);
-            $user->tab('Platform fixed cost', $platform->getPlatformMonthlyCost() * 100);
+            $user->newSubscription('platform', 'platform')->skipTrial()->quantity(1)->create($request->stripeToken);
 
             $request->session()->flash('confirmation', trans('projectsquare-payment::payment.payment_success'));
         } catch (\Exception $e) {

@@ -56,4 +56,16 @@
             color: white;
         }
     }
+
+    .button-subscribe {
+        margin-left: 2rem;
+        padding: 1.5rem 3rem;
+        
+        font-family: $typo1;
+        text-transform: uppercase;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }

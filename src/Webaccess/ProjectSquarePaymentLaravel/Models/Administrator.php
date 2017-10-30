@@ -29,4 +29,8 @@ class Administrator extends Authenticatable
     {
         return $this->belongsTo('Webaccess\ProjectSquareLaravelPayment\Models\Platform');
     }
+
+    public function taxPercentage() {
+        return 20;
+    }
 }

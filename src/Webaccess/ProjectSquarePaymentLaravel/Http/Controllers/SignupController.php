@@ -2,6 +2,7 @@
 
 namespace Webaccess\ProjectSquarePaymentLaravel\Http\Controllers;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -10,6 +11,7 @@ use Webaccess\ProjectSquarePayment\Requests\Signup\SignupRequest;
 use Webaccess\ProjectSquarePayment\Responses\Administrators\CreateAdministratorResponse;
 use Webaccess\ProjectSquarePayment\Responses\Platforms\CreatePlatformResponse;
 use Webaccess\ProjectSquarePayment\Responses\Signup\CheckPlatformSlugResponse;
+use Webaccess\ProjectSquarePaymentLaravel\Jobs\PaymentEmailJob;
 
 class SignupController extends Controller
 {
@@ -59,6 +61,10 @@ class SignupController extends Controller
             $errorMessage = trans('projectsquare-payment::signup.platform_generic_error');
             app()->make('LaravelLoggerService')->error($e->getMessage(), $request->all(), $e->getFile(), $e->getLine());
         }
+
+        //Delay payment email by 8 hours
+        $emailData = (object) ['administratorEmail' => $request->email, 'platformSlug' => $request->url];
+        PaymentEmailJob::dispatch($emailData)->onQueue('emails')->delay(Carbon::now()->addHours(8));
 
         return response()->json([
             'success' => $response->success,

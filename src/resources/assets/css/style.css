@@ -10081,6 +10081,17 @@ h3 {
 .my_account_template .button-red:focus, .my_account_template .button-red:active {
   color: white;
 }
+/* line 60, ../sass/pages/_my-account.scss */
+.my_account_template .button-subscribe {
+  margin-left: 2rem;
+  padding: 1.5rem 3rem;
+  font-family: "AvantGarde-Book";
+  text-transform: uppercase;
+}
+/* line 67, ../sass/pages/_my-account.scss */
+.my_account_template .button-subscribe:hover {
+  text-decoration: none;
+}
 
 /* line 3, ../sass/pages/_payment.scss */
 .payment_template .infos {
@@ -10097,27 +10108,26 @@ h3 {
 /* line 16, ../sass/pages/_payment.scss */
 .payment_template .payment-form {
   margin-top: 5rem;
-  width: 65%;
-  margin-left: 19%;
+  margin-left: 14%;
 }
-/* line 21, ../sass/pages/_payment.scss */
+/* line 20, ../sass/pages/_payment.scss */
 .payment_template .payment-form .value {
   font-size: 3rem;
   vertical-align: middle;
 }
-/* line 27, ../sass/pages/_payment.scss */
+/* line 26, ../sass/pages/_payment.scss */
 .payment_template form {
   display: block;
-  margin: auto;
   float: right;
   position: relative;
   top: -1rem;
   margin-top: 0;
+  margin-right: 14%;
   text-align: center;
   padding: 2rem;
   font-size: 4rem;
 }
-/* line 39, ../sass/pages/_payment.scss */
+/* line 38, ../sass/pages/_payment.scss */
 .payment_template form .stripe-button-el, .payment_template form .stripe-button-el span {
   background: #c8dc1e !important;
   -webkit-border-radius: 0 !important;
@@ -10130,20 +10140,20 @@ h3 {
   text-transform: uppercase;
   font-family: "AvantGarde-Book" !important;
 }
-/* line 51, ../sass/pages/_payment.scss */
+/* line 50, ../sass/pages/_payment.scss */
 .payment_template form .stripe-button-el:hover, .payment_template form .stripe-button-el span:hover {
   background: #096a85 !important;
 }
-/* line 54, ../sass/pages/_payment.scss */
+/* line 53, ../sass/pages/_payment.scss */
 .payment_template form .stripe-button-el:hover span, .payment_template form .stripe-button-el span:hover span {
   color: #c8dc1e !important;
   background: #096a85 !important;
 }
-/* line 61, ../sass/pages/_payment.scss */
+/* line 60, ../sass/pages/_payment.scss */
 .payment_template form .stripe-button-el {
   padding: 1.5rem 2rem 1.5rem 2rem !important;
 }
-/* line 66, ../sass/pages/_payment.scss */
+/* line 65, ../sass/pages/_payment.scss */
 .payment_template .button-blue {
   display: inline-block;
   margin-top: 7rem;

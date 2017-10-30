@@ -36,7 +36,7 @@
                         <p class="form-group"><label>{{ trans('projectsquare-payment::my_account.monthly_usage') }} :</label> <span class="value">{{ number_format($monthly_cost, 2) }}</span>€</p>
                     @endif
                 @else
-                    <p class="form-group"><label>Abonnement :</label> Pas d'abonnement en cours</p>
+                    <p class="form-group"><label>Pas d'abonnement en cours :</label> <a class="buttn button-valid button-subscribe" href="{{ route('subscribe') }}">Je m'abonne</a></p>
                 @endif
 
                 <label for="users_count">{{ trans('projectsquare-payment::my_account.users_number') }} :</label>
@@ -143,8 +143,6 @@
 
                 <hr>
             </section>
-
-            {{ $subscription->onTrial() }}
 
             @if ($subscription && !$subscription->onGracePeriod() && !$subscription->onTrial())
 
