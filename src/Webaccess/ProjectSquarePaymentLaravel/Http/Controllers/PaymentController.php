@@ -22,6 +22,13 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
+        $user = auth()->user();
+        $subscription = $user->subscription('user');
+
+        if ($subscription && !$subscription->onTrial()) {
+            $request->session()->flash('error', trans('projectsquare-payment::payment.subscription_in_progress'));
+            return redirect()->route('my_account');
+        }
 
         return view('projectsquare-payment::payment.index', [
             'user' => auth()->user(),

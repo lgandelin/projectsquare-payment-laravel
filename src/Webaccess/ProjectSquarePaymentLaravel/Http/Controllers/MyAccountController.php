@@ -27,7 +27,7 @@ class MyAccountController extends Controller
     {
         $user = auth()->user();
         $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
-        
+
         return view('projectsquare-payment::my_account.index', [
             'user' => $user,
             'subscription' => $user->subscription('user'),
