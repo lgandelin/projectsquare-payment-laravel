@@ -27,13 +27,12 @@ class MyAccountController extends Controller
     {
         $user = auth()->user();
         $platform = $this->platformRepository->getByID($this->getCurrentPlatformID());
-
+        
         return view('projectsquare-payment::my_account.index', [
             'user' => $user,
             'subscription' => $user->subscription('user'),
             'users_count' => $platform->getUsersCount(),
             'monthly_cost' => app()->make('GetPlatformUsageAmountInteractor')->getMonthlyCost($this->getCurrentPlatformID()),
-            //'invoices' => $this->getInvoices($this->getCurrentPlatformID()),
             'invoices' => ($user->subscription('user')) ? $user->invoices() : [],
             'error' => ($request->session()->has('error')) ? $request->session()->get('error') : null,
             'confirmation' => ($request->session()->has('confirmation')) ? $request->session()->get('confirmation') : null,
@@ -82,7 +81,6 @@ class MyAccountController extends Controller
     {
         $errorMessages = [
             UpdatePlatformUsersCountResponse::PLATFORM_NOT_FOUND_ERROR_CODE => trans('projectsquare-payment::my_account.update_platform_users_count_generic_error'),
-            UpdatePlatformUsersCountResponse::ACTUAL_USERS_COUNT_TOO_BIG_ERROR => trans('projectsquare-payment::my_account.platform_users_count_actual_users_count_too_big_error'),
             UpdatePlatformUsersCountResponse::INVALID_USERS_COUNT => trans('projectsquare-payment::my_account.platform_users_count_invalid_users_count_error'),
 
             UpdateAdministratorResponse::ADMINISTRATOR_NOT_FOUND_ERROR => trans('projectsquare-payment::my_account.administrator_generic_error'),

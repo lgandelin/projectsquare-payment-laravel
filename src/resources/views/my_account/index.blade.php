@@ -124,16 +124,16 @@
                             <th>{{ trans('projectsquare-payment::my_account.bill_identifier') }}</th>
                             <th>{{ trans('projectsquare-payment::my_account.bill_date') }}</th>
                             <th>{{ trans('projectsquare-payment::my_account.bill_amount') }}</th>
-                            <th width="150" align="right">{{ trans('projectsquare-payment::generic.action') }}</th>
+                            {{--<th width="150" align="right">{{ trans('projectsquare-payment::generic.action') }}</th>--}}
                         </tr>
                         @foreach ($invoices as $invoice)
                         <tr>
                             <td>{{ $invoice->number }}</td>
                             <td>{{ (new \DateTime())->setTimestamp($invoice->date)->format('d/m/Y H:i') }}</td>
                             <td>{{ number_format($invoice->total / 100, 2) }}€ TTC</td>
-                            <td>
+                            {{--<td>
                                 <a href="{{ route('payment_invoice', ['invoice' => $invoice->id]) }}" class="button button-valid">{{ trans('projectsquare-payment::generic.download') }}</a>
-                            </td>
+                            </td>--}}
                         </tr>
                         @endforeach
                     </table>
