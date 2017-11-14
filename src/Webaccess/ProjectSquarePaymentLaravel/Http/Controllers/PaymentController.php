@@ -76,16 +76,18 @@ class PaymentController extends Controller
             $emailData = (object)[
                 'administratorEmail' => $user->email,
                 'platformSlug' => $platform->getSlug(),
+                'endDate' => $user->subscription('user')->ends_at->format('d/m/Y'),
             ];
 
             RefundEmailJob::dispatch($emailData)->onQueue('emails');
+            CancelEmailJob::dispatch($emailData)->onQueue('emails');
 
             $request->session()->flash('confirmation', trans('projectsquare-payment::payment.refund_success'));
         } catch (\Exception $e) {
             $request->session()->flash('error', trans('projectsquare-payment::payment.refund_error'));
         }
 
-        $this->cancel($request);
+        return redirect()->route('my_account');
     }
 
     public function cancel(Request $request)

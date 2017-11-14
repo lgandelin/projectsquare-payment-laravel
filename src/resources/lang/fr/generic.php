@@ -7,5 +7,4 @@ return [
     'see' => 'Voir',
     'download' => 'Télécharger',
     'action' => 'Action',
-
 ];

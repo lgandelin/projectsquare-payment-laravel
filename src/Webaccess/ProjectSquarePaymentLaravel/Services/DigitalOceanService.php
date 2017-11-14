@@ -16,7 +16,7 @@ class DigitalOceanService implements RemoteInfrastructureService
     public function launchEnvCreation($nodeIdentifier, $slug, $administratorEmail, $usersLimit)
     {
         $fileName = env('ENVS_FOLDER') . $slug . '.txt';
-        $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL . $usersLimit . PHP_EOL;
+        $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL;
         file_put_contents($fileName, $fileContent);
     }
 
@@ -29,7 +29,7 @@ class DigitalOceanService implements RemoteInfrastructureService
     public function launchAppCreation($nodeIdentifier, $slug, $administratorEmail, $usersLimit)
     {
         $fileName = env('APPS_FOLDER') . $slug . '.txt';
-        $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL . $usersLimit . PHP_EOL;
+        $fileContent = $nodeIdentifier . PHP_EOL . $slug . PHP_EOL . $administratorEmail . PHP_EOL;
         file_put_contents($fileName, $fileContent);
     }
 

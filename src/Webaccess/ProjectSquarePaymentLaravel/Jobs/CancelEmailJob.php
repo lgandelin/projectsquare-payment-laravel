@@ -32,16 +32,16 @@ class CancelEmailJob implements ShouldQueue
      */
     public function handle()
     {
-        $email = $this->emailData->administratorEmail;
+        $administratorEmail = $this->emailData->administratorEmail;
         $platformSlug = $this->emailData->platformSlug;
         $endDate = $this->emailData->endDate;
 
-        Mail::send('projectsquare-payment::emails.cancel', array('platformSlug' => $platformSlug, 'endDate' => $endDate), function ($message) use ($email) {
-            $message->to($email)
+        Mail::send('projectsquare-payment::emails.cancel', array('platformSlug' => $platformSlug, 'administratorEmail' => $administratorEmail, 'endDate' => $endDate), function ($message) use ($administratorEmail) {
+            $message->to($administratorEmail)
                 ->subject('[projectsquare] Annulation de votre abonnement Projectsquare');
         });
 
-        Mail::send('projectsquare-payment::emails.cancel_admin', array('platformSlug' => $platformSlug, 'endDate' => $endDate), function ($message) {
+        Mail::send('projectsquare-payment::emails.cancel_admin', array('platformSlug' => $platformSlug, 'administratorEmail' => $administratorEmail, 'endDate' => $endDate), function ($message) {
             $message->to(env('CONTACT_EMAIL'))
                 ->subject('[projectsquare] Annulation d\'un abonnement Projectsquare');
         });

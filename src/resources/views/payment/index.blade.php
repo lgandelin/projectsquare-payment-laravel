@@ -27,8 +27,8 @@
 
                 <ul>
                     <li>L'abonnement à Projectsquare est mensuel et sera renouvelé automatiquement à la fin des 30 premiers jours.</li>
-                    <li>Avant la fin du premier mois, vous aurez la possibilité de demander le remboursement de votre abonnement si vous n'êtes pas satisfaits.</li>
-                    <li>A chaque modification du nombre d'utilisateurs dans la plateforme,la facture suivante sera mise à jour en conséquence.</li>
+                    <li>Avant la fin du premier mois, vous aurez la possibilité de demander le remboursement de votre abonnement si vous n'êtes pas satisfait.</li>
+                    <li>A chaque modification du nombre d'utilisateurs dans la plateforme, la facture suivante sera mise à jour en conséquence.</li>
                     <li>A tout moment, vous pourrez demander l'annulation de votre abonnement.</li>
                 </ul>
 
